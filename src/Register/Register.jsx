@@ -131,7 +131,7 @@ function Register() {
                 />
               </div>
               <small className="text-indigo-600 font-normal">
-                Password must contain atleast 8 character{" "}
+                Password must contain atleast 8 character
               </small>
             </div>
 

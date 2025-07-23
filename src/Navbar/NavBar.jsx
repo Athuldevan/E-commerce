@@ -20,10 +20,10 @@ function NavBar() {
 
   const { wishlist = [], cart = [], id = null } = loggedInUser;
 
-  // Logout functionality 
+  // Logout functionality
   function handleLogOut() {
     localStorage.removeItem("loggedInUser");
-    navigate("/register")
+    navigate("/register");
   }
   return (
     <nav className="bg-gradient-to-r from-indigo-900 via-purple-900 to-pink-800 text-white sticky top-0 z-50 shadow-lg">
@@ -93,6 +93,28 @@ function NavBar() {
                   {wishlist?.length}
                 </span>
               )}
+            </button>
+
+            {/* my  orders */}
+            <button
+              onClick={() => navigate("/orders")}
+              className="flex items-center gap-2 px-4 py-2 bg-purple-700 text-white rounded-full hover:bg-purple-800 transition-all shadow-md"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13L17 13M7 13h10"
+                />
+              </svg>
+              My Orders
             </button>
 
             {/* Cart Button */}

@@ -11,6 +11,8 @@ import PaymentPage from "./paymentPage/PaymentPage.jsx";
 
 import OrderPage from "./order/OrderPage.jsx";
 import Wishlist from "./wishlist/Wishlist.jsx";
+import ProductDetailsPage from "./productDetailPage/ProductDetailsPage.jsx";
+import PageNotFound from "./Pagenotfound/PageNotFound.jsx";
 
 function App() {
   return (
@@ -24,14 +26,16 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/products" element={<Products />} />
+            <Route path="productDetails/:id" element={<ProductDetailsPage />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/payment" element={<PaymentPage />} />
             <Route path="/orders" element={<OrderPage />} />
             <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/*" element={<PageNotFound />} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>
-        <ToastContainer
+      <ToastContainer
         position="top-center"
         autoClose={5000}
         hideProgressBar={false}
@@ -43,7 +47,8 @@ function App() {
         pauseOnHover
         theme="light"
         transition={Bounce}
-      />;
+      />
+      ;
     </div>
   );
 }

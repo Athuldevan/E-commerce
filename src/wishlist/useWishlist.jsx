@@ -9,7 +9,7 @@ function useWishlist() {
   const [userId, setUserId] = useState(null);
   const [isExist, setIsExist] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   async function fetchWishlist(userId) {
     try {
@@ -41,27 +41,31 @@ function useWishlist() {
       console.log(err);
     }
   }
+
+  
   function handleWishList(product) {
     if (!userId) {
       Swal.fire({
-          title: "Please Login  first  !",
-          icon: "warning",
-          draggable: true,
-        });
-        navigate("/login")
+        title: "Please Login first!",
+        icon: "warning",
+        draggable: true,
+      });
+      navigate("/login");
     }
     let updatedWishlist;
     const isAlreadyInWishlist = wishlist.some((item) => item.id === product.id);
+    setIsExist(!isExist);
     console.log(`wishlist`, wishlist);
     console.log(isAlreadyInWishlist);
 
     // if laready in wishist remove else addd
     if (isAlreadyInWishlist) {
-      setIsExist(!isExist);
       updatedWishlist = wishlist.filter((item) => item.id !== product.id);
+      setIsExist(!isExist);
 
-      toast.info("Already in the wishlist ", {autoClose : 1000});
+      toast.error("Removed form the wishlist ", { autoClose: 1000 });
     } else {
+      toast.success("Added to the wishlist", { autoClose: 1000 });
       // if not added to wishlist
       updatedWishlist = [...wishlist, product];
     }
@@ -75,7 +79,7 @@ function useWishlist() {
     const updatedWishlist = wishlist.filter((item) => product.id != item.id);
     setWishList(updatedWishlist);
     updateWishlistInBackend(updatedWishlist);
-    toast.error("Item removeed  from  wishlist!", {autoClose : 1000});
+    toast.error("Item removeed  from  wishlist!", { autoClose: 1000 });
   }
 
   return {

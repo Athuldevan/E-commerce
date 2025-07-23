@@ -1,11 +1,12 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
-import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
-import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
+// import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
+// import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
+import { HeartIcon } from "@heroicons/react/24/solid";
 import useWishlist from "../wishlist/useWishlist";
 import useCart from "../cart/useCart";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 //
 
@@ -13,7 +14,7 @@ export default function Products() {
   const [data, setData] = useState([]);
   const { handleWishList, isExist } = useWishlist();
   const { addToCart } = useCart();
-  const navigate  = useNavigate()
+  const navigate = useNavigate();
 
   // FETHCING THE DATA AND LOADING
   useEffect(() => {
@@ -45,22 +46,27 @@ export default function Products() {
             <div
               className=" relative space-x-4 p-3  bg-neutral-50"
               key={product.id}
-              onClick={()=> navigate()}
             >
               <button
                 onClick={() => handleWishList(product)}
                 className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-sm hover:shadow-md transition-all duration-200 group"
               >
                 {/* Outline heart (visible by default) */}
-                <HeartOutline className="h-5 w-5 text-red-500 group-hover:hidden" />
+                {/* <HeartOutline className="h-5 w-5 text-red-500 group-hover:hidden" /> */}
                 {/* Solid heart (hidden by default, shows on hover) */}
-                {isExist && (
+                {/* {isExist && (
                   <HeartSolid className="h-5 w-5 text-red-500 hidden group-hover:block" />
-                )}
+                )} */}
+                <HeartIcon className="h-6 w-6 text-gray-400" />
               </button>
 
               <img
                 src={product?.images?.[0]}
+                onClick={() =>
+                  navigate(`/productDetails/${product.id}`, {
+                    state: { product },
+                  })
+                }
                 alt="Rolex watch image "
                 className="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8 h-64"
               />

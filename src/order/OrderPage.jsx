@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import OrderHistory from "./OrderHistory";
 
 export default function OrderPage() {
   const [userId, setUserId] = useState("");
@@ -10,7 +11,7 @@ export default function OrderPage() {
   const location = useLocation();
   const cartItems = location.state?.cartItems || [];
   const totalPrice = location?.state?.totalPrice;
-  console.log(totalPrice);
+
   console.log(cartItems);
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export default function OrderPage() {
             quantity: item.count,
             image: item?.images[0],
           })),
-          total: 5656,
+          total: totalPrice,
           shippingAddress: "123 Main St, Kochi, KL 682001",
         };
         console.log(newOrder);
@@ -52,6 +53,8 @@ export default function OrderPage() {
   }, [cartItems]);
 
   const latestOrder = orders?.slice(-1) || [];
+  const pastOrders = orders?.slice(0, -1)
+
   console.log("latetsorder", latestOrder);
 
   return (
@@ -148,7 +151,7 @@ export default function OrderPage() {
                           </p>
                         </div>
                         <p className="mt-1 text-base font-medium text-gray-900">
-                          ₹{(item?.price * item?.count).toFixed(2)}
+                          ₹{(item?.price * item?.quantity).toFixed(2)}
                         </p>
                       </div>
                     </li>
@@ -162,7 +165,10 @@ export default function OrderPage() {
                   <p className="text-gray-900">
                     ₹
                     {latestOrder[0]?.items
-                      .reduce((sum, item) => sum + item.price * item?.count, 0)
+                      .reduce(
+                        (sum, item) => sum + item.price * item?.quantity,
+                        0
+                      )
                       .toFixed(2)}
                   </p>
                 </div>
@@ -186,15 +192,6 @@ export default function OrderPage() {
                   {latestOrder[0]?.shippingAddress}
                 </p>
               </div>
-
-              <div className="p-6 border-t border-gray-200 flex justify-end space-x-4">
-                <button className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50">
-                  Track Order
-                </button>
-                <button className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700">
-                  Buy Again
-                </button>
-              </div>
             </>
           ) : (
             <>
@@ -202,6 +199,7 @@ export default function OrderPage() {
               <div className="p-6">
                 <h2 className="text-xl font-semibold text-gray-900 mb-6">
                   Past Orders
+                  {<OrderHistory pastOrders={pastOrders}/>}
                 </h2>
                 {/* <div className="space-y-6">
                   {pastOrders.map((order) => (

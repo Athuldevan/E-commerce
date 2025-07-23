@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { ArrowRightIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const navigate = useNavigate();
 
   const heroSlides = [
     {
@@ -73,7 +75,7 @@ const HomePage = () => {
             <p className="text-xl text-amber-100 mb-8">
               {heroSlides[currentSlide].subtitle}
             </p>
-            <button className="bg-transparent border-2 border-amber-400 text-amber-400 px-8 py-3 hover:bg-amber-400 hover:text-black transition-all duration-300 flex items-center">
+            <button  onClick = {()=> navigate("/products")} className="bg-transparent border-2 border-amber-400 text-amber-400 px-8 py-3 hover:bg-amber-400 hover:text-black transition-all duration-300 flex items-center">
               {heroSlides[currentSlide].cta}
               <ArrowRightIcon className="h-5 w-5 ml-2" />
             </button>
@@ -227,11 +229,11 @@ const HomePage = () => {
             limited editions, private events, and expert watchmaking insights.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-amber-400 text-black px-8 py-4 hover:bg-amber-300 transition-colors">
+            <button
+              onClick={() => navigate("/products")}
+              className="bg-amber-400 text-black px-8 py-4 hover:bg-amber-300 transition-colors"
+            >
               Browse Collections
-            </button>
-            <button className="border border-white px-8 py-4 hover:bg-white hover:text-black transition-colors">
-              Book Consultation
             </button>
           </div>
         </div>
