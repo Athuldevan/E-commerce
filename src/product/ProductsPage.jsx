@@ -1,9 +1,19 @@
 import axios from "axios";
-import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
+import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
+import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
+import useWishlist from "../wishlist/useWishlist";
+import useCart from "../cart/useCart";
+import {  useNavigate } from "react-router-dom";
+
+//
 
 export default function Products() {
   const [data, setData] = useState([]);
+  const { handleWishList, isExist } = useWishlist();
+  const { addToCart } = useCart();
+  const navigate  = useNavigate()
 
   // FETHCING THE DATA AND LOADING
   useEffect(() => {
@@ -20,53 +30,9 @@ export default function Products() {
   }, []);
 
   // ADD TO CART
-  async function handleAddToCart(product, e) {
+  function handleAddToCart(product, e) {
     e.preventDefault();
-
-    try {
-      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-      if (!loggedInUser) {
-        alert("Please login first");
-        return;
-      }
-
-      // //  1. Get the latest user data from the server
-      const response = await axios.get(
-        `http://localhost:3000/users/${loggedInUser.id}`
-      );
-      const latestUserData = response.data;
-
-      const isAlreadyInCart = latestUserData.cart.some(
-        (item) => item.id === product.id
-      );
-      if (isAlreadyInCart) {
-        alert(`
-          this product is already in your cart `);
-        return false;
-      }
-
-      //  2.  update cart -spreading all the items in the cart the adding t new product
-      const updatedCart = [...(latestUserData.cart || []), product]; //ADDING NEW `PRODUCT `
-
-      //  Put the updated cart back UPDATING THE CART ONLY
-      const updatedUser = {
-        ...latestUserData,
-        cart: updatedCart,
-      };
-
-      // UPDATING THE USER
-      await axios.put(
-        `http://localhost:3000/users/${loggedInUser.id}`,
-        updatedUser
-      );
-
-      // Update localStorage with latest data
-      localStorage.setItem("loggedInUser", JSON.stringify(updatedUser));
-
-      console.log("Cart updated:", updatedCart);
-    } catch (err) {
-      console.error("Error adding to cart:", err);
-    }
+    addToCart(product);
   }
 
   return (
@@ -76,7 +42,23 @@ export default function Products() {
 
         <div className="grid grid-cols-2 gap-x-3 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
           {data.map((product) => (
-            <div className="space-x-4 p-3  bg-neutral-50" key={product.id}>
+            <div
+              className=" relative space-x-4 p-3  bg-neutral-50"
+              key={product.id}
+              onClick={()=> navigate()}
+            >
+              <button
+                onClick={() => handleWishList(product)}
+                className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-sm hover:shadow-md transition-all duration-200 group"
+              >
+                {/* Outline heart (visible by default) */}
+                <HeartOutline className="h-5 w-5 text-red-500 group-hover:hidden" />
+                {/* Solid heart (hidden by default, shows on hover) */}
+                {isExist && (
+                  <HeartSolid className="h-5 w-5 text-red-500 hidden group-hover:block" />
+                )}
+              </button>
+
               <img
                 src={product?.images?.[0]}
                 alt="Rolex watch image "

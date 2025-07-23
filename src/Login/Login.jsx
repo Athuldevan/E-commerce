@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -26,12 +27,19 @@ export default function Login() {
       if (user.isBlock) throw new Error("Your account is suspended ");
 
       if (user.password === password && user.email === email) {
-        alert("Login success!");
-
+        Swal.fire({
+          title: "Sucessfully Logged in ",
+          icon: "success",
+          draggable: true,
+        });
         localStorage.setItem("loggedInUser", JSON.stringify(user));
         navigate("/producst");
       } else {
-        alert("Invalid login credentials");
+        Swal.fire({
+          title: "Invalid Login Credentials.Try Again",
+          icon: "error",
+          draggable: true,
+        });
       }
     } catch (err) {
       console.error("Login failed", err.message);

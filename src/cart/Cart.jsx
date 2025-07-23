@@ -1,79 +1,11 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import useCart from "./useCart";
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState([]);
-  const [userId, setUserId] = useState(null);
-
-  async function fetchCart(userId) {
-    try {
-      const res = await axios.get(`http://localhost:3000/users/${userId}`);
-      setCartItems(res.data.cart || []); //SETTING THE CARTiTEMS TO CART
-    } catch (error) {
-      console.error("Error fetching cart:", error);
-    }
-  }
-
-  // Fetch cart items on mount
-  useEffect(() => {
-    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-    if (loggedInUser) {
-      setUserId(loggedInUser.id);
-      fetchCart(loggedInUser.id);
-    }
-  }, []);
-
-  // Update cart in backend (PUT request)
-  async function updateCartInBackend(updatedCart) {
-    try {
-      await axios.put(`http://localhost:3000/users/${userId}`, {
-        cart: updatedCart,
-      });
-    } catch (error) {
-      console.error("Error updating cart:", error);
-    }
-  }
-
-  // --ADDING THE QUANTITY
-  function addCount(productID) {
-    const updatedCart = cartItems.map((item) =>
-      item.id === productID ? { ...item, count: (item.count || 1) + 1 } : item
-    );
-    setCartItems(updatedCart);
-    updateCartInBackend(updatedCart);
-  }
-
-  //  --DECREASE THE QUANTITIY
-  function decreaseCount(productID) {
-    const updatedCart = cartItems.map((item) =>
-      item.id === productID
-        ? { ...item, count: Math.max(1, (item.count || 1) - 1) }
-        : item
-    );
-    setCartItems(updatedCart);
-    updateCartInBackend(updatedCart);
-  }
-
-  // --REMOVE THE ITEM
-  function removeItemFromCart(productID, e) {
-    try {
-
-      e.preventDefault();
-      e.stopPropagation(); // <-- Add this line just in case
-      const updatedCart = cartItems.filter((item) => item.id !== productID);
-      setCartItems(updatedCart);
-      updateCartInBackend(updatedCart);
-      console.log('CART UPDATED');
-    }catch(error) {
-      console.log(error + 'FAILED TO UPDATA CART ')
-    
-  }
-}
-
-  const totalPrice = cartItems.reduce(
-    (acc, item) => acc + item.price * (item.count || 1),
-    0
-  );
+  // const [userId, setUserId] = useState(null);
+  const { cartItems, addCount, decreaseCount, removeItemFromCart, totalPrice } =
+    useCart();
+  const navigate = useNavigate();
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8 bg-stone-50">
@@ -119,7 +51,7 @@ export default function Cart() {
                   ₹{(item.price * (item.count || 1)).toFixed(2)}
                 </p>
                 <button
-                type = "button"
+                  type="button"
                   className="text-red-500 hover:underline text-sm mt-1"
                   onClick={(e) => removeItemFromCart(item.id, e)}
                 >
@@ -134,7 +66,12 @@ export default function Cart() {
               <p className="text-lg font-semibold">
                 Total: ₹{totalPrice.toFixed(2)}
               </p>
-              <button className="mt-3 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition">
+              <button
+                onClick={() =>
+                  navigate("/payment", { state: { totalPrice, cartItems } })
+                }
+                className="mt-3 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition"
+              >
                 Proceed to Checkout
               </button>
             </div>
