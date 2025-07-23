@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Products() {
   const [data, setData] = useState([]);
-  const { handleWishList, isExist } = useWishlist();
+  const { handleWishList } = useWishlist();
   const { addToCart } = useCart();
   const navigate = useNavigate();
 

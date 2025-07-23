@@ -1,5 +1,6 @@
-import axios from "axios";
-import { useState } from "react";
+import axios, { isAxiosError } from "axios";
+import Swal from "sweetalert2";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -21,23 +22,59 @@ function Register() {
 
   const navigate = useNavigate();
 
+  // to check wheather the emial is already exist or not
+  async function isUserAlreadyExist(email) {
+    try {
+      const res = await axios.get(`http://localhost:3000/users`);
+      console.log(res);
+
+      res.data.some((user) => {
+        console.log(user.email);
+        if (user.email === email) {
+          Swal.fire({
+            title: "User with this email aready exist ",
+            icon: "error",
+            draggable: true,
+          });
+          return true;
+        }
+      });
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
   //   handling submit function
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    const exist = await isUserAlreadyExist(email);
+    if (exist) {
+      // user with the email alrerady exist -
+      Swal.fire({
+        title: "User with this email already exists",
+        icon: "error",
+        confirmButtonColor: "#d33",
+      });
+      return;
+    }
+    // if is the email dosent exist
     const newUser = {
       ...formData,
       name,
       email,
-      password,                    
+      password,
     };
     console.log(newUser);
 
-    //   Adding newly registered user to the users databse
+    //   Adding newly registered user to the Form
     axios.post(`http://localhost:3000/users`, newUser);
-    navigate('/login')
-
+    Swal.fire({
+      title: "Registered Sucessfully",
+      icon: "success",
+    });
+    navigate("/login");
   }
-
 
   return (
     <>
@@ -54,10 +91,7 @@ function Register() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form
-            className="space-y-6 "
-            onSubmit={handleSubmit}
-          >
+          <form className="space-y-6 " onSubmit={handleSubmit}>
             {/* Name  adress input  */}
             <div>
               <label
@@ -137,10 +171,7 @@ function Register() {
 
             {/* Submit Button  */}
             <div>
-              <button
-             
-                className="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
+              <button className="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                 Sign in
               </button>
             </div>
@@ -148,7 +179,10 @@ function Register() {
 
           <p className="mt-10 text-center text-sm/6 text-gray-500">
             Already have an account ?
-            <Link to = "/login" className="font-semibold text-indigo-600 hover:text-indigo-500">
+            <Link
+              to="/login"
+              className="font-semibold text-indigo-600 hover:text-indigo-500"
+            >
               login
             </Link>
           </p>

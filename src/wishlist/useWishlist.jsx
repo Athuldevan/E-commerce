@@ -42,7 +42,7 @@ function useWishlist() {
     }
   }
 
-  
+
   function handleWishList(product) {
     if (!userId) {
       Swal.fire({

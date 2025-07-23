@@ -12,7 +12,8 @@ import PaymentPage from "./paymentPage/PaymentPage.jsx";
 import OrderPage from "./order/OrderPage.jsx";
 import Wishlist from "./wishlist/Wishlist.jsx";
 import ProductDetailsPage from "./productDetailPage/ProductDetailsPage.jsx";
-import PageNotFound from "./Pagenotfound/PageNotFound.jsx";
+import PageNotFound from "./Pagenotfound/PageNotFound.jsx"
+import Profile from "./Profile/profile.jsx";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
             <Route path="/payment" element={<PaymentPage />} />
             <Route path="/orders" element={<OrderPage />} />
             <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/*" element={<PageNotFound />} />
           </Routes>
         </AuthProvider>
