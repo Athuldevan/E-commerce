@@ -1,4 +1,5 @@
 function OrderHistory({pastOrders}) {
+  console.log("pastOrders", pastOrders)
     return (
        <div className="p-4">
   <h2 className="text-2xl font-semibold mb-4">Order History</h2>
@@ -19,16 +20,16 @@ function OrderHistory({pastOrders}) {
         </thead>
         <tbody>
           {pastOrders.map((order) => (
-            <tr key={order.id} className="text-sm hover:bg-gray-50">
+            <tr key={order?.id} className="text-sm hover:bg-gray-50">
               <td className="px-6 py-4 border-b font-medium text-blue-600">
-                {order.id}
+                {order?.id}
               </td>
               <td className="px-6 py-4 border-b text-gray-500">
-                {order.date}
+                {order?.date}
               </td>
               <td className="px-6 py-4 border-b">
                 <ul className="list-disc pl-4">
-                  {order.items.map((item) => (
+                  {order?.items?.map((item) => (
                     <li key={item.id}>
                       {item.name} × {item.quantity}
                     </li>
@@ -36,12 +37,12 @@ function OrderHistory({pastOrders}) {
                 </ul>
               </td>
               <td className="px-6 py-4 border-b font-semibold">
-                ₹{order.total.toFixed(2)}
+                ₹{order?.total?.toFixed(2)}
               </td>
               <td className="px-6 py-4 border-b">
                 <span
                   className={`px-2 py-1 text-xs rounded-full font-semibold ${
-                    order.status === "delivered"
+                    order?.status === "delivered"
                       ? "bg-green-100 text-green-700"
                       : "bg-yellow-100 text-yellow-700"
                   }`}

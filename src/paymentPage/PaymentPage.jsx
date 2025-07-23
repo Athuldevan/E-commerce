@@ -1,12 +1,14 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import useCart from "../cart/useCart";
 
 export default function PaymentPage() {
   const location = useLocation();
   const totalPrice = location.state?.totalPrice || "0.00";
   const navigate = useNavigate();
+  const {cartItems = [], } = useCart()
 
-  const cartItems = location.state?.cartItems || [];
-  console.log(cartItems);
+  // const cartItems = location.state?.cartItems || [];
+  // console.log(cartItems);
 
   function handleOrder() {
     alert("order placed sucess");
@@ -135,7 +137,7 @@ export default function PaymentPage() {
             <p className="mt-2 text-sm text-gray-500">PCI Compliant</p>    
 
 
-            
+
           </div>
         </div>
       </div>

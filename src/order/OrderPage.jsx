@@ -2,17 +2,18 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import OrderHistory from "./OrderHistory";
+import useCart from "../cart/useCart";
 
 export default function OrderPage() {
   const [userId, setUserId] = useState("");
   const [orders, setOrders] = useState([]);
   const [activeTab, setActiveTab] = useState("recent");
 
-  const location = useLocation();
-  const cartItems = location.state?.cartItems || [];
-  const totalPrice = location?.state?.totalPrice;
+  const { cartItems = [] } = useCart();
 
-  console.log(cartItems);
+  const latestOrder = orders?.slice(-1) || [];
+  const pastOrders = orders?.slice(0, -1);
+  
 
   useEffect(() => {
     const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -21,6 +22,13 @@ export default function OrderPage() {
 
     // fetching the  orderof the logged user id
     if (userId && cartItems?.length > 0) {
+      //  calculating total price
+      const totalPrice = cartItems.reduce(
+        (acc, item) => acc + item.price * item.count,
+        0
+      );
+
+      // fetching data with taht partcular user id
       axios.get(`http://localhost:3000/users/${userId}`).then((res) => {
         // CREATING A NEW ORDEER
         const newOrder = {
@@ -51,9 +59,6 @@ export default function OrderPage() {
       });
     }
   }, [cartItems]);
-
-  const latestOrder = orders?.slice(-1) || [];
-  const pastOrders = orders?.slice(0, -1)
 
   console.log("latetsorder", latestOrder);
 
@@ -162,15 +167,7 @@ export default function OrderPage() {
               <div className="p-6 bg-gray-50 border-t border-gray-200">
                 <div className="flex justify-between">
                   <p className="text-gray-600">Subtotal</p>
-                  <p className="text-gray-900">
-                    ₹
-                    {latestOrder[0]?.items
-                      .reduce(
-                        (sum, item) => sum + item.price * item?.quantity,
-                        0
-                      )
-                      .toFixed(2)}
-                  </p>
+                  <p className="text-gray-900">₹{latestOrder[0]?.total}</p>
                 </div>
                 <div className="flex justify-between mt-2">
                   <p className="text-gray-600">Shipping</p>
@@ -189,7 +186,7 @@ export default function OrderPage() {
                   Shipping Address
                 </h3>
                 <p className="text-gray-700">
-                  {latestOrder[0]?.shippingAddress}
+                  {/* {latestOrder[0]?.shippingAddress} */}
                 </p>
               </div>
             </>
@@ -199,7 +196,8 @@ export default function OrderPage() {
               <div className="p-6">
                 <h2 className="text-xl font-semibold text-gray-900 mb-6">
                   Past Orders
-                  {<OrderHistory pastOrders={pastOrders}/>}
+               
+                  {<OrderHistory pastOrders={pastOrders} />}
                 </h2>
                 {/* <div className="space-y-6">
                   {pastOrders.map((order) => (
