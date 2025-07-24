@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { ToastContainer, Bounce } from "react-toastify";
 import NavBar from "./Navbar/NavBar";
 import Register from "./Register/Register";
@@ -14,13 +14,15 @@ import Wishlist from "./wishlist/Wishlist.jsx";
 import ProductDetailsPage from "./productDetailPage/ProductDetailsPage.jsx";
 import PageNotFound from "./Pagenotfound/PageNotFound.jsx"
 import Profile from "./Profile/profile.jsx";
+import AppRouter from "./Route/AppRouter.jsx";
 
 function App() {
+ 
   return (
     <div>
-      <BrowserRouter>
+      {/* <BrowserRouter>
         <AuthProvider>
-          <NavBar />
+       {   !hide && <NavBar />}
           <Routes>
             <Route path="/" element={<HomePage />} />
 
@@ -49,8 +51,8 @@ function App() {
         pauseOnHover
         theme="light"
         transition={Bounce}
-      />
-      ;
+      /> */}
+   <AppRouter/>
     </div>
   );
 }

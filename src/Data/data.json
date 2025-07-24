@@ -1576,18 +1576,6 @@
         }
       ],
       "created_at": "1,753,105,898,218"
-    },
-    {
-      "id": "391c",
-      "name": "svdf",
-      "email": "athuldevanv90@gmail.com",
-      "password": "svf",
-      "role": "user",
-      "isBlock": false,
-      "cart": [],
-      "orders": [],
-      "wishlist": [],
-      "created_at": "1,753,334,958,457"
     }
   ]
 }

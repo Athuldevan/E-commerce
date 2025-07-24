@@ -1,4 +1,4 @@
-import axios, { isAxiosError } from "axios";
+import axios from "axios";
 import Swal from "sweetalert2";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +22,7 @@ function Register() {
 
   const navigate = useNavigate();
 
-  // to check wheather the emial is already exist or not
+  // Function to check wheather user with email already exist
   async function isUserAlreadyExist(email) {
     try {
       const res = await axios.get(`http://localhost:3000/users`);
@@ -42,14 +42,13 @@ function Register() {
     }
   }
 
-  //   handling submit function
+  // HAndleSubmit funtction
   async function handleSubmit(e) {
     e.preventDefault();
     const userExist = await isUserAlreadyExist(email);
     if (userExist) {
       return;
     }
-    // if the user with email dosent exist
     const newUser = {
       ...formData,
       name,
@@ -58,7 +57,6 @@ function Register() {
     };
     console.log(newUser);
 
-    //   Adding newly registered user to the Form
     axios.post(`http://localhost:3000/users`, newUser);
     Swal.fire({
       title: "Registered Sucessfully",
@@ -68,82 +66,83 @@ function Register() {
   }
 
   return (
-    <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            alt="Your Company"
-            src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-            className="mx-auto h-10 w-auto"
-          />
-          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-            Register
-          </h2>
+    <div className="min-h-screen bg-slate-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="flex justify-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-16 w-16 text-slate-200"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
         </div>
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-slate-300">
+          Create your account
+        </h2>
+        <p className="mt-2 text-center text-sm text-slate-200">
+          Begin your timeless journey with us
+        </p>
+      </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6 " onSubmit={handleSubmit}>
-            {/* Name  adress input  */}
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="bg-slate-100 py-8 px-4 shadow-lg sm:rounded-lg sm:px-10">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label
-                htmlFor="email"
-                className="block text-sm/6 font-medium text-gray-900"
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
               >
-                Name
+                Full Name
               </label>
-              <div className="mt-2">
+              <div className="mt-1">
                 <input
                   type="text"
                   required
-                  autoComplete="text"
-                  placeholder="Enter your name"
+                  autoComplete="name"
+                  placeholder="John Doe"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
             </div>
 
-            {/* EMAIL ADRESS FIELD  */}
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm/6 font-medium text-gray-900"
+                className="block text-sm font-medium text-gray-700"
               >
                 Email address
               </label>
-              <div className="mt-2">
+              <div className="mt-1">
                 <input
-                  placeholder="Enter your email"
+                  placeholder="john@example.com"
                   type="email"
                   required
                   autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
             </div>
 
-            {/*  PAssword input button */}
             <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm/6 font-medium text-gray-900"
-                >
-                  Password
-                </label>
-                {/* <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    Forgot password?
-                  </a>
-                </div> */}
-              </div>
-              <div className="mt-2">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
+              <div className="mt-1">
                 <input
                   id="password"
                   name="password"
@@ -152,34 +151,48 @@ function Register() {
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 />
               </div>
-              <small className="text-indigo-600 font-normal">
-                Password must contain atleast 8 character
-              </small>
+              <p className="mt-2 text-sm text-gray-500">
+                Password must be at least 8 characters
+              </p>
             </div>
 
-            {/* Submit Button  */}
             <div>
-              <button className="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                Sign in
+              <button
+                type="submit"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 focus:shadow-2xl"
+              >
+                Register
               </button>
             </div>
           </form>
 
-          <p className="mt-10 text-center text-sm/6 text-gray-500">
-            Already have an account ?
-            <Link
-              to="/login"
-              className="font-semibold text-indigo-600 hover:text-indigo-500"
-            >
-              login
-            </Link>
-          </p>
+          <div className="mt-6">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-slate-400" />
+              </div>
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-slate-100 text-slate-500">
+                  Already have an account?
+                </span>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <Link
+                to="/login"
+                className="w-full flex justify-center py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-600 bg-white hover:bg-slate-900 hover:text-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
+              >
+                Login
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

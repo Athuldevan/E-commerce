@@ -40,31 +40,31 @@ function NavBar() {
   }
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
+    <nav className="bg-slate-900 shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Left side - Logo and Navigation */}
           <div className="flex items-center">
-            <Link to="/" className="text-xl font-bold text-gray-800">
+            <Link to="/" className="text-xl font-bold text-slate-200">
               LUXEWATCH
             </Link>
 
             <div className="hidden md:flex ml-10 space-x-8">
               <Link
                 to="/"
-                className="text-gray-700 hover:text-indigo-600 px-1 py-2 text-sm font-medium"
+                className="text-slate-200 hover:text-slate-400 px-1 py-2 text-sm font-medium"
               >
                 Home
               </Link>
               <Link
                 to="/products"
-                className="text-gray-700 hover:text-indigo-600 px-1 py-2 text-sm font-medium"
+                className="text-slate-200 hover:text-slate-400 px-1 py-2 text-sm font-medium"
               >
                 Products
               </Link>
               <Link
                 to="/orders"
-                className="text-gray-700 hover:text-indigo-600 px-1 py-2 text-sm font-medium"
+                className="text-slate-200 hover:text-slate-400 px-1 py-2 text-sm font-medium"
               >
                 My Orders
               </Link>
@@ -73,17 +73,17 @@ function NavBar() {
 
           {/* Right side - Icons */}
           <div className="flex items-center space-x-6">
-            <button className="p-1 text-gray-600 hover:text-indigo-600">
+            <button className="p-1 text-slate-200 hover:text-slate-400">
               <MagnifyingGlassIcon className="h-5 w-5" />
             </button>
 
             <button
-              className="p-1 text-gray-600 hover:text-indigo-600 relative"
+              className="p-1 text-slate-200 hover:text-red-500 relative"
               onClick={() => navigate("/wishlist")}
             >
               <HeartIcon className="h-5 w-5" />
               {wishlistCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-red-400 text-slate-200 text-xs rounded-full h-4 w-4 flex items-center justify-center">
                   {wishlistCount}
                 </span>
               )}
@@ -91,11 +91,11 @@ function NavBar() {
 
             <button
               onClick={() => navigate("/cart")}
-              className="p-1 text-gray-600 hover:text-indigo-600 relative"
+              className="p-1 text-slate-200 hover:text-slate-400 relative"
             >
               <ShoppingBagIcon className="h-5 w-5" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-red-400 text-slate-200 text-xs rounded-full h-4 w-4 flex items-center justify-center">
                   {cartCount}
                 </span>
               )}
@@ -105,17 +105,17 @@ function NavBar() {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                className="p-1 text-gray-600 hover:text-indigo-600 flex items-center"
+                className="p-1 text-slate-100 hover:text-slate-400 flex items-center"
               >
                 {<UserIcon className="h-5 w-5" />}
               </button>
 
               {userDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                <div className="absolute right-0 mt-2 w-48 bg-slate-900 rounded-md shadow-lg py-1 z-50">
                   <Link
                     to="/profile"
                     onClick={() => setUserDropdownOpen(false)}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
+                    className="block px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 hover:text-slate-100"
                   >
                     My Profile
                   </Link>
@@ -124,7 +124,7 @@ function NavBar() {
                       handleLogOut();
                       setUserDropdownOpen(false);
                     }}
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600"
+                    className="block w-full text-left px-4 py-2 text-sm text-slate-100 hover:bg-slate-800 hover:text-slate-100"
                   >
                     {id ? "LogOut" : "LogIn"}
                   </button>
