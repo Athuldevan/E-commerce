@@ -1,6 +1,6 @@
 import axios, { isAxiosError } from "axios";
 import Swal from "sweetalert2";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -26,21 +26,18 @@ function Register() {
   async function isUserAlreadyExist(email) {
     try {
       const res = await axios.get(`http://localhost:3000/users`);
-      console.log(res);
+      const isExist = res.data.some((user) => user.email === email);
 
-      res.data.some((user) => {
-        console.log(user.email);
-        if (user.email === email) {
-          Swal.fire({
-            title: "User with this email aready exist ",
-            icon: "error",
-            draggable: true,
-          });
-          return true;
-        }
-      });
-    } catch (error) {
-      console.error(error);
+      if (isExist) {
+        Swal.fire({
+          title: "User with this email already exists",
+          icon: "error",
+          confirmButtonColor: "#d33",
+        });
+      }
+      return isExist;
+    } catch (err) {
+      console.log(err, "from userAlready exist fucntion ");
       return false;
     }
   }
@@ -48,17 +45,11 @@ function Register() {
   //   handling submit function
   async function handleSubmit(e) {
     e.preventDefault();
-    const exist = await isUserAlreadyExist(email);
-    if (exist) {
-      // user with the email alrerady exist -
-      Swal.fire({
-        title: "User with this email already exists",
-        icon: "error",
-        confirmButtonColor: "#d33",
-      });
+    const userExist = await isUserAlreadyExist(email);
+    if (userExist) {
       return;
     }
-    // if is the email dosent exist
+    // if the user with email dosent exist
     const newUser = {
       ...formData,
       name,
