@@ -8,7 +8,6 @@ import useWishlist from "../wishlist/useWishlist";
 import useCart from "../cart/useCart";
 import { useNavigate } from "react-router-dom";
 
-//
 
 export default function Products() {
   const [data, setData] = useState([]);
@@ -37,59 +36,61 @@ export default function Products() {
   }
 
   return (
-    <div className="bg-white">
+    <div className="bg-stone-100">
       <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-        <h2 className="sr-only">Products</h2>
+        <h2 className="sr-only">Productss</h2>
 
-        <div className="grid grid-cols-2 gap-x-3 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {data.map((product) => (
             <div
-              className=" relative space-x-4 p-3  bg-neutral-50"
+              className="group relative bg-slate-200 text-slate-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
               key={product.id}
             >
               <button
                 onClick={() => handleWishList(product)}
-                className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-sm hover:shadow-md transition-all duration-200 group"
+                className="absolute top-4 right-4 p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm hover:shadow-md transition-all duration-200 z-10"
               >
-                {/* Outline heart (visible by default) */}
-                {/* <HeartOutline className="h-5 w-5 text-red-500 group-hover:hidden" /> */}
-                {/* Solid heart (hidden by default, shows on hover) */}
-                {/* {isExist && (
-                  <HeartSolid className="h-5 w-5 text-red-500 hidden group-hover:block" />
-                )} */}
-                <HeartIcon className="h-6 w-6 text-gray-400" />
+                <HeartIcon className="h-5 w-5 text-gray-400 hover:text-red-500 transition-colors" />
               </button>
 
-              <img
-                src={product?.images?.[0]}
-                onClick={() =>
-                  navigate(`/productDetails/${product.id}`, {
-                    state: { product },
-                  })
-                }
-                alt="Rolex watch image "
-                className="aspect-square w-full rounded-lg bg-gray-200 object-cover group-hover:opacity-75 xl:aspect-7/8 h-64"
-              />
-              <div className="p-4 mt-3.5 ">
-                <h3 className="font-semibold text-sm text-gray-900">
-                  {product.name}
-                </h3>
-                <p className="font-light text-stone-700">
-                  {product.description}
-                </p>
-                <p className="bg-green-600 text-stone-200 rounded w-8 h-6 text-center ">
-                  {product.rating}
-                </p>
-                <p>${product.price}</p>
+              <div className="aspect-square w-full overflow-hidden rounded-t-xl bg-gray-100">
+                <img
+                  src={product?.images?.[0]}
+                  onClick={() =>
+                    navigate(`/productDetails/${product.id}`, {
+                      state: { product },
+                    })
+                  }
+                  alt="Product image"
+                  className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+                />
               </div>
 
-              <button
-                type="button"
-                onClick={(e) => handleAddToCart(product, e)}
-                className=" bg-indigo-500 rounded-2xl text-stone-100 p-2 border-0 hover:bg-indigo-400 mt-2"
-              >
-                Add to cart
-              </button>
+              <div className="p-4">
+                <div className="flex justify-between items-start">
+                  <h3 className="text-lg font-medium text-gray-900 line-clamp-1">
+                    {product.name}
+                  </h3>
+                  <p className="text-lg font-semibold text-gray-900">${product.price}</p>
+                </div>
+                
+                <p className="mt-1 text-sm text-gray-600 line-clamp-2">
+                  {product.description}
+                </p>
+                
+                <div className="mt-3 flex items-center justify-between">
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-green-100 text-green-800 text-xs font-medium">
+                    {product.rating} ★
+                  </span>
+                  <button
+                    type="button"
+                    onClick={(e) => handleAddToCart(product, e)}
+                    className="inline-flex items-center rounded-full bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors"
+                  >
+                    Add to cart
+                  </button>
+                </div>
+              </div>
             </div>
           ))}
         </div>

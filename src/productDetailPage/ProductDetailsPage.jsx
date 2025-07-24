@@ -29,42 +29,42 @@ const ProductDetailsPage = () => {
   //     alert(`Added ${quantity} ${product.name} to cart`);
   //   };
 
-  return (
-    <div className="bg-gray-50 min-h-screen py-8">
+return (
+    <div className="bg-neutral-50 min-h-screen py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <button
           onClick={() => navigate(-1)}
-          className="flex items-center text-gray-600 hover:text-gray-900 mb-6"
+          className="flex items-center text-neutral-600 hover:text-neutral-900 mb-6 transition-colors duration-200"
         >
           <ArrowLeftIcon className="h-5 w-5 mr-2" />
-          Back to products
+          <span className="font-medium">Back to products</span>
         </button>
 
-        <div className="lg:grid lg:grid-cols-2 lg:gap-8">
+        <div className="lg:grid lg:grid-cols-2 lg:gap-12">
           {/* Product Images */}
           <div className="mb-8 lg:mb-0">
-            <div className="bg-white rounded-lg shadow-md overflow-hidden mb-4">
+            <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-4 border border-neutral-100">
               <img
                 src={product.images[selectedImage]}
                 alt={product.name}
-                className="w-full h-96 object-contain"
+                className="w-full h-96 object-contain p-4"
               />
             </div>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-4 gap-3">
               {product.images.map((img, index) => (
                 <button
                   key={index}
-                  onClick={() =>
-                    setSelectedImage((selectedImage) => selectedImage + 1)
-                  }
-                  className={`bg-white rounded-md shadow-sm overflow-hidden ${
-                    selectedImage === index ? "ring-2 ring-blue-500" : ""
+                  onClick={() => setSelectedImage(index)}
+                  className={`bg-white rounded-lg shadow-sm overflow-hidden border-2 transition-all duration-200 ${
+                    selectedImage === index
+                      ? "border-amber-500 scale-105"
+                      : "border-transparent hover:border-neutral-200"
                   }`}
                 >
                   <img
                     src={img}
                     alt={`${product.name} thumbnail ${index}`}
-                    className="w-full h-20 object-contain"
+                    className="w-full h-20 object-contain p-2"
                   />
                 </button>
               ))}
@@ -73,69 +73,54 @@ const ProductDetailsPage = () => {
 
           {/* Product Details */}
           <div className="px-4">
-            <div className="mb-4">
-              <h2 className="text-2xl font-bold text-gray-900">
+            <div className="mb-6">
+              <h2 className="text-lg font-semibold text-amber-600">
                 {product.brand}
               </h2>
-              <h1 className="text-3xl font-extrabold text-gray-900 mt-1">
+              <h1 className="text-3xl font-bold text-neutral-900 mt-1">
                 {product.name}
               </h1>
             </div>
 
-            <div className="flex items-center mb-4">
+            <div className="flex items-center mb-6">
               <div className="flex items-center">
                 {[0, 1, 2, 3, 4].map((rating) => (
                   <StarIcon
                     key={rating}
                     className={`h-5 w-5 ${
                       rating < Math.floor(product.rating)
-                        ? "text-yellow-400"
-                        : "text-gray-300"
+                        ? "text-amber-400"
+                        : "text-neutral-300"
                     }`}
                   />
                 ))}
               </div>
-              <span className="ml-2 text-gray-600">
+              <span className="ml-2 text-neutral-600">
                 {product.rating} ({product.reviewCount} reviews)
               </span>
             </div>
 
-            <div className="mb-6">
-              <p className="text-gray-700">{product.description}</p>
+            <div className="mb-8">
+              <p className="text-neutral-700 leading-relaxed">
+                {product.description}
+              </p>
             </div>
 
-            <div className="mb-8">
-              {/* <div className="flex items-center mb-4">
-                <span className="text-3xl font-bold text-gray-900">
-                  ${product?.discountPrice?.toFixed(2)}
-                </span>
-                {product?.discountPrice < product?.price && (
-                  <span className="ml-2 text-lg text-gray-500 line-through">
-                    ${product?.price?.toFixed(2)}
-                  </span>
-                )}
-                {product?.discountPrice < product?.price && (
-                  <span className="ml-2 text-sm font-medium bg-green-100 text-green-800 px-2 py-1 rounded">
-                    {Math.round(
-                      (1 - product?.discountPrice / product?.price) * 100
-                    )}
-                    % OFF
-                  </span>
-                )}
-              </div> */}
-
+            <div className="mb-10">
               <div className="flex items-center space-x-4">
-                <div className="flex items-center border border-gray-300 rounded-md">
+                <div className="flex items-center border border-neutral-200 rounded-lg bg-neutral-50">
                   <button
                     onClick={() => handleQuantityChange(-1)}
-                    className="px-3 py-2 text-gray-600 hover:bg-gray-100"
+                    className="px-3 py-2 text-neutral-600 hover:bg-neutral-100 rounded-l-lg transition-colors"
                   >
                     -
                   </button>
-                  <span className="px-4 py-2">{quantity}</span>
+                  <span className="px-4 py-2 border-x border-neutral-200 font-medium">
+                    {quantity}
+                  </span>
                   <button
                     onClick={() => handleQuantityChange(1)}
-                    className="px-3 py-2 text-gray-600 hover:bg-gray-100"
+                    className="px-3 py-2 text-neutral-600 hover:bg-neutral-100 rounded-r-lg transition-colors"
                   >
                     +
                   </button>
@@ -143,7 +128,7 @@ const ProductDetailsPage = () => {
 
                 <button
                   onClick={() => addToCart(product)}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-md flex items-center justify-center"
+                  className="flex-1 bg-amber-600 hover:bg-amber-700 text-white py-3 px-6 rounded-lg flex items-center justify-center font-medium transition-colors shadow-sm hover:shadow-md"
                 >
                   <ShoppingCartIcon className="h-5 w-5 mr-2" />
                   Add to Cart
@@ -151,22 +136,24 @@ const ProductDetailsPage = () => {
 
                 <button
                   onClick={() => handleWishList(product)}
-                  className="p-3 border border-gray-300 rounded-md hover:bg-gray-100"
+                  className="p-3 border border-neutral-200 rounded-lg hover:bg-neutral-50 transition-colors"
                 >
                   <HeartIcon
-                    className={`h-6 w-6 ${
-                      isExist  ? "text-red-500 fill-current" : "text-gray-400"
+                    className={`h-6 w-6 transition-colors ${
+                      isExist
+                        ? "text-rose-500 fill-current"
+                        : "text-neutral-400 hover:text-rose-300"
                     }`}
                   />
                 </button>
               </div>
             </div>
 
-            <div className="border-t border-gray-200 pt-4">
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <div className="border-t border-neutral-100 pt-6">
+              <h3 className="text-lg font-semibold text-neutral-900 mb-3">
                 Shipping & Returns
               </h3>
-              <p className="text-gray-600">
+              <p className="text-neutral-600 leading-relaxed">
                 Free shipping on all orders. 30-day return policy. International
                 shipping available.
               </p>
