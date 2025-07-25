@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import useCart from "../../customHooks/useCart";
+import useCart from "../../hooks/useCart";
 
 
 export default function Cart() {

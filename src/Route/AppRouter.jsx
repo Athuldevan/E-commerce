@@ -13,7 +13,7 @@ import Products from "../pages/product/ProductsPage.jsx";
 import OrderPage from "../pages/order/OrderPage.jsx";
 import Wishlist from "../pages/wishlist/Wishlist.jsx";
 import ProductDetailsPage from "../pages/product/ProductDetailsPage.jsx";
-import PageNotFound from "../pages/errors/Pagenotfound/PageNotFound.jsx";
+import PageNotFound from "../pages/error/PageNotFound.jsx";
 import Profile from "../pages/Profile/Profile.jsx";
 import Admin from "../admin/admin.jsx";
 export default function MainRoutes() {

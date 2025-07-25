@@ -1,5 +1,5 @@
 import OrderHistory from "./OrderHistory";
-import useOrders from "../../customHooks/useOrders";
+import useOrders from "../../hooks/useOrders";
 
 export default function OrderPage() {
   const { activeTab, setActiveTab, latestOrder, pastOrders } = useOrders();

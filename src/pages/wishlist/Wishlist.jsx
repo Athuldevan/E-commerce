@@ -1,5 +1,5 @@
-import useWishlist  from "../../customHooks/useWishlist";
-import useCart from "../../customHooks/useCart";
+import useWishlist  from "../../hooks/useWishlist";
+import useCart from "../../hooks/useCart";
 import { HeartIcon as HeartSolid, XMarkIcon } from "@heroicons/react/24/solid";
 import { HeartIcon as HeartIconOutline } from "@heroicons/react/24/outline";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";

@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import useCart from "../../customHooks/useAuth";
+import useCart from "../../hooks/useAuth";
 
 
 export default function PaymentPage() {

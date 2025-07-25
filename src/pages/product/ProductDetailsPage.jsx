@@ -7,8 +7,8 @@ import {
   ShoppingCartIcon,
 } from "@heroicons/react/24/solid";
 
-import useWishlist from "../../customHooks/useWishlist";
-import useCart from "../../customHooks/useCart";
+import useWishlist from "../../hooks/useWishlist";
+import useCart from "../../hooks/useCart";
 
 const ProductDetailsPage = () => {
   const [selectedImage, setSelectedImage] = useState(0);

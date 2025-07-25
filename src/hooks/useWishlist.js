@@ -11,6 +11,9 @@ function useWishlist() {
   const [isExist, setIsExist] = useState(false);
   const navigate = useNavigate();
 
+
+
+
   // fetch wishlist
   async function fetchWishlist(userId) {
     try {
@@ -35,7 +38,7 @@ function useWishlist() {
   //   update cart in backend
   async function updateWishlistInBackend(updatedWishlist) {
     try {
-      const res = await axios.get(`http://localhost:3000/users}/users/${userId}`);
+      const res = await axios.get(`${BASE_URL}/users/${userId}`);
       const updatedUser = { ...res.data, wishlist: updatedWishlist };
       await axios.put(`${BASE_URL}/users/${userId}`, updatedUser);
     } catch (err) {

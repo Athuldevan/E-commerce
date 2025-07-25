@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-
 import { useState } from "react";
 import BASE_URL from "../api/BASE_URL";
 import Swal from "sweetalert2";
 import axios from "axios";
+
 
 function useAuth() {
   const [email, setEmail] = useState("");
@@ -21,6 +21,9 @@ function useAuth() {
     created_at: Date.now().toLocaleString(),
   });
   const navigate = useNavigate();
+  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+
 
   // Function to check wheather user with email already exist
   async function isUserAlreadyExist(email) {
@@ -55,7 +58,6 @@ function useAuth() {
       email,
       password,
     };
-    console.log(newUser);
 
     axios.post(`${BASE_URL}/users`, newUser);
     Swal.fire({
@@ -90,7 +92,7 @@ function useAuth() {
 
         // Admin checking
         if (user?.role === "admin") {
-          console.log('admin ');
+          console.log("admin ");
           navigate("/admin");
         } else {
           navigate("/products");
@@ -117,6 +119,7 @@ function useAuth() {
   //   }
   // });
   return {
+    userID: loggedInUser?.id || null,
     email,
     setEmail,
     password,

@@ -3,8 +3,8 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 
 import { HeartIcon } from "@heroicons/react/24/solid";
-import useWishlist from "../../customHooks/useWishlist";
-import useCart from "../../customHooks/useCart";
+import useWishlist from "../../hooks/useWishlist";
+import useCart from "../../hooks/useCart";
 
 import { useNavigate } from "react-router-dom";
 
