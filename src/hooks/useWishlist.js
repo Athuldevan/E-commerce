@@ -1,53 +1,37 @@
-import axios from "axios";
 import Swal from "sweetalert2";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import { useEffect, useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BASE_URL from "../api/BASE_URL";
+import useAuth from "./useAuth";
+import { updateWishlistInBackend } from "../api/services/wishlistServices";
+import { fetchWishlist } from "../api/services/wishlistServices";
 
 function useWishlist() {
   const [wishlist, setWishList] = useState([]);
-  const [userId, setUserId] = useState(null);
   const [isExist, setIsExist] = useState(false);
+  const { userID } = useAuth();
   const navigate = useNavigate();
-
-
-
-
-  // fetch wishlist
-  async function fetchWishlist(userId) {
-    try {
-      const res = await axios.get(`http://localhost:3000/users/${userId}`);
-      setWishList(res?.data?.wishlist || []);
-    } catch (err) {
-      console.error(err);
-    }
-  }
 
   //  on mount
   useEffect(() => {
-    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-    console.log(loggedInUser);
-    if (loggedInUser) {
-      setUserId(loggedInUser.id);
-      fetchWishlist(loggedInUser.id);
-      console.log(wishlist);
+    async function getWishlist() {
+      if (!userID) return;
+
+      try {
+        const data = await fetchWishlist(userID);
+        setWishList(data.wishlist || []);
+        console.log("Fetched wishlist:", data.wishlist);
+      } catch (err) {
+        console.error("Something went wrong", err);
+      }
     }
+
+    getWishlist();
   }, []);
 
-  //   update cart in backend
-  async function updateWishlistInBackend(updatedWishlist) {
-    try {
-      const res = await axios.get(`${BASE_URL}/users/${userId}`);
-      const updatedUser = { ...res.data, wishlist: updatedWishlist };
-      await axios.put(`${BASE_URL}/users/${userId}`, updatedUser);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   function handleWishList(product) {
-    if (!userId) {
+    if (!userID) {
       Swal.fire({
         title: "Please Login first!",
         icon: "warning",
@@ -75,14 +59,14 @@ function useWishlist() {
     }
 
     setWishList(updatedWishlist);
-    updateWishlistInBackend(updatedWishlist);
+    updateWishlistInBackend(updatedWishlist, userID);
   }
 
   // REMOVE WISHlIST
   function removeItemFromWishlist(product) {
     const updatedWishlist = wishlist.filter((item) => product.id != item.id);
     setWishList(updatedWishlist);
-    updateWishlistInBackend(updatedWishlist);
+    updateWishlistInBackend(updatedWishlist, userID);
     toast.error("Item removeed  from  wishlist!", { autoClose: 1000 });
   }
 

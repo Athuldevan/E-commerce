@@ -1,12 +1,22 @@
-import { useNavigate } from "react-router-dom";
+
 import useCart from "../../hooks/useCart";
+import useOrders from "../../hooks/useOrders";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Cart() {
   // const [userId, setUserId] = useState(null);
   const { cartItems, addCount, decreaseCount, removeItemFromCart, totalPrice } =
     useCart();
+  const { placeOrder} = useOrders();
   const navigate = useNavigate();
+
+  async function handleCheckOut() {
+    await placeOrder();
+    navigate('/payment')
+
+  }
+
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8 bg-stone-50">
@@ -68,9 +78,7 @@ export default function Cart() {
                 Total: ₹{totalPrice.toFixed(2)}
               </p>
               <button
-                onClick={() =>
-                  navigate("/payment", { state: { totalPrice, cartItems } })
-                }
+                onClick={handleCheckOut}
                 className="mt-3 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition"
               >
                 Proceed to Checkout

@@ -13,7 +13,7 @@ import useAuth from "./useAuth.js";
 function useCart() {
   const [cartItems, setCartItems] = useState([]);
   const { userID } = useAuth();
-  const navigate = useNavigate();
+
 
   async function fetchCart(userID) {
     try {
@@ -33,7 +33,9 @@ function useCart() {
           icon: "warning",
           draggable: true,
         });
-        navigate("/login");
+        return;
+        // navigate("/login");
+
       } else {
         Swal.fire({
           title: "Added to cart !",
@@ -57,7 +59,7 @@ function useCart() {
         return false;
       }
 
-      // // 2.  update cart -spreading all the items in the cart the adding t new product
+      //update cart -spreading all the items in the cart the adding t new product
       const updatedCart = [...(latestUserData.cart || []), product]; //ADDING NEW `PRODUCT `
 
       //  //Put the updated cart back UPDATING THE CART ONLY
