@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { toast } from "react-toastify";
+
 import { useNavigate } from "react-router-dom";
+import BASE_URL from '../api/BASE_URL'
 
 function useCart() {
   const [cartItems, setCartItems] = useState([]);
@@ -11,7 +12,7 @@ function useCart() {
 
   async function fetchCart(userId) {
     try {
-      const res = await axios.get(`http://localhost:3000/users/${userId}`);
+      const res = await axios.get(`${BASE_URL}/users/${userId}`);
       setCartItems(res.data.cart || []); //SETTING THE CARTiTEMS TO CART
     } catch (error) {
       console.error("Error fetching cart:", error);
@@ -36,10 +37,10 @@ function useCart() {
   // Update cart in backend (PUT request)
   async function updateCartInBackend(updatedCart) {
     try {
-      const res = await axios.get(`http://localhost:3000/users/${userId}`);
+      const res = await axios.get(`${BASE_URL}/users/${userId}`);
       const updatedUser = { ...res.data, cart: updatedCart };
 
-      await axios.put(`http://localhost:3000/users/${userId}`, updatedUser);
+      await axios.put(`${BASE_URL}/users/${userId}`, updatedUser);
     } catch (error) {
       console.error("Error updating cart:", error);
     }
@@ -105,7 +106,7 @@ function useCart() {
 
       // //  1. Get the latest user data from the server
       const response = await axios.get(
-        `http://localhost:3000/users/${loggedInUser.id}`
+        `${BASE_URL}/users/${loggedInUser.id}`
       );
       const latestUserData = response.data;
 
@@ -132,7 +133,7 @@ function useCart() {
 
       // UPDATING THE USER
       await axios.put(
-        `http://localhost:3000/users/${loggedInUser.id}`,
+        `${BASE_URL}/users/${loggedInUser.id}`,
         updatedUser
       );
 

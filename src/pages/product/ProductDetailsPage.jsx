@@ -6,8 +6,9 @@ import {
   ArrowLeftIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/24/solid";
-import useCart from "../cart/useCart";
-import useWishlist from "../wishlist/useWishlist";
+
+import useWishlist from "../../customHooks/useWishlist";
+import useCart from "../../customHooks/useCart";
 
 const ProductDetailsPage = () => {
   const [selectedImage, setSelectedImage] = useState(0);
@@ -15,7 +16,7 @@ const ProductDetailsPage = () => {
   const [isWishlisted, setIsWishlisted] = useState(false);
 
   const { addToCart } = useCart();
-  const { handleWishList, isExist , wishlist} = useWishlist();
+  const { handleWishList, isExist, wishlist } = useWishlist();
 
   const navigate = useNavigate();
 
@@ -29,7 +30,7 @@ const ProductDetailsPage = () => {
   //     alert(`Added ${quantity} ${product.name} to cart`);
   //   };
 
-return (
+  return (
     <div className="bg-neutral-50 min-h-screen py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <button

@@ -1,13 +1,12 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
-// import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
-// import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
-import { HeartIcon } from "@heroicons/react/24/solid";
-import useWishlist from "../wishlist/useWishlist";
-import useCart from "../cart/useCart";
-import { useNavigate } from "react-router-dom";
 
+import { HeartIcon } from "@heroicons/react/24/solid";
+import useWishlist from "../../customHooks/useWishlist";
+import useCart from "../../customHooks/useCart";
+
+import { useNavigate } from "react-router-dom";
 
 export default function Products() {
   const [data, setData] = useState([]);
@@ -44,7 +43,7 @@ export default function Products() {
           {data.map((product) => (
             <div
               className="group relative bg-slate-200 text-slate-100 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
-              key={product.id}
+              key={product.name}
             >
               <button
                 onClick={() => handleWishList(product)}
@@ -71,13 +70,15 @@ export default function Products() {
                   <h3 className="text-lg font-medium text-gray-900 line-clamp-1">
                     {product.name}
                   </h3>
-                  <p className="text-lg font-semibold text-gray-900">${product.price}</p>
+                  <p className="text-lg font-semibold text-gray-900">
+                    ${product.price}
+                  </p>
                 </div>
-                
+
                 <p className="mt-1 text-sm text-gray-600 line-clamp-2">
                   {product.description}
                 </p>
-                
+
                 <div className="mt-3 flex items-center justify-between">
                   <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-green-100 text-green-800 text-xs font-medium">
                     {product.rating} ★

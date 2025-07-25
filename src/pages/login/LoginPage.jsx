@@ -1,58 +1,8 @@
-import Swal from "sweetalert2";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import useAuth from "../../customHooks/useAuth";
+import { Link } from "react-router-dom";
 
-export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate();
-
-  async function handleLogin(e) {
-    e.preventDefault();
-    try {
-      const res = await axios.get(`http://localhost:3000/users?email=${email}`);
-      const data = res.data;
-
-      if (data.length === 0) {
-        console.log("No user found");
-        return;
-      }
-
-      const user = data[0];
-
-      if (user.isBlock) throw new Error("Your account is suspended");
-
-      if (user.password === password && user.email === email) {
-        Swal.fire({
-          title: "Successfully Logged In",
-          icon: "success",
-          draggable: true,
-        });
-        localStorage.setItem("loggedInUser", JSON.stringify(user));
-        navigate("/products");
-      } else {
-        Swal.fire({
-          title: "Invalid Login Credentials. Try Again",
-          icon: "error",
-          draggable: true,
-        });
-      }
-    } catch (err) {
-      console.error("Login failed", err.message);
-    }
-    setEmail("");
-    setPassword("");
-  }
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("loggedInUser");
-    console.log(storedUser);
-    if (storedUser) {
-      navigate("/products");
-    }
-  });
-
+function LoginPage() {
+    const { email, setEmail, password, setPassword, handleLogin } = useAuth();
   return (
     <div className="min-h-screen bg-slate-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -173,3 +123,5 @@ export default function Login() {
     </div>
   );
 }
+
+export default LoginPage;

@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import useCart from "../cart/useCart";
+import useCart from "../../customHooks/useAuth";
+
 
 export default function PaymentPage() {
   const location = useLocation();

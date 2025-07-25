@@ -2,15 +2,16 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { ToastContainer, toast, Bounce } from "react-toastify";
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
+import BASE_URL from "../api/BASE_URL";
 
 function useWishlist() {
   const [wishlist, setWishList] = useState([]);
   const [userId, setUserId] = useState(null);
   const [isExist, setIsExist] = useState(false);
-
   const navigate = useNavigate();
 
+  // fetch wishlist
   async function fetchWishlist(userId) {
     try {
       const res = await axios.get(`http://localhost:3000/users/${userId}`);
@@ -34,14 +35,13 @@ function useWishlist() {
   //   update cart in backend
   async function updateWishlistInBackend(updatedWishlist) {
     try {
-      const res = await axios.get(`http://localhost:3000/users/${userId}`);
+      const res = await axios.get(`http://localhost:3000/users}/users/${userId}`);
       const updatedUser = { ...res.data, wishlist: updatedWishlist };
-      await axios.put(`http://localhost:3000/users/${userId}`, updatedUser);
+      await axios.put(`${BASE_URL}/users/${userId}`, updatedUser);
     } catch (err) {
       console.log(err);
     }
   }
-
 
   function handleWishList(product) {
     if (!userId) {
@@ -52,13 +52,14 @@ function useWishlist() {
       });
       navigate("/login");
     }
+
     let updatedWishlist;
     const isAlreadyInWishlist = wishlist.some((item) => item.id === product.id);
     setIsExist(!isExist);
     console.log(`wishlist`, wishlist);
     console.log(isAlreadyInWishlist);
 
-    // if laready in wishist remove else addd
+    // if laready in wishist remove  the product
     if (isAlreadyInWishlist) {
       updatedWishlist = wishlist.filter((item) => item.id !== product.id);
       setIsExist(!isExist);

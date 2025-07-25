@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import useCart from "./useCart";
+import useCart from "../../customHooks/useCart";
+
 
 export default function Cart() {
   // const [userId, setUserId] = useState(null);

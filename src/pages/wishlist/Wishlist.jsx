@@ -1,5 +1,5 @@
-import useWishlist from "./useWishlist";
-import useCart from "../cart/useCart";
+import useWishlist  from "../../customHooks/useWishlist";
+import useCart from "../../customHooks/useCart";
 import { HeartIcon as HeartSolid, XMarkIcon } from "@heroicons/react/24/solid";
 import { HeartIcon as HeartIconOutline } from "@heroicons/react/24/outline";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Wishlist() {
   const { wishlist, removeItemFromWishlist } = useWishlist();
+
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
@@ -32,13 +33,13 @@ export default function Wishlist() {
           <div className="inline-flex items-center px-6 py-2 bg-white rounded-full shadow-sm">
             <HeartSolid className="h-5 w-5 text-rose-500 mr-2" />
             <span className="font-medium text-gray-700">
-              {wishlist.length} {wishlist.length === 1 ? "item" : "items"} saved
+              {wishlist?.length} {wishlist?.length === 1 ? "item" : "items"} saved
             </span>
           </div>
         </div>
 
         {/* Products Grid */}
-        {wishlist.length === 0 ? (
+        {wishlist?.length === 0 ? (
           <div className="text-center py-16">
             <div className="mx-auto h-24 w-24 text-gray-300 mb-6">
               <HeartIconOutline className="h-full w-full" />
@@ -60,14 +61,14 @@ export default function Wishlist() {
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {wishlist?.map((product) => (
               <div
-                key={product.id}
+                key={product?.id}
                 className="relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100"
               >
                 {/* Product Image */}
                 <div className="relative aspect-square overflow-hidden">
                   <img
                     src={product?.images[0]}
-                    alt={product.name}
+                    alt={product?.name}
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
                   {/* Remove button */}
@@ -84,23 +85,23 @@ export default function Wishlist() {
                 <div className="p-5">
                   <div className="flex justify-between items-start mb-3">
                     <h3 className="text-lg font-semibold text-gray-900">
-                      {product.name}
+                      {product?.name}
                     </h3>
                     <div className="flex items-center bg-amber-50 px-2 py-1 rounded">
                       <StarIcon className="h-4 w-4 text-amber-400 mr-1" />
                       <span className="text-xs font-medium text-amber-800">
-                        {product.rating}
+                        {product?.rating}
                       </span>
                     </div>
                   </div>
 
                   <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                    {product.description}
+                    {product?.description}
                   </p>
 
                   <div className="flex items-center justify-between">
                     <span className="text-xl font-bold text-gray-900">
-                      ${product.price.toFixed(2)}
+                      ${product?.price.toFixed(2)}
                     </span>
 
                     <button
@@ -118,7 +119,7 @@ export default function Wishlist() {
         )}
 
         {/* Continue Shopping Button */}
-        {wishlist.length > 0 && (
+        {wishlist?.length > 0 && (
           <div className="text-center mt-16">
             <button
               onClick={() => navigate("/products")}

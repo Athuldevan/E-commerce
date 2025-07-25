@@ -1,66 +1,8 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import OrderHistory from "./OrderHistory";
-import useCart from "../cart/useCart";
+import useOrders from "../../customHooks/useOrders";
 
 export default function OrderPage() {
-  const [userId, setUserId] = useState("");
-  const [orders, setOrders] = useState([]);
-  const [activeTab, setActiveTab] = useState("recent");
-
-  const { cartItems = [] } = useCart();
-
-  const latestOrder = orders?.slice(-1) || [];
-  const pastOrders = orders?.slice(0, -1);
-  
-
-  useEffect(() => {
-    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-    const userId = loggedInUser.id;
-    setUserId(userId);
-
-    // fetching the  orderof the logged user id
-    if (userId && cartItems?.length > 0) {
-      //  calculating total price
-      const totalPrice = cartItems.reduce(
-        (acc, item) => acc + item.price * item.count,
-        0
-      );
-
-      // fetching data with taht partcular user id
-      axios.get(`http://localhost:3000/users/${userId}`).then((res) => {
-        // CREATING A NEW ORDEER
-        const newOrder = {
-          id: `ORD-${Math.floor(Math.random() * 100000)}`, // unique ID
-          date: new Date().toLocaleString(),
-          status: "processing",
-          items: cartItems.map((item) => ({
-            id: item.id,
-            name: item.name,
-            price: item.price,
-            quantity: item.count,
-            image: item?.images[0],
-          })),
-          total: totalPrice,
-          shippingAddress: "123 Main St, Kochi, KL 682001",
-        };
-        console.log(newOrder);
-        const previousOrders = res.data.orders || [];
-        const updatedOrders = [...previousOrders, newOrder];
-
-        // SAVING + UPDATING THE ORDERS ARRAY IN JSON (BACKEDN );
-        axios
-          .put(`http://localhost:3000/users/${userId}`, {
-            ...res.data,
-            orders: updatedOrders,
-          })
-          .then(() => setOrders(updatedOrders));
-      });
-    }
-  }, [cartItems]);
-
-  console.log("latetsorder", latestOrder);
+  const { activeTab, setActiveTab, latestOrder, pastOrders } = useOrders();
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
@@ -196,7 +138,6 @@ export default function OrderPage() {
               <div className="p-6">
                 <h2 className="text-xl font-semibold text-gray-900 mb-6">
                   Past Orders
-               
                   {<OrderHistory pastOrders={pastOrders} />}
                 </h2>
                 {/* <div className="space-y-6">

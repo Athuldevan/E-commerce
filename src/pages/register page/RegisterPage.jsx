@@ -1,69 +1,15 @@
-import axios from "axios";
-import Swal from "sweetalert2";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import useAuth from "../../customHooks/useAuth";
 import { Link } from "react-router-dom";
-
-function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    role: "user",
-    isBlock: false,
-    cart: [],
-    orders: [],
-    wishlist: [],
-    created_at: Date.now().toLocaleString(),
-  });
-
-  const navigate = useNavigate();
-
-  // Function to check wheather user with email already exist
-  async function isUserAlreadyExist(email) {
-    try {
-      const res = await axios.get(`http://localhost:3000/users`);
-      const isExist = res.data.some((user) => user.email === email);
-
-      if (isExist) {
-        Swal.fire({
-          title: "User with this email already exists",
-          icon: "error",
-          confirmButtonColor: "#d33",
-        });
-      }
-      return isExist;
-    } catch (err) {
-      console.log(err, "from userAlready exist fucntion ");
-      return false;
-    }
-  }
-
-  // HAndleSubmit funtction
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const userExist = await isUserAlreadyExist(email);
-    if (userExist) {
-      return;
-    }
-    const newUser = {
-      ...formData,
-      name,
-      email,
-      password,
-    };
-    console.log(newUser);
-
-    axios.post(`http://localhost:3000/users`, newUser);
-    Swal.fire({
-      title: "Registered Sucessfully",
-      icon: "success",
-    });
-    navigate("/login");
-  }
+function RegisterPage() {
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    handleSubmit,
+    name,
+    setName,
+  } = useAuth();
 
   return (
     <div className="min-h-screen bg-slate-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -196,4 +142,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default RegisterPage;
