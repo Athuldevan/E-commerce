@@ -15,10 +15,15 @@ import Wishlist from "../pages/wishlist/Wishlist.jsx";
 import ProductDetailsPage from "../pages/product/ProductDetailsPage.jsx";
 import PageNotFound from "../pages/error/PageNotFound.jsx";
 import Profile from "../pages/Profile/Profile.jsx";
-import Admin from "../admin/admin.jsx";
+import AdminRoute from "./AdminRoute.jsx";
+import AdminDashboard from "../admin/layout/AdminDashboard.jsx";
+import DashBoard from "../admin/pages/Dashboard.jsx";
+import UsersPage from "../admin/layout/UsersPage.jsx";
+import OrdersPage from "../admin/pages/OrdersPage.jsx";
 export default function MainRoutes() {
   return (
     <BrowserRouter>
+
       <AppRouter />
     </BrowserRouter>
   );
@@ -27,14 +32,15 @@ export default function MainRoutes() {
 function AppRouter() {
   const location = useLocation();
   const hide =
-    location.pathname === "/login" || location.pathname === "/register" || location.pathname === "/admin";
+    location.pathname === "/login" ||
+    location.pathname === "/register" ||
+    location.pathname.startsWith("/admin");
   return (
     <div>
-      <AuthProvider>
+      {/* <AuthProvider>/ */}
         {!hide && <NavBar />}
         <Routes>
           <Route path="/" element={<HomePage />} />
-
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/products" element={<Products />} />
@@ -44,10 +50,24 @@ function AppRouter() {
           <Route path="/orders" element={<OrderPage />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/admin" element={<Admin/>} />
-          <Route path="/*" element={<PageNotFound />} />
+
+          <Route
+            path="/admin"
+            element={
+              <AdminRoute>
+                <AdminDashboard />
+        
+              </AdminRoute>
+            }
+          >
+            <Route path="users" element={<UsersPage />} />
+            <Route path="dashboard" element={<DashBoard />} />
+            <Route path="order" element={<OrdersPage />} />
+          </Route>
+
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
-      </AuthProvider>
+      {/* </AuthProvider> */}
 
       <ToastContainer
         position="top-center"

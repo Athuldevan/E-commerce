@@ -6,7 +6,7 @@ import {
   updateUserCart,
 } from "../api/services/cartServices.js";
 
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import BASE_URL from "../api/BASE_URL";
 import useAuth from "./useAuth.js";
 

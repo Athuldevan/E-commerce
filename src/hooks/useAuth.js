@@ -18,7 +18,7 @@ function useAuth() {
     cart: [],
     orders: [],
     wishlist: [],
-    created_at: Date.now().toLocaleString(),
+    created_at: new Date().toLocaleDateString()
   });
   const navigate = useNavigate();
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
