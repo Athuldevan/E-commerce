@@ -6,10 +6,12 @@ import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
 import { fetchOrders } from "../api/services/orderService";
 import {
+  cancelOrder,
   getAllOrderedItems,
   getRevenue,
   totalOrders as getTotalOrders,
 } from "../admin/controller/orderController";
+import { fetchUsers } from "../api/services/userService";
 
 function useOrders() {
   const [orders, setOrders] = useState([]);
@@ -19,6 +21,7 @@ function useOrders() {
   const [totalOrders, setTotalOrders] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [allOrders, setAllOrders] = useState([]);
+  const [clicked, setClicked] = useState(false);
 
   const { cartItems = [] } = useCart();
   const { userID } = useAuth();
@@ -125,13 +128,51 @@ function useOrders() {
     loadAllOrderedItems();
   }, []);
 
-  const handleDelte = function (orderId) {
-    allOrders.map((order) =>
-      order.orderID === orderId
-        ? console.log("ordere deleted ")
-        : console.log("order-delted")
-    );
-  };
+  // DELETE a order.
+  async function handleDelte(orderID) {
+    try {
+      const allUsers = await fetchUsers();
+      const user = allUsers.find(
+        (user) =>
+          user.role === "user" &&
+          user.orders.find((order) => order.id === orderID)
+      );
+      const userID = user.id; // the user id of the user who placed that order;
+      console.log("userid --", userID, user.name);
+
+      const updatedOrders = user.orders.map((order) =>
+        order.id === orderID ? { ...order, status: "cancelled" } : order
+      );
+      console.log(updatedOrders);
+      await axios.put(`${BASE_URL}/users/${userID}`, {
+        ...user,
+        orders: updatedOrders,
+      });
+
+      const updatedOrder = updatedOrders.find((order) => order.id === orderID);
+
+      setAllOrders((prevOrders) =>
+        prevOrders.map((order) =>
+          order.id === orderID ? { ...order, status: "cancelled" } : order
+        )
+      );
+      setLatestOrders((prev) =>
+        prev.map((order) => (order.id === orderID ? orders : updatedOrder))
+      );
+
+      setPastOrders((prev) =>
+        prev.map((order) => (order.id === orderID ? orders : updatedOrder))
+      );
+
+      setOrders((prev) =>
+        prev.map((order) => (order.id === orderID ? orders : updatedOrder))
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {});
 
   return {
     userID,
@@ -146,7 +187,7 @@ function useOrders() {
     totalOrders,
     totalRevenue,
     allOrders,
-    handleDelte
+    handleDelte,
   };
 }
 

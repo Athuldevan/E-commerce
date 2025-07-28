@@ -4,7 +4,6 @@ import BASE_URL from "../api/BASE_URL";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-
 function useAuth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,12 +17,10 @@ function useAuth() {
     cart: [],
     orders: [],
     wishlist: [],
-    created_at: new Date().toLocaleDateString()
+    created_at: new Date().toLocaleDateString(),
   });
   const navigate = useNavigate();
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-
-
 
   // Function to check wheather user with email already exist
   async function isUserAlreadyExist(email) {
@@ -120,6 +117,7 @@ function useAuth() {
   // });
   return {
     userID: loggedInUser?.id || null,
+    loggedInUser,
     email,
     setEmail,
     password,

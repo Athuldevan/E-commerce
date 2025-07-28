@@ -1,8 +1,11 @@
+import useAuth from "../../hooks/useAuth";
+
 function Header() {
+  const {loggedInUser} = useAuth()
   return (
     <>
       <header className="bg-gray-800 p-4 flex items-center justify-between border-b border-gray-700">
-        <h1 className="text-2xl font-bold">Dashboard Overview</h1>
+        <h1 className="text-2xl font-bold"> Welcome {loggedInUser.name}</h1>
 
         <div className="flex items-center space-x-4">
           <div className="relative">

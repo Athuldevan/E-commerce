@@ -1,38 +1,6 @@
 {
   "products": [
     {
-      "id": "1a2b3c4d",
-      "name": "Classic Leather Watch",
-      "description": "A stylish leather watch with a vintage finish.",
-      "price": 2499,
-      "count": 15,
-      "category": "Watches",
-      "brand": "Fossil",
-      "rating": 4.5,
-      "images": [
-        "https://assets.tissotwatches.com/transform/Extend/8c99426a-3edc-4e15-ae24-ef8e49f73757/T006-407-11-033-00_shadow?io=transform:fill,width:639,height:840,gravity:center",
-        "https://images.unsplash.com/photo-1526045431048-f857369baa09?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      ],
-      "isActive": true,
-      "created_at": "2025-07-17T10:00:00Z"
-    },
-    {
-      "id": "2b3c4d5e",
-      "name": "Modern Digital Watch",
-      "description": "Sleek digital watch with multiple time zone support.",
-      "price": 3499,
-      "count": 8,
-      "category": "Digital",
-      "brand": "Casio",
-      "rating": 4.2,
-      "images": [
-        "https://assets.tissotwatches.com/transform/Extend/c6aa4fe1-49a2-454c-8de6-a2ecdfda3a79/T006-407-22-036-00_shadow?io=transform:fill,width:639,height:840,gravity:center",
-        "https://images.unsplash.com/photo-1526045431048-f857369baa09?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-      ],
-      "isActive": true,
-      "created_at": "2025-07-10T12:30:00Z"
-    },
-    {
       "id": "3c4d5e6f",
       "name": "Luxury Gold Watch",
       "description": "Premium gold watch for special occasions.",
@@ -131,194 +99,410 @@
   ],
   "users": [
     {
-      "id": "fcf6",
-      "name": "ATHUL",
-      "email": "athuldevan90@gmail.com",
-      "password": "832005",
-      "role": "user",
-      "isBlock": false,
-      "cart": [
-        {
-          "id": "2b3c4d5e",
-          "name": "Modern Digital Watch",
-          "description": "Sleek digital watch with multiple time zone support.",
-          "price": 3499,
-          "count": 1,
-          "category": "Digital",
-          "brand": "Casio",
-          "rating": 4.2,
-          "images": [
-            "https://assets.tissotwatches.com/transform/Extend/c6aa4fe1-49a2-454c-8de6-a2ecdfda3a79/T006-407-22-036-00_shadow?io=transform:fill,width:639,height:840,gravity:center",
-            "https://images.unsplash.com/photo-1526045431048-f857369baa09?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          ],
-          "isActive": true,
-          "created_at": "2025-07-10T12:30:00Z"
-        },
-        {
-          "id": "3c4d5e6f",
-          "name": "Luxury Gold Watch",
-          "description": "Premium gold watch for special occasions.",
-          "price": 9999,
-          "count": 1,
-          "category": "Luxury",
-          "brand": "Rolex",
-          "rating": 4.8,
-          "images": [
-            "https://images.unsplash.com/photo-1734776576464-30551c357fd6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDM1fHx8ZW58MHx8fHx8",
-            "https://images.unsplash.com/photo-1526045431048-f857369baa09?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          ],
-          "isActive": false,
-          "created_at": "2025-06-20T15:45:00Z"
-        },
-        {
-          "id": "1a2b3c4d",
-          "name": "Classic Leather Watch",
-          "description": "A stylish leather watch with a vintage finish.",
-          "price": 2499,
-          "count": 1,
-          "category": "Watches",
-          "brand": "Fossil",
-          "rating": 4.5,
-          "images": [
-            "https://assets.tissotwatches.com/transform/Extend/8c99426a-3edc-4e15-ae24-ef8e49f73757/T006-407-11-033-00_shadow?io=transform:fill,width:639,height:840,gravity:center",
-            "https://images.unsplash.com/photo-1526045431048-f857369baa09?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          ],
-          "isActive": true,
-          "created_at": "2025-07-17T10:00:00Z"
-        },
-        {
-          "id": "5e6f7g8h",
-          "name": "Titan Edge Ceramic",
-          "description": "One of the slimmest watches in the world with a sleek ceramic body.",
-          "price": 14500,
-          "count": 6,
-          "category": "Formal",
-          "brand": "Titan",
-          "rating": 4.3,
-          "images": [
-            "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT0yRpS_UZxK33MwBYVr1o5bgbhbGf_UnB3_OP4guWAREiwp4qCMwJxVOZ84mgTbgsjo1gYPGRaZBU33gk6Gu-9tuODCHyywjDvs331ieiM_ClPKeTPylOQAQ",
-            "https://images.unsplash.com/photo-1610729448101-6985f0fa5c29?q=80&w=1180&auto=format&fit=crop&ixlib=rb-4.1.0"
-          ],
-          "isActive": true,
-          "created_at": "2025-07-13T16:20:00Z"
-        }
-      ],
-      "orders": [
-        {
-          "id": "ORD-70428",
-          "date": "26/07/2025",
-          "status": "processing",
-          "paymentMethod": "Credit Card",
-          "deliveredAt": "02/08/2025",
-          "items": [
-            {
-              "id": "2b3c4d5e",
-              "name": "Modern Digital Watch",
-              "price": 3499,
-              "quantity": 1,
-              "image": "https://assets.tissotwatches.com/transform/Extend/c6aa4fe1-49a2-454c-8de6-a2ecdfda3a79/T006-407-22-036-00_shadow?io=transform:fill,width:639,height:840,gravity:center"
-            },
-            {
-              "id": "3c4d5e6f",
-              "name": "Luxury Gold Watch",
-              "price": 9999,
-              "quantity": 1,
-              "image": "https://images.unsplash.com/photo-1734776576464-30551c357fd6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDM1fHx8ZW58MHx8fHx8"
-            },
-            {
-              "id": "1a2b3c4d",
-              "name": "Classic Leather Watch",
-              "price": 2499,
-              "quantity": 15,
-              "image": "https://assets.tissotwatches.com/transform/Extend/8c99426a-3edc-4e15-ae24-ef8e49f73757/T006-407-11-033-00_shadow?io=transform:fill,width:639,height:840,gravity:center"
-            }
-          ],
-          "total": 50983,
-          "shippingAddress": "123 Main St, Kochi, KL 682001"
-        },
-        {
-          "id": "ORD-12487",
-          "date": "26/07/2025",
-          "status": "processing",
-          "paymentMethod": "Credit Card",
-          "deliveredAt": "02/08/2025",
-          "items": [
-            {
-              "id": "2b3c4d5e",
-              "name": "Modern Digital Watch",
-              "price": 3499,
-              "quantity": 1,
-              "image": "https://assets.tissotwatches.com/transform/Extend/c6aa4fe1-49a2-454c-8de6-a2ecdfda3a79/T006-407-22-036-00_shadow?io=transform:fill,width:639,height:840,gravity:center"
-            },
-            {
-              "id": "3c4d5e6f",
-              "name": "Luxury Gold Watch",
-              "price": 9999,
-              "quantity": 1,
-              "image": "https://images.unsplash.com/photo-1734776576464-30551c357fd6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDM1fHx8ZW58MHx8fHx8"
-            },
-            {
-              "id": "1a2b3c4d",
-              "name": "Classic Leather Watch",
-              "price": 2499,
-              "quantity": 15,
-              "image": "https://assets.tissotwatches.com/transform/Extend/8c99426a-3edc-4e15-ae24-ef8e49f73757/T006-407-11-033-00_shadow?io=transform:fill,width:639,height:840,gravity:center"
-            },
-            {
-              "id": "5e6f7g8h",
-              "name": "Titan Edge Ceramic",
-              "price": 14500,
-              "quantity": 8,
-              "image": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT0yRpS_UZxK33MwBYVr1o5bgbhbGf_UnB3_OP4guWAREiwp4qCMwJxVOZ84mgTbgsjo1gYPGRaZBU33gk6Gu-9tuODCHyywjDvs331ieiM_ClPKeTPylOQAQ"
-            }
-          ],
-          "total": 166983,
-          "shippingAddress": "123 Main St, Kochi, KL 682001"
-        }
-      ],
-      "wishlist": [],
-      "created_at": "1,753,374,409,234"
-    },
-    {
-      "id": "588e",
-      "name": "Elwin ",
-      "email": "elwin@gmail.com",
-      "password": "200538",
-      "role": "user",
-      "isBlock": false,
-      "cart": [
-        {
-          "id": "3c4d5e6f",
-          "name": "Luxury Gold Watch",
-          "description": "Premium gold watch for special occasions.",
-          "price": 9999,
-          "count": 3,
-          "category": "Luxury",
-          "brand": "Rolex",
-          "rating": 4.8,
-          "images": [
-            "https://images.unsplash.com/photo-1734776576464-30551c357fd6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDM1fHx8ZW58MHx8fHx8",
-            "https://images.unsplash.com/photo-1526045431048-f857369baa09?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          ],
-          "isActive": false,
-          "created_at": "2025-06-20T15:45:00Z"
-        }
-      ],
-      "orders": [],
-      "wishlist": [],
-      "created_at": "1,753,515,966,297"
-    },
-    {
-      "id": "b8bf",
-      "name": "ADMIN",
-      "email": "admin@gmail.com",
-      "password": "123",
+      "id": "9113",
+      "name": "Admin User",
+      "email": "admin@example.com",
+      "password": "admin@123",
       "role": "admin",
       "isBlock": false,
       "cart": [],
       "orders": [],
       "wishlist": [],
-      "created_at": "26/07/2025"
+      "created_at": "01/01/2025"
+    },
+    {
+      "id": "9117",
+      "name": "Arjun Mehta",
+      "email": "arjun.mehta@example.com",
+      "password": "arjun567",
+      "role": "user",
+      "isBlock": false,
+      "cart": [
+        {
+          "id": "4d5e6f7g",
+          "name": "Fossil Grant Chronograph",
+          "price": 10500,
+          "count": 1,
+          "category": "Casual",
+          "brand": "Fossil",
+          "rating": 4.4,
+          "images": [
+            "https://m.media-amazon.com/images/I/71UIocsjBUL._SX522_.jpg"
+          ],
+          "isActive": true,
+          "created_at": "2025-07-14T13:30:00Z"
+        }
+      ],
+      "orders": [],
+      "wishlist": [
+        "1a2b3c4d",
+        "2b3c4d5e"
+      ],
+      "created_at": "22/07/2025"
+    },
+    {
+      "id": "9119",
+      "name": "Rohan Malhotra",
+      "email": "rohan.malhotra@example.com",
+      "password": "rohan789",
+      "role": "user",
+      "isBlock": false,
+      "cart": [
+        {
+          "id": "3c4d5e6f",
+          "name": "Luxury Gold Watch",
+          "price": 9999,
+          "count": 1,
+          "category": "Luxury",
+          "brand": "Rolex",
+          "rating": 4.8,
+          "images": [
+            "https://images.unsplash.com/photo-1734776576464-30551c357fd6"
+          ],
+          "isActive": false,
+          "created_at": "2025-06-20T15:45:00Z"
+        }
+      ],
+      "orders": [],
+      "wishlist": [
+        "3c4d5e6f",
+        "6f7g8h9i"
+      ],
+      "created_at": "30/07/2025"
+    },
+    {
+      "id": "9120",
+      "name": "Ishaan Kumar",
+      "email": "ishaan.kumar@example.com",
+      "password": "ishaan456",
+      "role": "user",
+      "isBlock": false,
+      "cart": [],
+      "orders": [
+        {
+          "id": "ORD-70217",
+          "date": "22/07/2025",
+          "status": "cancelled",
+          "paymentMethod": "Credit Card",
+          "deliveredAt": "Pending",
+          "items": [
+            {
+              "id": "5e6f7g8h",
+              "name": "Titan Edge Ceramic",
+              "price": 14500,
+              "quantity": 1,
+              "image": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT0yRpS_UZxK33MwBYVr1o5bgbhbGf_UnB3_OP4guWAREiwp4qCMwJxVOZ84mgTbgsjo1gYPGRaZBU33gk6Gu-9tuODCHyywjDvs331ieiM_ClPKeTPylOQAQ"
+            }
+          ],
+          "total": 14500,
+          "shippingAddress": "888 Connaught Place, New Delhi, DL 110001"
+        }
+      ],
+      "wishlist": [
+        "1a2b3c4d"
+      ],
+      "created_at": "12/07/2025"
+    },
+    {
+      "id": "9121",
+      "name": "Divya Nair",
+      "email": "divya.nair@example.com",
+      "password": "divya2025",
+      "role": "user",
+      "isBlock": false,
+      "cart": [
+        {
+          "id": "1a2b3c4d",
+          "name": "Rolex Submariner",
+          "price": 125000,
+          "count": 1,
+          "category": "Luxury",
+          "brand": "Rolex",
+          "rating": 4.9,
+          "images": [
+            "https://media.istockphoto.com/id/1440770515/photo/watch-isolated-on-white.jpg"
+          ],
+          "isActive": true,
+          "created_at": "2025-07-17T10:00:00Z"
+        },
+        {
+          "id": "2b3c4d5e",
+          "name": "Omega Speedmaster Moonwatch",
+          "price": 95000,
+          "count": 1,
+          "category": "Luxury",
+          "brand": "Omega",
+          "rating": 4.8,
+          "images": [
+            "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRbZ4hig8EAQBgc2sxa9TfjzjwKQX1ElLy5uTclD8_y0IKxCRsrlT20Q4QSzON13Hweg1U6u9ReB4T2sDYprIMKeVy7oULwVJQ9B19FV4ixWDxroApoNU2KBUk"
+          ],
+          "isActive": true,
+          "created_at": "2025-07-16T15:00:00Z"
+        }
+      ],
+      "orders": [],
+      "wishlist": [],
+      "created_at": "25/07/2025"
+    },
+    {
+      "id": "9122",
+      "name": "Kavya Iyer",
+      "email": "kavya.iyer@example.com",
+      "password": "kavya123",
+      "role": "user",
+      "isBlock": false,
+      "cart": [],
+      "orders": [
+        {
+          "id": "ORD-70218",
+          "date": "15/07/2025",
+          "status": "delivered",
+          "paymentMethod": "UPI",
+          "deliveredAt": "20/07/2025",
+          "items": [
+            {
+              "id": "6f7g8h9i",
+              "name": "Tissot Le Locle Automatic",
+              "price": 62000,
+              "quantity": 1,
+              "image": "https://assets.tissotwatches.com/transform/Extend/7309f600-12be-445c-a91a-b7d89fdcac1d/T006-407-11-093-00_Shadow"
+            }
+          ],
+          "total": 62000,
+          "shippingAddress": "999 Velachery, Chennai, TN 600042"
+        }
+      ],
+      "wishlist": [
+        "4d5e6f7g",
+        "5e6f7g8h"
+      ],
+      "created_at": "08/07/2025"
+    },
+    {
+      "id": "9123",
+      "name": "Aarav Khanna",
+      "email": "aarav.khanna@example.com",
+      "password": "aarav789",
+      "role": "user",
+      "isBlock": true,
+      "cart": [],
+      "orders": [],
+      "wishlist": [
+        "1a2b3c4d",
+        "2b3c4d5e",
+        "3c4d5e6f"
+      ],
+      "created_at": "03/07/2025"
+    },
+    {
+      "id": "9124",
+      "name": "Meera Desai",
+      "email": "meera.desai@example.com",
+      "password": "meera456",
+      "role": "user",
+      "isBlock": false,
+      "cart": [
+        {
+          "id": "4d5e6f7g",
+          "name": "Fossil Grant Chronograph",
+          "price": 10500,
+          "count": 2,
+          "category": "Casual",
+          "brand": "Fossil",
+          "rating": 4.4,
+          "images": [
+            "https://m.media-amazon.com/images/I/71UIocsjBUL._SX522_.jpg"
+          ],
+          "isActive": true,
+          "created_at": "2025-07-14T13:30:00Z"
+        }
+      ],
+      "orders": [
+        {
+          "id": "ORD-70219",
+          "date": "10/07/2025",
+          "status": "delivered",
+          "paymentMethod": "Debit Card",
+          "deliveredAt": "15/07/2025",
+          "items": [
+            {
+              "id": "4d5e6f7g",
+              "name": "Fossil Grant Chronograph",
+              "price": 10500,
+              "quantity": 1,
+              "image": "https://m.media-amazon.com/images/I/71UIocsjBUL._SX522_.jpg"
+            }
+          ],
+          "total": 10500,
+          "shippingAddress": "111 Bandra West, Mumbai, MH 400050"
+        }
+      ],
+      "wishlist": [],
+      "created_at": "28/06/2025"
+    },
+    {
+      "id": "9125",
+      "name": "Aditya Rao",
+      "email": "aditya.rao@example.com",
+      "password": "aditya123",
+      "role": "user",
+      "isBlock": false,
+      "cart": [],
+      "orders": [
+        {
+          "id": "ORD-70220",
+          "date": "05/07/2025",
+          "status": "delivered",
+          "paymentMethod": "Net Banking",
+          "deliveredAt": "10/07/2025",
+          "items": [
+            {
+              "id": "5e6f7g8h",
+              "name": "Titan Edge Ceramic",
+              "price": 14500,
+              "quantity": 1,
+              "image": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT0yRpS_UZxK33MwBYVr1o5bgbhbGf_UnB3_OP4guWAREiwp4qCMwJxVOZ84mgTbgsjo1gYPGRaZBU33gk6Gu-9tuODCHyywjDvs331ieiM_ClPKeTPylOQAQ"
+            },
+            {
+              "id": "6f7g8h9i",
+              "name": "Tissot Le Locle Automatic",
+              "price": 62000,
+              "quantity": 1,
+              "image": "https://assets.tissotwatches.com/transform/Extend/7309f600-12be-445c-a91a-b7d89fdcac1d/T006-407-11-093-00_Shadow"
+            }
+          ],
+          "total": 76500,
+          "shippingAddress": "222 HSR Layout, Bangalore, KA 560102"
+        }
+      ],
+      "wishlist": [
+        "2b3c4d5e"
+      ],
+      "created_at": "20/06/2025"
+    },
+    {
+      "id": "9126",
+      "name": "Pooja Menon",
+      "email": "pooja.menon@example.com",
+      "password": "pooja2025",
+      "role": "user",
+      "isBlock": false,
+      "cart": [
+        {
+          "id": "3c4d5e6f",
+          "name": "Luxury Gold Watch",
+          "price": 9999,
+          "count": 1,
+          "category": "Luxury",
+          "brand": "Rolex",
+          "rating": 4.8,
+          "images": [
+            "https://images.unsplash.com/photo-1734776576464-30551c357fd6"
+          ],
+          "isActive": false,
+          "created_at": "2025-06-20T15:45:00Z"
+        }
+      ],
+      "orders": [],
+      "wishlist": [
+        "1a2b3c4d"
+      ],
+      "created_at": "15/07/2025"
+    },
+    {
+      "id": "9127",
+      "name": "Rajat Verma",
+      "email": "rajat.verma@example.com",
+      "password": "rajat567",
+      "role": "user",
+      "isBlock": false,
+      "cart": [],
+      "orders": [
+        {
+          "id": "ORD-70221",
+          "date": "28/07/2025",
+          "status": "processing",
+          "paymentMethod": "COD",
+          "deliveredAt": "Pending",
+          "items": [
+            {
+              "id": "1a2b3c4d",
+              "name": "Rolex Submariner",
+              "price": 125000,
+              "quantity": 1,
+              "image": "https://media.istockphoto.com/id/1440770515/photo/watch-isolated-on-white.jpg"
+            }
+          ],
+          "total": 125000,
+          "shippingAddress": "333 Salt Lake, Kolkata, WB 700091"
+        }
+      ],
+      "wishlist": [
+        "5e6f7g8h"
+      ],
+      "created_at": "10/07/2025"
+    },
+    {
+      "id": "9128",
+      "name": "Shreya Kapoor",
+      "email": "shreya.kapoor@example.com",
+      "password": "shreya123",
+      "role": "user",
+      "isBlock": false,
+      "cart": [],
+      "orders": [
+        {
+          "id": "ORD-70222",
+          "date": "14/07/2025",
+          "status": "delivered",
+          "paymentMethod": "Credit Card",
+          "deliveredAt": "19/07/2025",
+          "items": [
+            {
+              "id": "2b3c4d5e",
+              "name": "Omega Speedmaster Moonwatch",
+              "price": 95000,
+              "quantity": 1,
+              "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRbZ4hig8EAQBgc2sxa9TfjzjwKQX1ElLy5uTclD8_y0IKxCRsrlT20Q4QSzON13Hweg1U6u9ReB4T2sDYprIMKeVy7oULwVJQ9B19FV4ixWDxroApoNU2KBUk"
+            }
+          ],
+          "total": 95000,
+          "shippingAddress": "444 Banjara Hills, Hyderabad, TS 500034"
+        }
+      ],
+      "wishlist": [
+        "6f7g8h9i"
+      ],
+      "created_at": "05/07/2025"
+    },
+    {
+      "id": "9129",
+      "name": "Vivek Choudhary",
+      "email": "vivek.choudhary@example.com",
+      "password": "vivek789",
+      "role": "user",
+      "isBlock": false,
+      "cart": [
+        {
+          "id": "5e6f7g8h",
+          "name": "Titan Edge Ceramic",
+          "price": 14500,
+          "count": 1,
+          "category": "Formal",
+          "brand": "Titan",
+          "rating": 4.3,
+          "images": [
+            "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT0yRpS_UZxK33MwBYVr1o5bgbhbGf_UnB3_OP4guWAREiwp4qCMwJxVOZ84mgTbgsjo1gYPGRaZBU33gk6Gu-9tuODCHyywjDvs331ieiM_ClPKeTPylOQAQ"
+          ],
+          "isActive": true,
+          "created_at": "2025-07-13T16:20:00Z"
+        }
+      ],
+      "orders": [],
+      "wishlist": [
+        "3c4d5e6f"
+      ],
+      "created_at": "30/06/2025"
     }
   ]
 }

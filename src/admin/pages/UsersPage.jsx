@@ -1,82 +1,16 @@
 import useUsers from "../../hooks/useUsers";
+import UserView from "../layout/UserView";
 
 const UsersPage = () => {
-  // Mock user data
-  // const users = [
-  //   {
-  //     id: 1,
-  //     name: "John Smith",
-  //     email: "john.smith@example.com",
-  //     role: "Admin",
-  //     status: "Active",
-  //     lastLogin: "2023-05-20 14:30",
-  //     avatar: "bg-purple-500",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Sarah Johnson",
-  //     email: "sarah.j@example.com",
-  //     role: "Editor",
-  //     status: "Active",
-  //     lastLogin: "2023-05-19 09:15",
-  //     avatar: "bg-blue-500",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Michael Brown",
-  //     email: "michael.b@example.com",
-  //     role: "User",
-  //     status: "Inactive",
-  //     lastLogin: "2023-05-10 11:45",
-  //     avatar: "bg-green-500",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Emily Davis",
-  //     email: "emily.d@example.com",
-  //     role: "User",
-  //     status: "Active",
-  //     lastLogin: "2023-05-20 08:20",
-  //     avatar: "bg-yellow-500",
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "Robert Wilson",
-  //     email: "robert.w@example.com",
-  //     role: "Editor",
-  //     status: "Suspended",
-  //     lastLogin: "2023-04-28 16:50",
-  //     avatar: "bg-red-500",
-  //   },
-  //   {
-  //     id: 6,
-  //     name: "Jessica Lee",
-  //     email: "jessica.l@example.com",
-  //     role: "User",
-  //     status: "Active",
-  //     lastLogin: "2023-05-18 13:10",
-  //     avatar: "bg-indigo-500",
-  //   },
-  //   {
-  //     id: 7,
-  //     name: "David Kim",
-  //     email: "david.k@example.com",
-  //     role: "User",
-  //     status: "Inactive",
-  //     lastLogin: "2023-05-05 10:30",
-  //     avatar: "bg-pink-500",
-  //   },
-  //   {
-  //     id: 8,
-  //     name: "Amanda Taylor",
-  //     email: "amanda.t@example.com",
-  //     role: "Editor",
-  //     status: "Active",
-  //     lastLogin: "2023-05-20 17:25",
-  //     avatar: "bg-teal-500",
-  //   },
-  // ];
-  const {users} = useUsers()
+  const {
+    users,
+    userViewMode,
+    handleDelte,
+
+    handleViewUser,
+    selectedUser,
+    handleCloseUserView
+  } = useUsers();
 
   return (
     <div className="flex h-screen bg-gray-900 text-gray-200">
@@ -148,6 +82,9 @@ const UsersPage = () => {
           {/* Users Table */}
           <div className="bg-gray-800 rounded-lg shadow overflow-hidden">
             <div className="overflow-x-auto">
+              {userViewMode && selectedUser && (
+                <UserView selectedUser={selectedUser} handleCloseUserView = {handleCloseUserView}/>
+              )}
               <table className="min-w-full divide-y divide-gray-700">
                 <thead className="bg-gray-750">
                   <tr>
@@ -224,7 +161,12 @@ const UsersPage = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex justify-end space-x-3">
-                          <button className="text-blue-400 hover:text-blue-300">
+                          <button
+                            onClick={() => {
+                              handleViewUser(user);
+                            }}
+                            className="text-blue-400 hover:text-blue-300"
+                          >
                             <svg
                               className="w-5 h-5"
                               fill="none"
@@ -246,6 +188,7 @@ const UsersPage = () => {
                               />
                             </svg>
                           </button>
+
                           <button className="text-yellow-400 hover:text-yellow-300">
                             <svg
                               className="w-5 h-5"
@@ -262,7 +205,10 @@ const UsersPage = () => {
                               />
                             </svg>
                           </button>
-                          <button className="text-red-400 hover:text-red-300">
+                          <button
+                            onClick={() => handleDelte(user.id)}
+                            className="text-red-400 hover:text-red-300"
+                          >
                             <svg
                               className="w-5 h-5"
                               fill="none"

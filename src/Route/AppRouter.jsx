@@ -18,12 +18,12 @@ import Profile from "../pages/Profile/Profile.jsx";
 import AdminRoute from "./AdminRoute.jsx";
 import AdminDashboard from "../admin/layout/AdminDashboard.jsx";
 import DashBoard from "../admin/pages/Dashboard.jsx";
-import UsersPage from "../admin/layout/UsersPage.jsx";
+import UsersPage from "../admin/pages/UsersPage.jsx";
 import OrdersPage from "../admin/pages/OrdersPage.jsx";
+import ProductsPage from "../admin/pages/ProductsPage.jsx";
 export default function MainRoutes() {
   return (
     <BrowserRouter>
-
       <AppRouter />
     </BrowserRouter>
   );
@@ -38,35 +38,35 @@ function AppRouter() {
   return (
     <div>
       {/* <AuthProvider>/ */}
-        {!hide && <NavBar />}
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="productDetails/:id" element={<ProductDetailsPage />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/payment" element={<PaymentPage />} />
-          <Route path="/orders" element={<OrderPage />} />
-          <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="/profile" element={<Profile />} />
+      {!hide && <NavBar />}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="productDetails/:id" element={<ProductDetailsPage />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/orders" element={<OrderPage />} />
+        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/profile" element={<Profile />} />
 
-          <Route
-            path="/admin"
-            element={
-              <AdminRoute>
-                <AdminDashboard />
-        
-              </AdminRoute>
-            }
-          >
-            <Route path="users" element={<UsersPage />} />
-            <Route path="dashboard" element={<DashBoard />} />
-            <Route path="order" element={<OrdersPage />} />
-          </Route>
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        >
+          <Route path="users" element={<UsersPage />} />
+          <Route path="dashboard" element={<DashBoard />} />
+          <Route path="order" element={<OrdersPage />} />
+          <Route path="products" element={<ProductsPage />} />
+        </Route>
 
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
       {/* </AuthProvider> */}
 
       <ToastContainer
