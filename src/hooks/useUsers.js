@@ -5,12 +5,14 @@ import axios from "axios";
 import BASE_URL from "../api/BASE_URL.js";
 
 function useUsers() {
+  const [totalUsers, setTotalUsers] = useState([]);
   const [users, setUsers] = useState([]);
   const [userViewMode, setUserMode] = useState(false);
   const [userEditMode, setUserEditMode] = useState(false);
   const [selectedUser, setSelcetedUser] = useState(null);
+  const [text, setText] = useState("");
+
   const { userID } = useAuth();
-  console.log(userID);
 
   // fetch all the USERS ONLY
   useEffect(() => {
@@ -19,6 +21,7 @@ function useUsers() {
         const allUsers = await fetchUsers();
 
         setUsers(allUsers.filter((user) => user.role === "user"));
+        setTotalUsers(allUsers.filter((user) => user.role === "user"));
       } catch (err) {
         console.error(err);
       }
@@ -70,12 +73,28 @@ function useUsers() {
           user.id === userID ? { ...user, isBlock: isBlocked } : user
         )
       );
+
+      setTotalUsers((users) =>
+        users.map((user) =>
+          user.id === userID ? { ...user, isBlock: isBlocked } : user
+        )
+      );
       console.log("ckicked the block button");
       console.log(updatedUser.data);
       setUserEditMode(false);
     } catch (err) {
       console.error(err.message);
     }
+  }
+  console.log("totalUsers", totalUsers);
+  // handleSearch the user
+  function handleSearch() {
+    console.log("totalUser", totalUsers);
+    const searchUser = totalUsers.filter(
+      (user) => user.name.toLowerCase().includes(text.toLowerCase())
+    );
+    
+    setUsers(searchUser);
   }
 
   return {
@@ -88,6 +107,9 @@ function useUsers() {
     userEditMode,
     handleEditUser,
     handleBlock,
+    text,
+    setText,
+    handleSearch,
   };
 }
 

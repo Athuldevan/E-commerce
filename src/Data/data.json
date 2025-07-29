@@ -116,7 +116,7 @@
       "email": "arjun.mehta@example.com",
       "password": "arjun567",
       "role": "user",
-      "isBlock": false,
+      "isBlock": true,
       "cart": [
         {
           "id": "4d5e6f7g",
@@ -146,7 +146,7 @@
       "email": "rohan.malhotra@example.com",
       "password": "rohan789",
       "role": "user",
-      "isBlock": true,
+      "isBlock": false,
       "cart": [
         {
           "id": "3c4d5e6f",
@@ -300,7 +300,7 @@
       "email": "meera.desai@example.com",
       "password": "meera456",
       "role": "user",
-      "isBlock": false,
+      "isBlock": true,
       "cart": [
         {
           "id": "4d5e6f7g",
@@ -454,7 +454,7 @@
         {
           "id": "ORD-70222",
           "date": "14/07/2025",
-          "status": "delivered",
+          "status": "cancelled",
           "paymentMethod": "Credit Card",
           "deliveredAt": "19/07/2025",
           "items": [

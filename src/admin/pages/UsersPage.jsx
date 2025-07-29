@@ -3,6 +3,7 @@ import UserView from "../layout/UserView";
 import EditUserComponent from "../layout/EditUserComponent";
 
 const UsersPage = () => {
+
   const {
     users,
     userViewMode,
@@ -13,12 +14,18 @@ const UsersPage = () => {
     userEditMode,
     handleEditUser,
     handleBlock,
+    handleSearch,
+    text,
+    setText,
   } = useUsers();
 
+  function OnSearch(e) {
+    setText(e.target.value)
+    handleSearch();
+
+  }
   return (
     <div className="flex h-screen bg-gray-900 text-gray-200">
-      {/* Sidebar (same as dashboard) */}
-
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Content */}
@@ -29,6 +36,8 @@ const UsersPage = () => {
               <input
                 type="text"
                 placeholder="Search users..."
+                value={text}
+                onChange={(e)=> OnSearch(e)}
                 className="w-full bg-gray-700 border border-gray-600 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
               <svg
