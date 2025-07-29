@@ -79,7 +79,7 @@ function useUsers() {
           user.id === userID ? { ...user, isBlock: isBlocked } : user
         )
       );
-      console.log("ckicked the block button");
+
       console.log(updatedUser.data);
       setUserEditMode(false);
     } catch (err) {
@@ -90,10 +90,10 @@ function useUsers() {
   // handleSearch the user
   function handleSearch() {
     console.log("totalUser", totalUsers);
-    const searchUser = totalUsers.filter(
-      (user) => user.name.toLowerCase().includes(text.toLowerCase())
+    const searchUser = totalUsers?.filter((user) =>
+      user?.name.toLowerCase().includes(text.toLowerCase())
     );
-    
+
     setUsers(searchUser);
   }
 

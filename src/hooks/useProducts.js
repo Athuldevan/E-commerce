@@ -6,6 +6,7 @@ function useProducts() {
   const [allProducts, setAllProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [productViewMode, setProductViewMode] = useState(false);
+  const [text, setText] = useState("");
 
   // Fetching all Products
   useEffect(() => {
@@ -32,7 +33,7 @@ function useProducts() {
 
   // product viewControlelr
   function handleProductView(productID) {
-    console.log('allProduct', allProducts);
+    console.log("allProduct", allProducts);
     const product = allProducts.find((product) => product.id === productID);
     console.log(product);
     setSelectedProduct(product);
@@ -40,7 +41,15 @@ function useProducts() {
   }
 
   function handleCloseProductView() {
-    setProductViewMode(!productViewMode)
+    setProductViewMode(!productViewMode);
+  }
+
+  // handle search  products
+  function searchProduct() {
+    const filteredProduct = allProducts.filter((product) =>
+      product.name.toLowerCase().includes(text.toLowerCase())
+    );
+    setProducts(filteredProduct);
   }
 
   return {
@@ -49,7 +58,9 @@ function useProducts() {
     handleProductView,
     selectedProduct,
     productViewMode,
-    handleCloseProductView
+    handleCloseProductView,
+    searchProduct,
+    text, setText
   };
 }
 

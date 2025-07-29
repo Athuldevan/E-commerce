@@ -9,8 +9,14 @@ function ProductsPage() {
     productViewMode,
     selectedProduct,
     handleCloseProductView,
+    searchProduct,
+    setText,
   } = useProducts();
-  console.log(products);
+
+  function handleSearch(e) {
+    searchProduct()
+    setText(e.target.value)
+  }
 
   return (
     <div className="flex h-screen bg-gray-900 text-gray-200">
@@ -57,6 +63,7 @@ function ProductsPage() {
               <input
                 type="text"
                 placeholder="Search products..."
+                onChange={(e) => handleSearch(e)}
                 className="w-full bg-gray-700 border border-gray-600 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
               <svg
