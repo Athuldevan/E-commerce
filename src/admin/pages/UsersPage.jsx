@@ -3,7 +3,6 @@ import UserView from "../layout/UserView";
 import EditUserComponent from "../layout/EditUserComponent";
 
 const UsersPage = () => {
-
   const {
     users,
     userViewMode,
@@ -17,13 +16,12 @@ const UsersPage = () => {
     handleSearch,
     text,
     setText,
-   handleFilterUser
+    handleFilterUser,
   } = useUsers();
 
   function OnSearch(e) {
-    setText(e.target.value)
+    setText(e.target.value);
     handleSearch();
-
   }
   return (
     <div className="flex h-screen bg-gray-900 text-gray-200">
@@ -38,7 +36,7 @@ const UsersPage = () => {
                 type="text"
                 placeholder="Search users..."
                 value={text}
-                onChange={(e)=> OnSearch(e)}
+                onChange={(e) => OnSearch(e)}
                 className="w-full bg-gray-700 border border-gray-600 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
               <svg
@@ -58,36 +56,14 @@ const UsersPage = () => {
             </div>
 
             <div className="flex space-x-3 w-full md:w-auto">
-              <select className="bg-gray-700 border border-gray-600 text-gray-200 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
-                <option>Filter by role</option>
-                <option>Admin</option>
-                <option>Editor</option>
-                <option>User</option>
+              <select
+                onChange={(e) => handleFilterUser(e.target.value)}
+                className="bg-gray-700 border border-gray-600 text-gray-200 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              >
+                <option value="all">Filter by status</option>
+                <option value={false}>Active</option>
+                <option value={true}>Blocked</option>
               </select>
-
-              <select  onChange={(e)=> handleFilterUser(e.target.value)} className="bg-gray-700 border border-gray-600 text-gray-200 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
-                <option value = 'all'>Filter by status</option>
-                <option value = {false}>Active</option>
-                <option value ={true}>Blocked</option>
-              </select>
-
-              <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm flex items-center">
-                <svg
-                  className="w-4 h-4 mr-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                  />
-                </svg>
-                Add User
-              </button>
             </div>
           </div>
 

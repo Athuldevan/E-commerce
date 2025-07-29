@@ -1,4 +1,5 @@
 import useProducts from "../../hooks/useProducts";
+import EditProduct from "../layout/EditProduct";
 import ProductView from "../layout/ProductView";
 
 function ProductsPage() {
@@ -11,19 +12,27 @@ function ProductsPage() {
     handleCloseProductView,
     searchProduct,
     setText,
+    productEditMode,
+    handleEditProduct,
+    handleClose,
+    handleDelete
   } = useProducts();
 
   function handleSearch(e) {
-    searchProduct()
-    setText(e.target.value)
+    searchProduct();
+    setText(e.target.value);
   }
 
   return (
     <div className="flex h-screen bg-gray-900 text-gray-200">
       {/* Sidebar (same as dashboard) */}
+      {productEditMode && selectedProduct && (
+        <EditProduct selectedProduct={selectedProduct} onClose={handleClose} />
+      )}
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
+        {}
         {/* Header */}
         <header className="bg-gray-800 p-4 flex items-center justify-between border-b border-gray-700">
           <h1 className="text-2xl font-bold">Product Management</h1>
@@ -286,7 +295,7 @@ function ProductsPage() {
                           <div
                             className={`flex-shrink-0 h-10 w-10 rounded-full ${product.image} flex items-center justify-center text-white`}
                           >
-                            {product.name.charAt(0)}
+                            {product?.name?.charAt(0)}
                           </div>
                           <div className="ml-4">
                             <div className="text-sm font-medium">
@@ -308,10 +317,8 @@ function ProductsPage() {
                         {product?.count}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span
-                          className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${product.color} ${product.textColor}`}
-                        >
-                          {product?.isActive}
+                        <span className="px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full">
+                          {product?.isActive ? "Active" : "InActive"}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
@@ -346,6 +353,7 @@ function ProductsPage() {
                             </svg>
                           </button>
                           <button
+                            onClick={() => handleEditProduct(product.id)}
                             className="text-yellow-400 hover:text-yellow-300"
                             title="Edit"
                           >
@@ -365,6 +373,7 @@ function ProductsPage() {
                             </svg>
                           </button>
                           <button
+                          onClick={()=> handleDelete(product.id)}
                             className="text-red-400 hover:text-red-300"
                             title="Delete"
                           >

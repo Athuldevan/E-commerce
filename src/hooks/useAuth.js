@@ -22,6 +22,7 @@ function useAuth() {
   const navigate = useNavigate();
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
+
   // Function to check wheather user with email already exist
   async function isUserAlreadyExist(email) {
     try {
@@ -108,13 +109,11 @@ function useAuth() {
     setPassword("");
   }
 
-  // useEffect(() => {
-  //   const storedUser = localStorage.getItem("loggedInUser");
-  //   console.log(storedUser);
-  //   if (storedUser) {
-  //     navigate("/products");
-  //   }
-  // });
+  // handle logout
+  function handleLogout() {
+    localStorage.removeItem("loggedInUser");
+    navigate("/login");
+  }
   return {
     userID: loggedInUser?.id || null,
     loggedInUser,
@@ -128,6 +127,7 @@ function useAuth() {
     setFormData,
     handleLogin,
     handleSubmit,
+    handleLogout,
   };
 }
 
