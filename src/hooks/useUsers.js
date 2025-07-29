@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import useAuth from "./useAuth.js";
 import axios from "axios";
 import BASE_URL from "../api/BASE_URL.js";
+import { FcUnlock } from "react-icons/fc";
 
 function useUsers() {
   const [totalUsers, setTotalUsers] = useState([]);
@@ -43,21 +44,24 @@ function useUsers() {
     }
   }
 
+  // View User
   function handleViewUser(user) {
     setUserMode(true);
     setSelcetedUser(user);
   }
 
+  // Clsoe user view
   function handleCloseUserView() {
     setUserMode(false);
     setSelcetedUser(null);
   }
-
+  // show edit viewe
   async function handleEditUser(user) {
     setSelcetedUser(user);
     setUserEditMode(true);
   }
 
+  // Block the user
   async function handleBlock(isBlocked, userID) {
     if (!userID) return null;
 
@@ -86,7 +90,7 @@ function useUsers() {
       console.error(err.message);
     }
   }
-  console.log("totalUsers", totalUsers);
+
   // handleSearch the user
   function handleSearch() {
     console.log("totalUser", totalUsers);
@@ -95,6 +99,21 @@ function useUsers() {
     );
 
     setUsers(searchUser);
+  }
+
+  // Filter User
+  function handleFilterUser(status) {
+    const trueVal = status === "true";
+  
+   
+    console.log(+status, typeof status);
+    if (status === "all") {
+      setUsers(totalUsers);
+      return;
+    }
+    const filteredUser = totalUsers.filter((user) => user.isBlock === trueVal);
+
+    setUsers(filteredUser);
   }
 
   return {
@@ -110,6 +129,7 @@ function useUsers() {
     text,
     setText,
     handleSearch,
+    handleFilterUser,
   };
 }
 

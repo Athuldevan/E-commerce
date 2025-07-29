@@ -17,6 +17,7 @@ const UsersPage = () => {
     handleSearch,
     text,
     setText,
+   handleFilterUser
   } = useUsers();
 
   function OnSearch(e) {
@@ -64,11 +65,10 @@ const UsersPage = () => {
                 <option>User</option>
               </select>
 
-              <select className="bg-gray-700 border border-gray-600 text-gray-200 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
-                <option>Filter by status</option>
-                <option>Active</option>
-                <option>Inactive</option>
-                <option>Suspended</option>
+              <select  onChange={(e)=> handleFilterUser(e.target.value)} className="bg-gray-700 border border-gray-600 text-gray-200 px-3 py-2 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+                <option value = 'all'>Filter by status</option>
+                <option value = {false}>Active</option>
+                <option value ={true}>Blocked</option>
               </select>
 
               <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm flex items-center">

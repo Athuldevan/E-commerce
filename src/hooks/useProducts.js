@@ -17,7 +17,7 @@ function useProducts() {
     })();
   }, []);
 
-  // filter products
+  // FILTER PRODUCT 
   function handleFilter(brand) {
     if (brand === "all") {
       setProducts(allProducts);
@@ -51,6 +51,7 @@ function useProducts() {
     );
     setProducts(filteredProduct);
   }
+
 
   return {
     products,
