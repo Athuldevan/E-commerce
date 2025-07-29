@@ -1,15 +1,18 @@
 import useUsers from "../../hooks/useUsers";
 import UserView from "../layout/UserView";
+import EditUserComponent from "../layout/EditUserComponent";
 
 const UsersPage = () => {
   const {
     users,
     userViewMode,
     handleDelte,
-
     handleViewUser,
     selectedUser,
-    handleCloseUserView
+    handleCloseUserView,
+    userEditMode,
+    handleEditUser,
+    handleBlock,
   } = useUsers();
 
   return (
@@ -83,8 +86,20 @@ const UsersPage = () => {
           <div className="bg-gray-800 rounded-lg shadow overflow-hidden">
             <div className="overflow-x-auto">
               {userViewMode && selectedUser && (
-                <UserView selectedUser={selectedUser} handleCloseUserView = {handleCloseUserView}/>
+                <UserView
+                  selectedUser={selectedUser}
+                  handleCloseUserView={handleCloseUserView}
+                />
               )}
+              {userEditMode && selectedUser && (
+                <EditUserComponent
+                  selectedUser={selectedUser}
+                  userEditMode={userEditMode}
+                  handleBlock={handleBlock}
+                  handleCloseUserView={handleCloseUserView}
+                />
+              )}
+
               <table className="min-w-full divide-y divide-gray-700">
                 <thead className="bg-gray-750">
                   <tr>
@@ -146,14 +161,12 @@ const UsersPage = () => {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span
                           className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            user?.status === "Active"
-                              ? "bg-green-900 text-green-200"
-                              : user?.status === "block"
+                            user?.isBlock
                               ? "bg-gray-700 text-gray-300"
-                              : "bg-red-900 text-red-200"
+                              : "bg-green-900 text-green-200"
                           }`}
                         >
-                          {user.status}
+                          {user?.isBlock ? "Blocked" : "Active"}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
@@ -161,6 +174,7 @@ const UsersPage = () => {
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div className="flex justify-end space-x-3">
+                          {/* view button  */}
                           <button
                             onClick={() => {
                               handleViewUser(user);
@@ -188,8 +202,12 @@ const UsersPage = () => {
                               />
                             </svg>
                           </button>
+                          {/* edit button  */}
 
-                          <button className="text-yellow-400 hover:text-yellow-300">
+                          <button
+                            onClick={() => handleEditUser(user)}
+                            className="text-yellow-400 hover:text-yellow-300"
+                          >
                             <svg
                               className="w-5 h-5"
                               fill="none"

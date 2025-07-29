@@ -3,13 +3,12 @@ import { useEffect, useState } from "react";
 import useAuth from "./useAuth.js";
 import axios from "axios";
 import BASE_URL from "../api/BASE_URL.js";
-import UserView from "../admin/layout/UserView.jsx";
 
 function useUsers() {
   const [users, setUsers] = useState([]);
   const [userViewMode, setUserMode] = useState(false);
+  const [userEditMode, setUserEditMode] = useState(false);
   const [selectedUser, setSelcetedUser] = useState(null);
-
   const { userID } = useAuth();
   console.log(userID);
 
@@ -47,9 +46,36 @@ function useUsers() {
   }
 
   function handleCloseUserView() {
-    console.log('close button is clicekd ');
     setUserMode(false);
     setSelcetedUser(null);
+  }
+
+  async function handleEditUser(user) {
+    setSelcetedUser(user);
+    setUserEditMode(true);
+  }
+
+  async function handleBlock(isBlocked, userID) {
+    if (!userID) return null;
+
+    try {
+      const allUsers = await fetchUsers();
+      const user = allUsers.find((user) => user.id === userID);
+      const updatedUser = await axios.put(`${BASE_URL}/users/${userID}`, {
+        ...user,
+        isBlock: isBlocked,
+      });
+      setUsers((users) =>
+        users.map((user) =>
+          user.id === userID ? { ...user, isBlock: isBlocked } : user
+        )
+      );
+      console.log("ckicked the block button");
+      console.log(updatedUser.data);
+      setUserEditMode(false);
+    } catch (err) {
+      console.error(err.message);
+    }
   }
 
   return {
@@ -59,6 +85,9 @@ function useUsers() {
     handleViewUser,
     selectedUser,
     handleCloseUserView,
+    userEditMode,
+    handleEditUser,
+    handleBlock,
   };
 }
 

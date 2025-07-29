@@ -146,7 +146,7 @@
       "email": "rohan.malhotra@example.com",
       "password": "rohan789",
       "role": "user",
-      "isBlock": false,
+      "isBlock": true,
       "cart": [
         {
           "id": "3c4d5e6f",
@@ -209,7 +209,7 @@
       "email": "divya.nair@example.com",
       "password": "divya2025",
       "role": "user",
-      "isBlock": false,
+      "isBlock": true,
       "cart": [
         {
           "id": "1a2b3c4d",
@@ -250,13 +250,13 @@
       "email": "kavya.iyer@example.com",
       "password": "kavya123",
       "role": "user",
-      "isBlock": false,
+      "isBlock": true,
       "cart": [],
       "orders": [
         {
           "id": "ORD-70218",
           "date": "15/07/2025",
-          "status": "delivered",
+          "status": "cancelled",
           "paymentMethod": "UPI",
           "deliveredAt": "20/07/2025",
           "items": [
@@ -321,7 +321,7 @@
         {
           "id": "ORD-70219",
           "date": "10/07/2025",
-          "status": "delivered",
+          "status": "cancelled",
           "paymentMethod": "Debit Card",
           "deliveredAt": "15/07/2025",
           "items": [
@@ -346,13 +346,13 @@
       "email": "aditya.rao@example.com",
       "password": "aditya123",
       "role": "user",
-      "isBlock": false,
+      "isBlock": true,
       "cart": [],
       "orders": [
         {
           "id": "ORD-70220",
           "date": "05/07/2025",
-          "status": "delivered",
+          "status": "cancelled",
           "paymentMethod": "Net Banking",
           "deliveredAt": "10/07/2025",
           "items": [
@@ -421,7 +421,7 @@
         {
           "id": "ORD-70221",
           "date": "28/07/2025",
-          "status": "processing",
+          "status": "cancelled",
           "paymentMethod": "COD",
           "deliveredAt": "Pending",
           "items": [
@@ -474,35 +474,6 @@
         "6f7g8h9i"
       ],
       "created_at": "05/07/2025"
-    },
-    {
-      "id": "9129",
-      "name": "Vivek Choudhary",
-      "email": "vivek.choudhary@example.com",
-      "password": "vivek789",
-      "role": "user",
-      "isBlock": false,
-      "cart": [
-        {
-          "id": "5e6f7g8h",
-          "name": "Titan Edge Ceramic",
-          "price": 14500,
-          "count": 1,
-          "category": "Formal",
-          "brand": "Titan",
-          "rating": 4.3,
-          "images": [
-            "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT0yRpS_UZxK33MwBYVr1o5bgbhbGf_UnB3_OP4guWAREiwp4qCMwJxVOZ84mgTbgsjo1gYPGRaZBU33gk6Gu-9tuODCHyywjDvs331ieiM_ClPKeTPylOQAQ"
-          ],
-          "isActive": true,
-          "created_at": "2025-07-13T16:20:00Z"
-        }
-      ],
-      "orders": [],
-      "wishlist": [
-        "3c4d5e6f"
-      ],
-      "created_at": "30/06/2025"
     }
   ]
 }
