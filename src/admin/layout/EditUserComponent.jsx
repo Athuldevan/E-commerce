@@ -84,8 +84,8 @@ function EditUserComponent({ selectedUser, handleBlock, handleCloseUserView }) {
               Cancel
             </button>
             <button onClick={handleBlockAndClose} className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded-md text-sm font-medium">
-             { isBlock ? 'Unblock User' : 'Block User'}
-            </button>
+             { isBlock === true  ? 'Unblock User' : 'Block User'}
+            </button> 
           </div>
         </div>
       </div>

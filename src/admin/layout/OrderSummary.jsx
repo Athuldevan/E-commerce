@@ -1,4 +1,12 @@
-function OrderSummary({ totalOrders }) {
+function OrderSummary({ allOrders }) {
+  const pending = allOrders.filter((order) => order.status === "processing");
+  const totalOrders = allOrders.length;
+  const totalRevenue = allOrders.reduce(
+    (acc, currOrder) => acc + currOrder.total,
+    0
+  );
+  const totalRevenueInPerc = (totalRevenue / totalRevenue) * 100;
+
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -32,7 +40,7 @@ function OrderSummary({ totalOrders }) {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-400">Revenue</p>
-              <h3 className="text-2xl font-bold">athul</h3>
+              <h3 className="text-2xl font-bold">{totalRevenue}</h3>
             </div>
             <div className="p-3 bg-green-600 rounded-lg">
               <svg
@@ -51,14 +59,16 @@ function OrderSummary({ totalOrders }) {
               </svg>
             </div>
           </div>
-          <p className="text-green-400 text-sm mt-2">↑ 5.7% from last month</p>
+          <p className="text-green-400 text-sm mt-2">
+            ↑ {totalRevenueInPerc} %from last month
+          </p>
         </div>
 
         <div className="bg-gray-800 p-6 rounded-lg shadow">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-400">Avg. Order Value</p>
-              <h3 className="text-2xl font-bold">$134.50</h3>
+              <h3 className="text-2xl font-bold">134.50</h3>
             </div>
             <div className="p-3 bg-yellow-600 rounded-lg">
               <svg
@@ -84,7 +94,7 @@ function OrderSummary({ totalOrders }) {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-400">Pending Orders</p>
-              <h3 className="text-2xl font-bold">56</h3>
+              <h3 className="text-2xl font-bold">{pending.length}</h3>
             </div>
             <div className="p-3 bg-red-600 rounded-lg">
               <svg

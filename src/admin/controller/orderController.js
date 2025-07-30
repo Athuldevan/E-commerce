@@ -1,10 +1,12 @@
 import axios from "axios";
 import { fetchUsers } from "../../api/services/userService";
 import BASE_URL from "../../api/BASE_URL";
+import useAuth from "../../hooks/useAuth";
 
 // Total orders count
 export async function totalOrders() {
   let totalOrdersCount = 0;
+  const { userID } = useAuth();
   const allUsers = await fetchUsers();
   const users = allUsers?.filter((user) => user?.role === "user");
   totalOrdersCount = users.reduce(
@@ -36,6 +38,7 @@ export async function getAllOrderedItems() {
         date: order.date,
         items: order.items,
         status: order.status,
+        userID: order.userID,
       }))
       .flat(2)
   );
@@ -53,7 +56,7 @@ export async function cancelOrder(orderID) {
   const updatedOrders = user.orders.map((order) =>
     order.id === orderID ? { ...order, status: "cancelled" } : order
   );
-   return await axios.put(`${BASE_URL}/users/${userID}`, {
+  return await axios.put(`${BASE_URL}/users/${userID}`, {
     ...user,
     orders: updatedOrders,
   });

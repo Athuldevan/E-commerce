@@ -1,5 +1,5 @@
 import { FiPlus, FiMinus } from "react-icons/fi";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import useProducts from "../../hooks/useProducts";
 import axios from "axios";
 import BASE_URL from "../../api/BASE_URL";

@@ -22,7 +22,6 @@ function useAuth() {
   const navigate = useNavigate();
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
 
-
   // Function to check wheather user with email already exist
   async function isUserAlreadyExist(email) {
     try {
@@ -46,6 +45,7 @@ function useAuth() {
   // HAndleSubmit funtction
   async function handleSubmit(e) {
     e.preventDefault();
+
     const userExist = await isUserAlreadyExist(email);
     if (userExist) {
       return;

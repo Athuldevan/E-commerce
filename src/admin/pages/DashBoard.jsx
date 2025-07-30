@@ -1,5 +1,9 @@
 import useOrders from "../../hooks/useOrders";
 import useUsers from "../../hooks/useUsers";
+import ChartLayout from "../layout/ChartLayout";
+
+
+
 
 function DashBoard() {
   const { users } = useUsers();
@@ -10,7 +14,9 @@ function DashBoard() {
   const lastDelivered = allOrders.findLast(
     (order) => order.status === "delivered"
   );
-  console.log(lastDelivered);
+
+
+
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
       {/* Content */}
@@ -137,9 +143,9 @@ function DashBoard() {
                 <option>Last 90 days</option>
               </select>
             </div>
-            <div className="h-64 bg-gray-700 rounded flex items-center justify-center">
-              <p className="text-gray-400">Chart Placeholder</p>
-            </div>
+            <>
+             <ChartLayout/>
+            </>
           </div>
 
           <div className="bg-gray-800 p-6 rounded-lg shadow">

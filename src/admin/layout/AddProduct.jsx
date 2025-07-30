@@ -10,11 +10,10 @@ function AddProduct({ onClose, onAddProduct }) {
     images: [],
     rating: 0,
     isActive: true,
-    id: Date.now().toString(), 
+    id: Date.now().toString(),
   });
 
   const handleChange = (e) => {
-
     const { name, value } = e.target;
     setNewProduct({
       ...newProduct,
@@ -140,7 +139,7 @@ function AddProduct({ onClose, onAddProduct }) {
               Cancel
             </button>
             <button
-            type ="submit"
+              type="submit"
               className="px-4 py-2 bg-purple-600 rounded hover:bg-purple-700"
             >
               Add Product

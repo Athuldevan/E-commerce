@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+
 function SideBar() {
-  const {loggedInUser} = useAuth()
+  const { loggedInUser } = useAuth();
 
   return (
     <>
@@ -15,7 +16,10 @@ function SideBar() {
         <nav className="flex-1">
           <ul className="space-y-2">
             <li>
-              <Link to ="dashboard" className="flex items-center space-x-2 p-2 rounded-lg bg-gray-700">
+              <Link 
+                to="dashboard" 
+                className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700"
+              >
                 <svg
                   className="w-5 h-5"
                   fill="none"
@@ -56,7 +60,10 @@ function SideBar() {
               </Link>
             </li>
             <li>
-              <Link  to ='products' className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700">
+              <Link 
+                to='products' 
+                className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700"
+              >
                 <svg
                   className="w-5 h-5"
                   fill="none"
@@ -75,7 +82,10 @@ function SideBar() {
               </Link>
             </li>
             <li>
-              <Link  to = 'order' className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700">
+              <Link 
+                to='order' 
+                className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700"
+              >
                 <svg
                   className="w-5 h-5"
                   fill="none"
@@ -94,7 +104,9 @@ function SideBar() {
               </Link>
             </li>
             <li>
-              <Link className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700">
+              <Link 
+                className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700"
+              >
                 <svg
                   className="w-5 h-5"
                   fill="none"

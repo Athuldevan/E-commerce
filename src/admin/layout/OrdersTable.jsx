@@ -1,4 +1,4 @@
-function OrdersTable({ handleDelte, allOrders }) {
+function OrdersTable({ handleDelte, allOrders, handleStatusChange }) {
   return (
     <>
       <div className="bg-gray-800 rounded-lg shadow overflow-hidden">
@@ -97,50 +97,6 @@ function OrdersTable({ handleDelte, allOrders }) {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex justify-end space-x-3">
-                      {/* <button
-                            className="text-blue-400 hover:text-blue-300"
-                            title="View"
-                          >
-                            <svg
-                              className="w-5 h-5"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                              />
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                              />
-                            </svg>
-                          </button> */}
-                      {/* <button
-                            className="text-yellow-400 hover:text-yellow-300"
-                            title="Edit"
-                          >
-                            <svg
-                              className="w-5 h-5"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                              />
-                            </svg>
-                          </button> */}
                       <button
                         className="text-red-400 hover:text-red-300"
                         title="Delete"
@@ -161,6 +117,19 @@ function OrdersTable({ handleDelte, allOrders }) {
                           />
                         </svg>
                       </button>
+                      {/* change ststus  */}
+                      <select
+                        // value={order.status}
+                        className="bg-gray-700 text-white px-2 py-1 rounded"
+                        onChange={(e) =>
+                          handleStatusChange(order, e.target.value)
+                        }
+                      >
+                        <option value="processing">Processing</option>
+                        <option value="shipped">Shipped</option>
+                        <option value="delivered">Delivered</option>
+                        <option value="cancelled">Cancelled</option>
+                      </select>
                     </div>
                   </td>
                 </tr>

@@ -21,7 +21,6 @@ function useOrders() {
   const [totalOrders, setTotalOrders] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [allOrders, setAllOrders] = useState([]);
-  const [clicked, setClicked] = useState(false);
 
   const { cartItems = [] } = useCart();
   const { userID } = useAuth();
@@ -34,7 +33,8 @@ function useOrders() {
       0
     );
     const newOrder = {
-      id: `ORD-${Math.floor(Math.random() * 100000)}`, // unique ID
+      userID,
+      id: `ORD-${Math.floor(Math.random() * 100000)}`,
       date: new Date().toLocaleDateString(),
       status: "processing",
       paymentMethod: "Credit Card",
@@ -50,12 +50,14 @@ function useOrders() {
         image: item?.images[0],
       })),
       total: totalPrice,
-      shippingAddress: "123 Main St, Kochi, KL 682001",
+      shippingAddress: "123 Kochi, kerala 55",
     };
 
     const data = await fetchOrders(userID);
-    const previousOrders = data.orders;
+    const previousOrders = Array.isArray(data.orders) ? data.orders : [];
     const updatedOrders = [...previousOrders, newOrder];
+
+    console.log(previousOrders);
 
     await axios.put(`${BASE_URL}/users/${userID}`, {
       ...data,
@@ -79,11 +81,11 @@ function useOrders() {
         const res = await axios.get(`${BASE_URL}/users/${userID}`);
         const data = res.data;
         console.log(data);
-        const recentOrders = data.orders.filter(
+        const recentOrders = data?.orders?.filter(
           (order) => order.status !== "delivered"
         );
 
-        const pastOrder = data.orders.filter(
+        const pastOrder = data?.orders?.filter(
           (order) => order.status === "delivered"
         );
 
@@ -128,7 +130,7 @@ function useOrders() {
     loadAllOrderedItems();
   }, []);
 
-  // DELETE a order.
+  // DELETE a order.`
   async function handleDelte(orderID) {
     try {
       const allUsers = await fetchUsers();
@@ -172,7 +174,25 @@ function useOrders() {
     }
   }
 
-  useEffect(() => {});
+  // function handleStatus
+  async function handleStatusChange(order, newStatus) {
+    try {
+      const res = await axios.get(`${BASE_URL}/users/${order.userID}`);
+      const user = res.data;
+
+      const updatedOrders = user.orders.map((o) =>
+        o.id === order.id ? { ...o, status: newStatus } : o
+      );
+      console.log(updatedOrders, "updatedOrder");
+
+      await axios.put(`${BASE_URL}/users/${order.userID}`, {
+        ...user,
+        orders: updatedOrders,
+      });
+    } catch (err) {
+      console.error("Something went wrong:", err.message);
+    }
+  }
 
   return {
     userID,
@@ -188,9 +208,8 @@ function useOrders() {
     totalRevenue,
     allOrders,
     handleDelte,
+    handleStatusChange,
   };
 }
-
-
 
 export default useOrders;

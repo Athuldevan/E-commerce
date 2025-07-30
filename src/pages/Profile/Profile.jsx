@@ -15,6 +15,7 @@ import { fetchUsers } from "../../api/services/userService";
 function Profile() {
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
   const [user, setUser] = useState(null);
+  console.log(user);
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingPassword, setIsEditingPassword] = useState(false);
@@ -54,23 +55,50 @@ function Profile() {
     role: user?.role,
     isBlock: user?.isBlock,
   };
-  async function handleSubmit() {
-    userData.password !== passwordData.currentPassword &&
-      alert("current password is not matching ");
-    if (
-      passwordData.newPassword.length === 0 ||
-      passwordData.confirmPassword.length === 0
-    ) {
-      alert("password is empty");
-      return;
-    }
-    const updatedUser = await axios.put(
-      `${BASE_URL}/users/${loggedInUser.id}`,
-      { ...userData, password: passwordData.newPassword }
-    );
-    console.log(updatedUser);
-    setIsEditingPassword(false);
+ async function handleSubmit() {
+  if (passwordData.currentPassword !== user?.password) {
+    alert("Current password is incorrect");
+    return;
   }
+
+  if (passwordData.newPassword !== passwordData.confirmPassword) {
+    alert("New password and confirmation do not match");
+    return;
+  }
+
+  if (!passwordData.newPassword) {
+    alert("New password cannot be empty");
+    return;
+  }
+
+  try {
+    const updatedUser = {
+      ...user,
+      password: passwordData.newPassword,
+    };
+
+    await axios.put(
+      `${BASE_URL}/users/${loggedInUser.id}`,
+      updatedUser
+    );
+
+    // Save updated user to localStorage
+    localStorage.setItem("loggedInUser", JSON.stringify(updatedUser));
+
+    setIsEditingPassword(false);
+    setPasswordData({
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    });
+
+    alert("Password updated successfully");
+  } catch (error) {
+    console.error("Error updating password:", error);
+    alert("Failed to update password");
+  }
+}
+
 
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
@@ -125,7 +153,7 @@ function Profile() {
                   <div className="mb-2">
                     <div className="flex justify-center items-center">
                       <h2 className="text-2xl font-bold text-gray-900">
-                        {name}
+                        {userData?.name}
                       </h2>
                       <button
                         onClick={() => setIsEditingName(true)}
@@ -136,19 +164,20 @@ function Profile() {
                       </button>
                     </div>
                     <span className="inline-block mt-2 px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
-                      {userData.membership}
+                      {userData?.membership}
                     </span>
                   </div>
                 )}
 
                 <p className="text-gray-500 text-sm mt-4">
-                  Member since {userData.joinDate}
+                  Member since {userData?.joinDate}
                 </p>
 
                 <div className="mt-8 grid grid-cols-2 gap-4">
                   <div className="bg-gray-50 p-4 rounded-xl">
                     <p className="text-3xl font-bold text-indigo-600">
-                      {userData.orders}
+                      {userData?.orders?.length}
+                      
                     </p>
                     <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mt-1">
                       Orders
@@ -156,7 +185,7 @@ function Profile() {
                   </div>
                   <div className="bg-gray-50 p-4 rounded-xl">
                     <p className="text-3xl font-bold text-indigo-600">
-                      {userData.wishlist}
+                      {userData?.wishlist}
                     </p>
                     <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mt-1">
                       Wishlist
@@ -199,7 +228,7 @@ function Profile() {
                       Phone Number
                     </h4>
                     <p className="text-base text-gray-900 mt-1">
-                      {userData.phone}
+                      {userData?.phone}
                     </p>
                   </div>
                 </div>
@@ -214,7 +243,7 @@ function Profile() {
                       Shipping Address
                     </h4>
                     <p className="text-base text-gray-900 mt-1">
-                      {userData.address}
+                      {userData?.address}
                     </p>
                   </div>
                 </div>
@@ -229,7 +258,7 @@ function Profile() {
                         </label>
                         <input
                           type="password"
-                          value={passwordData.currentPassword}
+                          value={passwordData?.currentPassword}
                           onChange={(e) =>
                             setPasswordData({
                               ...passwordData,
@@ -245,7 +274,7 @@ function Profile() {
                         </label>
                         <input
                           type="password"
-                          value={passwordData.newPassword}
+                          value={passwordData?.newPassword}
                           onChange={(e) =>
                             setPasswordData({
                               ...passwordData,
