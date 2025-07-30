@@ -1,4 +1,5 @@
 import useProducts from "../../hooks/useProducts";
+import AddProduct from "../layout/AddProduct";
 import EditProduct from "../layout/EditProduct";
 import ProductView from "../layout/ProductView";
 
@@ -15,7 +16,11 @@ function ProductsPage() {
     productEditMode,
     handleEditProduct,
     handleClose,
-    handleDelete
+    handleDelete,
+    addProductMode,
+    handleAddProduct,
+    handleAddNewProduct,
+    handleCloseProdutEditMode
   } = useProducts();
 
   function handleSearch(e) {
@@ -25,6 +30,9 @@ function ProductsPage() {
 
   return (
     <div className="flex h-screen bg-gray-900 text-gray-200">
+      {addProductMode && (
+        <AddProduct onAddProduct={handleAddNewProduct} onClose={handleCloseProdutEditMode} />
+      )}
       {/* Sidebar (same as dashboard) */}
       {productEditMode && selectedProduct && (
         <EditProduct selectedProduct={selectedProduct} onClose={handleClose} />
@@ -33,30 +41,7 @@ function ProductsPage() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {}
-        {/* Header */}
-        <header className="bg-gray-800 p-4 flex items-center justify-between border-b border-gray-700">
-          <h1 className="text-2xl font-bold">Product Management</h1>
-          <div className="flex items-center space-x-4">
-            <div className="relative">
-              <svg
-                className="w-6 h-6 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                />
-              </svg>
-              <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full"></span>
-            </div>
-            <div className="w-8 h-8 bg-gray-600 rounded-full"></div>
-          </div>
-        </header>
+  
         {productViewMode && selectedProduct && (
           <ProductView
             selectedProduct={selectedProduct}
@@ -104,7 +89,10 @@ function ProductsPage() {
                 <option value="Casio">Casio</option>
               </select>
 
-              <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm flex items-center">
+              <button
+                onClick={handleAddProduct}
+                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-sm flex items-center"
+              >
                 <svg
                   className="w-4 h-4 mr-2"
                   fill="none"
@@ -373,7 +361,7 @@ function ProductsPage() {
                             </svg>
                           </button>
                           <button
-                          onClick={()=> handleDelete(product.id)}
+                            onClick={() => handleDelete(product.id)}
                             className="text-red-400 hover:text-red-300"
                             title="Delete"
                           >

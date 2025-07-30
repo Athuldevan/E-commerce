@@ -93,6 +93,7 @@ export default function OrderPage() {
 
                   <div className="mt-4 text-right text-lg font-semibold text-gray-100">
                     Total: ₹{order.total}
+                    <button>Delte Order</button>
                   </div>
                 </div>
               ))}
@@ -132,6 +133,7 @@ export default function OrderPage() {
                       >
                         {order.status}
                       </span>
+                      
                     </div>
                   </div>
 

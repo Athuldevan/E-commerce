@@ -1,27 +1,17 @@
-import { useState } from "react";
 import { ArrowRightIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
+import Footer from '../Footer.jsx'
 
 const HomePage = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
 
-  const heroSlides = [
-    {
-      image:
-        "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80",
-      title: "Precision Crafted",
-      subtitle: "Swiss Made Excellence",
-      cta: "Explore Movements",
-    },
-    {
-      image:
-        "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      title: "Where Elegance Meets Function",
-      subtitle: "Shop Premium Watches Now.",
-      cta: "Shop Now",
-    },
-  ];
+  const heroContent = {
+    image:
+      "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    title: "Precision Crafted",
+    subtitle: "Swiss Made Excellence",
+    cta: "Explore Collections",
+  };
 
   const collections = [
     {
@@ -47,7 +37,7 @@ const HomePage = () => {
   const testimonials = [
     {
       quote:
-        "As someone who’s picky about design, I was thrilled to find a watch that’s both stylish AND comfortable for all-day wear. The ordering process was seamless, and delivery was lightning-fast. Will definitely be back for my next one!",
+        "As someone who's picky about design, I was thrilled to find a watch that's both stylish AND comfortable for all-day wear. The ordering process was seamless, and delivery was lightning-fast. Will definitely be back for my next one!",
       author: "James Wilson, Collector",
     },
     {
@@ -59,42 +49,48 @@ const HomePage = () => {
 
   return (
     <div className="text-gray-900">
-      {/* Hero Carousel */}
-      <div className="relative h-screen overflow-hidden">
-        <div className="absolute inset-0 bg-black/30 z-10"></div>
-        <img
-          src={heroSlides[currentSlide]?.image}
-          alt="Luxury Watch"
-          className="w-full h-full object-cover object-center transition-opacity duration-1000"
-        />
-        <div className="absolute inset-0 flex items-center z-20 px-8 sm:px-16 lg:px-24">
-          <div className="max-w-2xl">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-light text-white mb-4">
-              {heroSlides[currentSlide].title}
-            </h1>
-            <p className="text-xl text-amber-100 mb-8">
-              {heroSlides[currentSlide].subtitle}
-            </p>
-            <button  onClick = {()=> navigate("/products")} className="bg-transparent border-2 border-amber-400 text-amber-400 px-8 py-3 hover:bg-amber-400 hover:text-black transition-all duration-300 flex items-center">
-              {heroSlides[currentSlide].cta}
-              <ArrowRightIcon className="h-5 w-5 ml-2" />
-            </button>
-          </div>
+      {/* Hero Section - Single Image */}
+      <div className="relative h-[90vh] min-h-[600px] overflow-hidden bg-gray-100">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src={heroContent.image}
+            alt="Luxury Watch"
+            className="w-full h-full object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
         </div>
-        <div className="absolute bottom-8 left-0 right-0 flex justify-center z-20 space-x-2">
-          {heroSlides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`h-3 w-3 rounded-full ${
-                currentSlide === index ? "bg-amber-400" : "bg-white/50"
-              }`}
-            />
-          ))}
+
+        {/* Content Container */}
+        <div className="relative z-10 h-full flex flex-col">
+          {/* Top Navigation Area */}
+          <div className="flex-1"></div>
+
+          {/* Hero Content */}
+          <div className="container mx-auto px-6 pb-24">
+            <div className="max-w-2xl">
+              <p className="text-lg text-amber-300 mb-2 font-light tracking-widest">
+                {heroContent.subtitle}
+              </p>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-tight">
+                {heroContent.title}
+              </h1>
+              <button
+                onClick={() => navigate("/products")}
+                className="group relative inline-flex items-center overflow-hidden px-8 py-3 border border-amber-400 text-amber-400 hover:text-black focus:outline-none"
+              >
+                <span className="absolute left-0 h-full w-0 bg-amber-400 transition-all duration-300 group-hover:w-full"></span>
+                <span className="relative flex items-center">
+                  {heroContent.cta}
+                  <ArrowRightIcon className="h-5 w-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Marquee Brands */}
+      {/* Rest of the page remains unchanged */}
       <div className="py-12 bg-gray-100 overflow-hidden">
         <div className="whitespace-nowrap animate-marquee">
           {[
@@ -159,9 +155,7 @@ const HomePage = () => {
               Elevate your style with our exquisite collection of premium
               watches. From sleek minimalist designs to bold statement pieces,
               each timepiece is crafted for precision, durability, and timeless
-              elegance. Whether you're dressing up or keeping it casual, find
-              the perfect watch to match your vibe. Shop now and make every
-              second count!"
+              elegance.
             </p>
             <p className="text-gray-600 mb-8">
               Our watches are more than timekeeping instruments—they're
@@ -237,6 +231,10 @@ const HomePage = () => {
             </button>
           </div>
         </div>
+      </section>
+
+      <section>
+       <Footer/>
       </section>
     </div>
   );

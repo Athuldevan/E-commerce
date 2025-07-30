@@ -7,10 +7,13 @@ function useProducts() {
   const [products, setProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [refresh, setRefresh] = useState(false);
   const [productViewMode, setProductViewMode] = useState(false);
   const [text, setText] = useState("");
   const [productEditMode, setProductEditMode] = useState(false);
-  const [refresh, setRefresh] = useState(false);
+  const [addProductMode, setAddProductMode] = useState(false);
+
+  
 
   // Fetching all Products
   useEffect(() => {
@@ -19,6 +22,7 @@ function useProducts() {
 
       const product = await fetchProducts();
       setProducts(product);
+ 
       setAllProducts(product);
     })();
   }, [refresh]);
@@ -64,33 +68,56 @@ function useProducts() {
     const product = allProducts.find((product) => product.id === productID);
     setSelectedProduct(product);
   }
-  //
+
   function handleClose() {
-    console.log("close button is clickef ");
     setProductEditMode(false);
   }
 
   // handle Delete Product
- async function handleDelete(productID) {
-  try {
-    await axios.delete(`${BASE_URL}/products/${productID}`); // Corrected "products"
-    // Optionally update local state to remove the deleted product
-    setProducts((prevProducts) =>
-      prevProducts.filter((product) => product.id !== productID)
-    );
-    setAllProducts((prevProducts) =>
-      prevProducts.filter((product) => product.id !== productID)
-    );
-  } catch (err) {
-    console.log(err.message);
+  async function handleDelete(productID) {
+    try {
+      await axios.delete(`${BASE_URL}/products/${productID}`); // Corrected "products"
+      // Optionally update local state to remove the deleted product
+      setProducts((prevProducts) =>
+        prevProducts.filter((product) => product.id !== productID)
+      );
+      setAllProducts((prevProducts) =>
+        prevProducts.filter((product) => product.id !== productID)
+      );
+    } catch (err) {
+      console.log(err.message);
+    }
   }
-}
+
+  // Function handle Add Product
+  function handleAddProduct() {
+    setAddProductMode(true);
+  }
+
+  async function handleAddNewProduct(newProduct) {
+    try {
+      console.log(newProduct);
+      await axios.post(`${BASE_URL}/products`, newProduct);
+      setProducts((prevPrdts) => [...prevPrdts, newProduct]);
+      setAllProducts((prevPrdts) => [...prevPrdts, newProduct]);
+      setAddProductMode(false);
+      console.log(newProduct);
+    } catch (err) {
+      console.error("Error adding product:", err.messager);
+    }
+  }
+
+  function handleCloseProdutEditMode() {
+    setProductEditMode(false);
+  }
+
   return {
     products,
     handleFilter,
     handleProductView,
     selectedProduct,
     productViewMode,
+    addProductMode,
     handleCloseProductView,
     searchProduct,
     text,
@@ -101,8 +128,11 @@ function useProducts() {
     setAllProducts,
     refresh,
     setRefresh,
-    handleClose,
+    handleCloseProdutEditMode,
     handleDelete,
+    handleAddProduct,
+    handleAddNewProduct,
+    handleClose,
   };
 }
 

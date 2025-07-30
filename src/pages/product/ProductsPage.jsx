@@ -54,7 +54,7 @@ export default function Products() {
 
               <div className="aspect-square w-full overflow-hidden rounded-t-xl bg-gray-100">
                 <img
-                  src={product?.images?.[0]}
+                  src={product?.images?.[0] || product.image}
                   onClick={() =>
                     navigate(`/productDetails/${product.id}`, {
                       state: { product },

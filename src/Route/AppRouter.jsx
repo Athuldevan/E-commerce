@@ -21,6 +21,7 @@ import DashBoard from "../admin/pages/Dashboard.jsx";
 import UsersPage from "../admin/pages/UsersPage.jsx";
 import OrdersPage from "../admin/pages/OrdersPage.jsx";
 import ProductsPage from "../admin/pages/ProductsPage.jsx";
+import AdminProfile from "../admin/pages/AdminProfile.jsx";
 export default function MainRoutes() {
   return (
     <BrowserRouter>
@@ -63,6 +64,7 @@ function AppRouter() {
           <Route path="dashboard" element={<DashBoard />} />
           <Route path="order" element={<OrdersPage />} />
           <Route path="products" element={<ProductsPage />} />
+          <Route path="profile" element={<AdminProfile />} />
         </Route>
 
         <Route path="*" element={<PageNotFound />} />

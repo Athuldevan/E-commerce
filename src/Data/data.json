@@ -79,6 +79,28 @@
       ],
       "isActive": true,
       "created_at": "2025-07-14T13:30:00Z"
+    },
+    {
+      "id": "1753849392360",
+      "name": "Athul",
+      "brand": "Casio",
+      "price": 5657,
+      "count": 787,
+      "description": "fggfn",
+      "image": "https://images.unsplash.com/photo-1671119720870-df45dcaf81c1?q=80&w=1955&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "rating": 0,
+      "isActive": true
+    },
+    {
+      "id": "1753849853081",
+      "name": "fdbfdb",
+      "brand": "Casio",
+      "price": 0,
+      "count": 6546764,
+      "description": "dffbdgb",
+      "image": "https://images.unsplash.com/photo-1671119720870-df45dcaf81c1?q=80&w=1955&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      "rating": 0,
+      "isActive": true
     }
   ],
   "users": [
@@ -89,7 +111,19 @@
       "password": "admin@123",
       "role": "admin",
       "isBlock": false,
-      "cart": [],
+      "cart": [
+        {
+          "id": "1753849392360",
+          "name": "Athul",
+          "brand": "Casio",
+          "price": 5657,
+          "count": 787,
+          "description": "fggfn",
+          "image": "https://images.unsplash.com/photo-1671119720870-df45dcaf81c1?q=80&w=1955&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "rating": 0,
+          "isActive": true
+        }
+      ],
       "orders": [],
       "wishlist": [],
       "created_at": "01/01/2025"
@@ -166,7 +200,7 @@
         {
           "id": "ORD-70217",
           "date": "22/07/2025",
-          "status": "cancelled",
+          "status": "delivered",
           "paymentMethod": "Credit Card",
           "deliveredAt": "Pending",
           "items": [
@@ -458,6 +492,35 @@
         "6f7g8h9i"
       ],
       "created_at": "05/07/2025"
+    },
+    {
+      "email": "athuldevan90@gmail.com",
+      "id": "f1cd",
+      "created_at": "30/07/2025",
+      "orders": [],
+      "wishlist": [],
+      "cart": [
+        {
+          "id": "1a2b3c4d",
+          "name": "Rolex Submariner",
+          "description": "Iconic luxury dive watch with timeless design and unmatched precision.",
+          "price": 125010,
+          "count": 15,
+          "category": "Luxury",
+          "brand": "Rolex",
+          "rating": 4.9,
+          "images": [
+            "https://media.istockphoto.com/id/1440770515/photo/watch-isolated-on-white.jpg?s=612x612&w=is&k=20&c=Kusy2IWQpzrLhf2oxY4gBAFXW8Fk7QQiov7T2-VPmeg=",
+            "https://images.unsplash.com/photo-1600185366137-58b04ecb89a3?q=80&w=1180&auto=format&fit=crop&ixlib=rb-4.1.0"
+          ],
+          "isActive": true,
+          "created_at": "2025-07-17T10:00:00Z"
+        }
+      ],
+      "name": "Athul",
+      "password": "225588",
+      "role": "user",
+      "isBlock": false
     }
   ]
 }

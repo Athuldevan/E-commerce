@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import {
   FiUser,
   FiLogOut,
@@ -7,6 +7,7 @@ import {
   FiBell,
 } from "react-icons/fi";
 import useAuth from "../../hooks/useAuth";
+import { Link } from "react-router-dom";
 
 function Header() {
   const { loggedInUser, handleLogout } = useAuth();
@@ -50,12 +51,12 @@ function Header() {
                     {loggedInUser.email}
                   </div>
                 </div>
-                <a className="flex items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
+                <Link to ='profile' className="flex items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
                   <FiUser className="mr-2" /> My Profile
-                </a>
-                <a className="flex items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
+                </Link>
+                <Link  className="flex items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-700">
                   <FiSettings className="mr-2" /> Settings
-                </a>
+                </Link>
                 <button  onClick = {handleLogout} className="flex items-center px-4 py-2 text-sm text-gray-200 hover:bg-gray-700 border-t border-gray-700">
                   <FiLogOut className="mr-2" /> Logout
                 </button>

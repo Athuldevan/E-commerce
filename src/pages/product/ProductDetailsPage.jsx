@@ -25,10 +25,7 @@ const ProductDetailsPage = () => {
   const product = state.product;
   console.log(product);
 
-  //   const addToCart = () => {
-  //     // Add to cart logic here
-  //     alert(`Added ${quantity} ${product.name} to cart`);
-  //   };
+ 
 
   return (
     <div className="bg-neutral-50 min-h-screen py-8">
@@ -46,8 +43,8 @@ const ProductDetailsPage = () => {
           <div className="mb-8 lg:mb-0">
             <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-4 border border-neutral-100">
               <img
-                src={product.images[selectedImage]}
-                alt={product.name}
+                src={product?.images[selectedImage] || product?.image}
+                alt={product?.name}
                 className="w-full h-96 object-contain p-4"
               />
             </div>
@@ -63,8 +60,8 @@ const ProductDetailsPage = () => {
                   }`}
                 >
                   <img
-                    src={img}
-                    alt={`${product.name} thumbnail ${index}`}
+                    src={img || product?.image}
+                    alt={`${product?.name} thumbnail ${index}`}
                     className="w-full h-20 object-contain p-2"
                   />
                 </button>
@@ -76,10 +73,10 @@ const ProductDetailsPage = () => {
           <div className="px-4">
             <div className="mb-6">
               <h2 className="text-lg font-semibold text-amber-600">
-                {product.brand}
+                {product?.brand}
               </h2>
               <h1 className="text-3xl font-bold text-neutral-900 mt-1">
-                {product.name}
+                {product?.name}
               </h1>
             </div>
 
@@ -97,13 +94,13 @@ const ProductDetailsPage = () => {
                 ))}
               </div>
               <span className="ml-2 text-neutral-600">
-                {product.rating} ({product.reviewCount} reviews)
+                {product?.rating} ({product?.reviewCount} reviews)
               </span>
             </div>
 
             <div className="mb-8">
               <p className="text-neutral-700 leading-relaxed">
-                {product.description}
+                {product?.description}
               </p>
             </div>
 
