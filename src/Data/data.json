@@ -152,6 +152,18 @@
           "userID": "9114"
         }
       ]
+    },
+    {
+      "id": "a9c9",
+      "name": "ji",
+      "email": "athsfbuldevan90@gmail.com",
+      "password": "higugugujhbu@",
+      "role": "user",
+      "isBlock": false,
+      "cart": [],
+      "orders": [],
+      "wishlist": [],
+      "created_at": "31/07/2025"
     }
   ]
 }

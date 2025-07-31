@@ -2,6 +2,7 @@ import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
+import checkPassWordStrength from "../../utility/checkPassWordStrength";
 
 function RegisterPage() {
   const {
@@ -15,7 +16,7 @@ function RegisterPage() {
   } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
- 
+  const [passwordStrength, setPasswordStrength] = useState("");
 
   return (
     <div
@@ -116,8 +117,9 @@ function RegisterPage() {
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => {
-                    setPassword(e.target.value);
-                    
+                    const value = e.target.value;
+                    setPassword(value);
+                    setPasswordStrength(checkPassWordStrength(value));
                   }}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm pr-10"
                 />
@@ -135,9 +137,18 @@ function RegisterPage() {
                   )}
                 </div>
               </div>
-              
             </div>
-
+            <p
+              className={`text-sm mt-1 font-medium ${
+                passwordStrength === "Weak"
+                  ? "text-red-500"
+                  : passwordStrength === "Medium"
+                  ? "text-yellow-500"
+                  : "text-green-600"
+              }`}
+            >
+              Password Strength: {passwordStrength}
+            </p>
             <div>
               <button
                 type="submit"

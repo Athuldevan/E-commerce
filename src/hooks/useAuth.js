@@ -4,7 +4,6 @@ import BASE_URL from "../api/BASE_URL";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-
 function useAuth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,14 +42,11 @@ function useAuth() {
     }
   }
 
- 
   //  Handle Registration
   async function handleSubmit(e) {
     e.preventDefault();
-
     const userExist = await isUserAlreadyExist(email);
     if (userExist) return;
-
     const newUser = {
       ...formData,
       name,
@@ -69,7 +65,6 @@ function useAuth() {
   //  Handle Login
   async function handleLogin(e) {
     e.preventDefault();
-
     try {
       const res = await axios.get(`${BASE_URL}/users?email=${email}`);
       const data = res.data;
@@ -81,12 +76,10 @@ function useAuth() {
         });
         return;
       }
-
       const user = data[0];
       if (user.isBlock) {
         throw new Error("Your account is suspended");
       }
-
       if (user.password === password && user.email === email) {
         Swal.fire({
           title: "Successfully Logged In",
