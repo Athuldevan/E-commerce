@@ -8,18 +8,19 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "react-router-dom";
+import useWishlist from "../../hooks/useWishlist";
+import useCart from "../../hooks/useCart";
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
-  const [wishlistCount, setWishlistCount] = useState(5);
-  const [cartCount, setCartCount] = useState(3);
+  const { wishlist } = useWishlist();
+  const {CartItems} = useCart()
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
 
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser")) || {};
   const { id = null } = loggedInUser;
-  // const { wishlist = [], cart = [], id = null } = loggedInUser;
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -82,9 +83,9 @@ function NavBar() {
               onClick={() => navigate("/wishlist")}
             >
               <HeartIcon className="h-5 w-5" />
-              {wishlistCount > 0 && (
+              {wishlist?.length >0 > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-400 text-slate-200 text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                  {wishlistCount}
+                  {wishlist.length}
                 </span>
               )}
             </button>
@@ -94,9 +95,9 @@ function NavBar() {
               className="p-1 text-slate-200 hover:text-slate-400 relative"
             >
               <ShoppingBagIcon className="h-5 w-5" />
-              {cartCount > 0 && (
+              {CartItems?.length > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-400 text-slate-200 text-xs rounded-full h-4 w-4 flex items-center justify-center">
-                  {cartCount}
+                  {CartItems.length}
                 </span>
               )}
             </button>

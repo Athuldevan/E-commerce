@@ -6,7 +6,7 @@ import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
 import { fetchOrders } from "../api/services/orderService";
 import {
-  cancelOrder,
+
   getAllOrderedItems,
   getRevenue,
   totalOrders as getTotalOrders,

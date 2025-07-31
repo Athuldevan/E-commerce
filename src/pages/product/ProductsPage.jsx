@@ -18,10 +18,11 @@ export default function Products() {
   useEffect(() => {
     async function fetchProduts() {
       try {
+        console.log("fetching product ")
         const response = await axios.get(`http://localhost:3000/products`);
         setData(response.data);
       } catch (error) {
-        console.error(`Error in fetchhinfg products  ${error}`);
+        console.error(`Error in fetchhinfg products  ${error.message}`);
       }
     }
 

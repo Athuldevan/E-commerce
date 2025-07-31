@@ -1,8 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import BASE_URL from "../api/BASE_URL";
 import Swal from "sweetalert2";
 import axios from "axios";
+import usePasswordStrength from "./usePasswordStrength";
 
 function useAuth() {
   const [email, setEmail] = useState("");
@@ -19,15 +20,16 @@ function useAuth() {
     wishlist: [],
     created_at: new Date().toLocaleDateString(),
   });
+
   const navigate = useNavigate();
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  const {  checkStrength } = usePasswordStrength();
 
-  // Function to check wheather user with email already exist
+  //  User existence check
   async function isUserAlreadyExist(email) {
     try {
       const res = await axios.get(`${BASE_URL}/users`);
       const isExist = res.data.some((user) => user.email === email);
-
       if (isExist) {
         Swal.fire({
           title: "User with this email already exists",
@@ -37,19 +39,34 @@ function useAuth() {
       }
       return isExist;
     } catch (err) {
-      console.log(err, "from userAlready exist fucntion ");
+      console.log(err, "from isUserAlreadyExist");
       return false;
     }
   }
 
-  // HAndleSubmit funtction
+  //  Validate password strength and length
+  function isPasswordValid(pwd) {
+    const passwordStrength = checkStrength(pwd);
+    return pwd.length >= 6 && (passwordStrength === "medium" || passwordStrength === "strong");
+  }
+
+  //  Handle Registration
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const userExist = await isUserAlreadyExist(email);
-    if (userExist) {
+    // Check password strength
+    if (!isPasswordValid(formData.password)) {
+      Swal.fire({
+        title: "Weak Password",
+        text: "Password must be at least 6 characters and medium or strong strength.",
+        icon: "error",
+      });
       return;
     }
+
+    const userExist = await isUserAlreadyExist(email);
+    if (userExist) return;
+
     const newUser = {
       ...formData,
       name,
@@ -57,63 +74,77 @@ function useAuth() {
       password,
     };
 
-    axios.post(`${BASE_URL}/users`, newUser);
+    await axios.post(`${BASE_URL}/users`, newUser);
     Swal.fire({
-      title: "Registered Sucessfully",
+      title: "Registered Successfully",
       icon: "success",
     });
     navigate("/login");
   }
 
+  //  Handle Login
   async function handleLogin(e) {
     e.preventDefault();
+
+    // Validate password before checking login
+    if (!isPasswordValid(password)) {
+      Swal.fire({
+        title: "Weak Password",
+        text: "Password must be at least 6 characters and medium or strong strength.",
+        icon: "error",
+      });
+      return;
+    }
+
     try {
       const res = await axios.get(`${BASE_URL}/users?email=${email}`);
       const data = res.data;
 
       if (data.length === 0) {
-        console.log("No user found");
+        Swal.fire({
+          title: "No user found with this email",
+          icon: "error",
+        });
         return;
       }
 
       const user = data[0];
-
-      if (user.isBlock) throw new Error("Your account is suspended");
+      if (user.isBlock) {
+        throw new Error("Your account is suspended");
+      }
 
       if (user.password === password && user.email === email) {
         Swal.fire({
           title: "Successfully Logged In",
           icon: "success",
-          draggable: true,
         });
         localStorage.setItem("loggedInUser", JSON.stringify(user));
 
-        // Admin checking
-        if (user?.role === "admin") {
-          console.log("admin ");
+        if (user.role === "admin") {
           navigate("/admin");
         } else {
           navigate("/products");
         }
       } else {
         Swal.fire({
-          title: "Invalid Login Credentials. Try Again",
+          title: "Invalid Credentials",
           icon: "error",
-          draggable: true,
         });
       }
     } catch (err) {
       console.error("Login failed", err.message);
     }
+
     setEmail("");
     setPassword("");
   }
 
-  // handle logout
+  //  Logout
   function handleLogout() {
     localStorage.removeItem("loggedInUser");
     navigate("/login");
   }
+
   return {
     userID: loggedInUser?.id || null,
     loggedInUser,
