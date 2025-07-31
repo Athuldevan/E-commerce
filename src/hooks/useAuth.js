@@ -3,7 +3,7 @@ import { useState } from "react";
 import BASE_URL from "../api/BASE_URL";
 import Swal from "sweetalert2";
 import axios from "axios";
-import usePasswordStrength from "./usePasswordStrength";
+
 
 function useAuth() {
   const [email, setEmail] = useState("");
@@ -23,7 +23,6 @@ function useAuth() {
 
   const navigate = useNavigate();
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-  const {  checkStrength } = usePasswordStrength();
 
   //  User existence check
   async function isUserAlreadyExist(email) {
@@ -44,25 +43,10 @@ function useAuth() {
     }
   }
 
-  //  Validate password strength and length
-  function isPasswordValid(pwd) {
-    const passwordStrength = checkStrength(pwd);
-    return pwd.length >= 6 && (passwordStrength === "medium" || passwordStrength === "strong");
-  }
-
+ 
   //  Handle Registration
   async function handleSubmit(e) {
     e.preventDefault();
-
-    // Check password strength
-    if (!isPasswordValid(formData.password)) {
-      Swal.fire({
-        title: "Weak Password",
-        text: "Password must be at least 6 characters and medium or strong strength.",
-        icon: "error",
-      });
-      return;
-    }
 
     const userExist = await isUserAlreadyExist(email);
     if (userExist) return;

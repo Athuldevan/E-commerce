@@ -2,7 +2,7 @@ import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
-import usePasswordStrength from "../../hooks/usePasswordStrength";
+
 function RegisterPage() {
   const {
     email,
@@ -15,7 +15,7 @@ function RegisterPage() {
   } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
-  const { strength, checkStrength } = usePasswordStrength();
+ 
 
   return (
     <div
@@ -117,7 +117,7 @@ function RegisterPage() {
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
-                    checkStrength(e.target.value);
+                    
                   }}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm pr-10"
                 />
@@ -135,21 +135,7 @@ function RegisterPage() {
                   )}
                 </div>
               </div>
-              <p
-                className={`mt-2 text-sm ${
-                  strength === "Strong"
-                    ? "text-green-600"
-                    : strength === "Moderate"
-                    ? "text-yellow-600"
-                    : strength === "Weak"
-                    ? "text-red-500"
-                    : "text-gray-500"
-                }`}
-              >
-                {strength
-                  ? `Strength: ${strength}`
-                  : "Password must be at least 8 characters"}
-              </p>
+              
             </div>
 
             <div>
