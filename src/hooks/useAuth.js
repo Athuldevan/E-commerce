@@ -86,16 +86,6 @@ function useAuth() {
   async function handleLogin(e) {
     e.preventDefault();
 
-    // Validate password before checking login
-    if (!isPasswordValid(password)) {
-      Swal.fire({
-        title: "Weak Password",
-        text: "Password must be at least 6 characters and medium or strong strength.",
-        icon: "error",
-      });
-      return;
-    }
-
     try {
       const res = await axios.get(`${BASE_URL}/users?email=${email}`);
       const data = res.data;
