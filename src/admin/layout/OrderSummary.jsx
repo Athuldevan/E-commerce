@@ -1,7 +1,7 @@
 function OrderSummary({ allOrders }) {
   const pending = allOrders.filter((order) => order.status === "processing");
-  const totalOrders = allOrders.length;
-  const totalRevenue = allOrders.reduce(
+  const totalOrders = allOrders?.length;
+  const totalRevenue = allOrders?.reduce(
     (acc, currOrder) => acc + currOrder.total,
     0
   );
@@ -40,7 +40,7 @@ function OrderSummary({ allOrders }) {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-gray-400">Revenue</p>
-              <h3 className="text-2xl font-bold">{totalRevenue}</h3>
+              <h3 className="text-2xl font-bold">{totalRevenue|| 123}</h3>
             </div>
             <div className="p-3 bg-green-600 rounded-lg">
               <svg

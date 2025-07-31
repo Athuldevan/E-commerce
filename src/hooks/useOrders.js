@@ -6,21 +6,18 @@ import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
 import { fetchOrders } from "../api/services/orderService";
 import {
-
   getAllOrderedItems,
-  getRevenue,
   totalOrders as getTotalOrders,
 } from "../admin/controller/orderController";
-import { fetchUsers } from "../api/services/userService";
 
 function useOrders() {
   const [orders, setOrders] = useState([]);
-  const [activeTab, setActiveTab] = useState("recent");
-  const [latestOrders, setLatestOrders] = useState([]);
-  const [pastOrders, setPastOrders] = useState([]);
-  const [totalOrders, setTotalOrders] = useState(0);
-  const [totalRevenue, setTotalRevenue] = useState(0);
   const [allOrders, setAllOrders] = useState([]);
+  const [latestOrders, setLatestOrders] = useState([]);
+  const [totalOrders, setTotalOrders] = useState(0);
+  const [pastOrders, setPastOrders] = useState([]);
+  const [totalRevenue, setTotalRevenue] = useState(0);
+  const [activeTab, setActiveTab] = useState("recent");
 
   const { cartItems = [] } = useCart();
   const { userID } = useAuth();
@@ -34,7 +31,7 @@ function useOrders() {
     );
     const newOrder = {
       userID,
-      id: `ORD-${Math.floor(Math.random() * 100000)}`,
+      orderID: `ORD-${Math.floor(Math.random() * 100000)}`,
       date: new Date().toLocaleDateString(),
       status: "processing",
       paymentMethod: "Credit Card",
@@ -42,11 +39,11 @@ function useOrders() {
         Date.now() + 7 * 24 * 60 * 60 * 1000
       ).toLocaleDateString(),
 
-      items: cartItems.map((item) => ({
-        id: item.id,
-        name: item.name,
-        price: item.price,
-        quantity: item.count,
+      items: cartItems?.map((item) => ({
+        id: item?.id,
+        name: item?.name,
+        price: item?.price,
+        quantity: item?.count,
         image: item?.images[0],
       })),
       total: totalPrice,
@@ -57,8 +54,6 @@ function useOrders() {
     const previousOrders = Array.isArray(data.orders) ? data.orders : [];
     const updatedOrders = [...previousOrders, newOrder];
 
-    console.log(previousOrders);
-
     await axios.put(`${BASE_URL}/users/${userID}`, {
       ...data,
       orders: updatedOrders,
@@ -66,11 +61,11 @@ function useOrders() {
     setOrders(updatedOrders);
     navigate("/payment");
 
-    const recentOrders = updatedOrders.filter(
-      (item) => item.status !== "delivered"
+    const recentOrders = updatedOrders?.filter(
+      (item) => item?.status !== "delivered"
     );
     setLatestOrders(recentOrders || []);
-    console.log(orders);
+  
   }
 
   // past orddr and latest orders
@@ -79,14 +74,14 @@ function useOrders() {
       if (!userID) return;
       try {
         const res = await axios.get(`${BASE_URL}/users/${userID}`);
-        const data = res.data;
-        console.log(data);
+        const data = res?.data;
+
         const recentOrders = data?.orders?.filter(
-          (order) => order.status !== "delivered"
+          (order) => order?.status !== "delivered"
         );
 
         const pastOrder = data?.orders?.filter(
-          (order) => order.status === "delivered"
+          (order) => order?.status === "delivered"
         );
 
         setPastOrders(pastOrder);
@@ -104,11 +99,10 @@ function useOrders() {
     try {
       async function loadOrders() {
         const ordersCount = await getTotalOrders();
-        console.log(ordersCount);
+
         setTotalOrders(ordersCount);
 
-        const revenue = await getRevenue();
-        setTotalRevenue(revenue);
+        setTotalRevenue(4);
       }
       loadOrders();
     } catch (err) {
@@ -121,7 +115,6 @@ function useOrders() {
     async function loadAllOrderedItems() {
       try {
         const orderedItems = await getAllOrderedItems();
-        console.log("orderedItemns ", orderedItems);
         setAllOrders(orderedItems);
       } catch (err) {
         console.error(err);
@@ -131,66 +124,93 @@ function useOrders() {
   }, []);
 
   // DELETE a order.`
-  async function handleDelte(orderID) {
+  // async function handleDelte(orderID) {
+  //   try {
+  //     const allUsers = await fetchUsers();
+  //     const user = allUsers.find(
+  //       (user) =>
+  //         user.role === "user" &&
+  //         user.orders.find((order) => order.id === orderID)
+  //     );
+  //     const userID = user.id; // the user id of the user who placed that order;
+  //     console.log("userid --", userID, user.name);
+
+  //     const updatedOrders = user.orders.map((order) =>
+  //       order.id === orderID ? { ...order, status: "cancelled" } : order
+  //     );
+  //     console.log(updatedOrders);
+  //     await axios.put(`${BASE_URL}/users/${userID}`, {
+  //       ...user,
+  //       orders: updatedOrders,
+  //     });
+
+  //     const updatedOrder = updatedOrders.find((order) => order.id === orderID);
+
+  //     setAllOrders((prevOrders) =>
+  //       prevOrders.map((order) =>
+  //         order.id === orderID ? { ...order, status: "cancelled" } : order
+  //       )
+  //     );
+  //     setLatestOrders((prev) =>
+  //       prev.map((order) => (order.id === orderID ? orders : updatedOrder))
+  //     );
+
+  //     setPastOrders((prev) =>
+  //       prev.map((order) => (order.id === orderID ? orders : updatedOrder))
+  //     );
+
+  //     setOrders((prev) =>
+  //       prev.map((order) => (order.id === orderID ? orders : updatedOrder))
+  //     );
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+
+  // handle status change
+  async function handleStatusChange(newOrder) {
     try {
-      const allUsers = await fetchUsers();
-      const user = allUsers.find(
-        (user) =>
-          user.role === "user" &&
-          user.orders.find((order) => order.id === orderID)
+      const { data: user } = await axios.get(
+        `${BASE_URL}/users/${newOrder?.userID}`
       );
-      const userID = user.id; // the user id of the user who placed that order;
-      console.log("userid --", userID, user.name);
-
-      const updatedOrders = user.orders.map((order) =>
-        order.id === orderID ? { ...order, status: "cancelled" } : order
-      );
-      console.log(updatedOrders);
-      await axios.put(`${BASE_URL}/users/${userID}`, {
-        ...user,
-        orders: updatedOrders,
-      });
-
-      const updatedOrder = updatedOrders.find((order) => order.id === orderID);
-
-      setAllOrders((prevOrders) =>
-        prevOrders.map((order) =>
-          order.id === orderID ? { ...order, status: "cancelled" } : order
-        )
-      );
-      setLatestOrders((prev) =>
-        prev.map((order) => (order.id === orderID ? orders : updatedOrder))
-      );
-
-      setPastOrders((prev) =>
-        prev.map((order) => (order.id === orderID ? orders : updatedOrder))
-      );
-
-      setOrders((prev) =>
-        prev.map((order) => (order.id === orderID ? orders : updatedOrder))
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  // function handleStatus
-  async function handleStatusChange(order, newStatus) {
-    try {
-      const res = await axios.get(`${BASE_URL}/users/${order.userID}`);
-      const user = res.data;
 
       const updatedOrders = user.orders.map((o) =>
-        o.id === order.id ? { ...o, status: newStatus } : o
+        o?.orderID === newOrder?.orderID ? newOrder : o
       );
-      console.log(updatedOrders, "updatedOrder");
-
-      await axios.put(`${BASE_URL}/users/${order.userID}`, {
+      console.log("updatedOrder", updatedOrders);
+      await axios.put(`${BASE_URL}/users/${newOrder.userID}`, {
         ...user,
         orders: updatedOrders,
       });
-    } catch (err) {
-      console.error("Something went wrong:", err.message);
+
+      // Update all local state lists correctly
+      setOrders((prevOrders) =>
+        prevOrders?.map((order) =>
+          order.orderID === newOrder.orderID ? newOrder : order
+        )
+      );
+
+      setAllOrders((prevOrders) =>
+        prevOrders?.map((order) =>
+          order.orderID === newOrder.orderID ? newOrder : order
+        )
+      );
+
+      setLatestOrders((prevOrders) =>
+        prevOrders?.map((order) =>
+          order.orderID === newOrder.orderID ? newOrder : order
+        )
+      );
+
+      setPastOrders((prevOrders) =>
+        prevOrders?.map((order) =>
+          order.orderID === newOrder.orderID ? newOrder : order
+        )
+      );
+
+      console.log("Updated order saved.");
+    } catch (error) {
+      console.log("Update failed:", error.message);
     }
   }
 
@@ -207,7 +227,6 @@ function useOrders() {
     totalOrders,
     totalRevenue,
     allOrders,
-    handleDelte,
     handleStatusChange,
   };
 }

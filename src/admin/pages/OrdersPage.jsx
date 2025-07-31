@@ -3,7 +3,7 @@ import OrdersTable from "../layout/OrdersTable";
 import OrderSummary from "../layout/OrderSummary";
 
 function OrdersPage() {
-  const { totalOrders, allOrders, handleDelte, handleStatusChange } =
+  const { totalOrders, allOrders, handleStatusChange } =
     useOrders();
   console.log(allOrders);
 
@@ -28,9 +28,8 @@ function OrdersPage() {
           </div>
 
           {/* Orders Summary Cards */}
-          <OrderSummary totalOrders={totalOrders} allOrders = {allOrders} />
+          <OrderSummary totalOrders={totalOrders} allOrders={allOrders} />
           <OrdersTable
-            handleDelte={handleDelte}
             allOrders={allOrders}
             totalOrders={totalOrders}
             handleStatusChange={handleStatusChange}

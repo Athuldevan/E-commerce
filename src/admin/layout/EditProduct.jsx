@@ -1,8 +1,10 @@
 import { FiPlus, FiMinus } from "react-icons/fi";
-import {  useState } from "react";
+import { useState } from "react";
 import useProducts from "../../hooks/useProducts";
 import axios from "axios";
 import BASE_URL from "../../api/BASE_URL";
+import Swal from "sweetalert2";
+import { showToast } from "../../utility/Toast";
 
 function EditProduct({ selectedProduct, onClose }) {
   console.log(selectedProduct);
@@ -37,7 +39,10 @@ function EditProduct({ selectedProduct, onClose }) {
         )
       );
 
-      alert("Product updated");
+      Swal.fire({
+        title: "Edited product successfully",
+        icon: "success",
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -45,6 +50,7 @@ function EditProduct({ selectedProduct, onClose }) {
 
   const handleStockChange = (amount) => {
     setStock((prev) => Math.max(0, prev + amount));
+    showToast("Stock updated successfully");
   };
 
   const handlePriceChange = (amount) => {

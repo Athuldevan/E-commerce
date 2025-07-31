@@ -1,4 +1,5 @@
-function OrdersTable({ handleDelte, allOrders, handleStatusChange }) {
+function OrdersTable({allOrders, handleStatusChange }) {
+  console.log(allOrders);
   return (
     <>
       <div className="bg-gray-800 rounded-lg shadow overflow-hidden">
@@ -52,23 +53,22 @@ function OrdersTable({ handleDelte, allOrders, handleStatusChange }) {
             </thead>
             <tbody className="divide-y divide-gray-700">
               {allOrders?.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-750">
+                <tr key={order?.id} className="hover:bg-gray-750">
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     {order?.orderID}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium">
                       <ul>
-                        {order.items.map((item) => (
-                          <li>{item.name}</li>
+                        {order?.items?.map((item) => (
+                          <li>{item?.name}</li>
                         ))}
                       </ul>
                     </div>
                     <div className="text-sm text-gray-400">
                       <span>
-                        {" "}
                         {order?.items?.reduce(
-                          (acc, currItem) => acc + currItem.quantity,
+                          (acc, currItem) => acc + currItem?.quantity,
                           0
                         )}
                       </span>
@@ -76,31 +76,45 @@ function OrdersTable({ handleDelte, allOrders, handleStatusChange }) {
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
-                    {order.date}
+                    {order?.date}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
                       className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        order.status === "delivered"
+                        order?.status === "delivered"
                           ? "text-green-700"
                           : "text-blue-300"
                       } `}
                     >
-                      {order.status}
+                      {order?.status}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
-                    {order.deliveredAt}
+                    {order?.deliveredAt}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    {order.total}
+                    {order?.total}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <select
+                      value={order?.status}
+                      onChange={(e) =>
+                        handleStatusChange({ ...order, status: e.target.value })
+                      }
+                      className="bg-gray-700 text-white border border-gray-600 px-2 py-1 rounded text-xs"
+                    >
+                      <option value="processing">Processing</option>
+                      <option value="shipped">Shipped</option>
+                      <option value="delivered">Delivered</option>
+                      <option value="cancelled">Cancelled</option>
+                    </select>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex justify-end space-x-3">
-                      <button
+                      {/* <button
                         className="text-red-400 hover:text-red-300"
                         title="Delete"
-                        onClick={() => handleDelte(order.orderID)}
+                        onClick={() => handleDelte(order?.orderID)}
                       >
                         <svg
                           className="w-5 h-5"
@@ -116,20 +130,8 @@ function OrdersTable({ handleDelte, allOrders, handleStatusChange }) {
                             d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                           />
                         </svg>
-                      </button>
+                      </button> */}
                       {/* change ststus  */}
-                      <select
-                        // value={order.status}
-                        className="bg-gray-700 text-white px-2 py-1 rounded"
-                        onChange={(e) =>
-                          handleStatusChange(order, e.target.value)
-                        }
-                      >
-                        <option value="processing">Processing</option>
-                        <option value="shipped">Shipped</option>
-                        <option value="delivered">Delivered</option>
-                        <option value="cancelled">Cancelled</option>
-                      </select>
                     </div>
                   </td>
                 </tr>

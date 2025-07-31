@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { fetchProducts } from "../api/services/productsService";
 import axios from "axios";
 import BASE_URL from "../api/BASE_URL";
+import Swal from "sweetalert2";
 
 function useProducts() {
   const [products, setProducts] = useState([]);
@@ -67,6 +68,7 @@ function useProducts() {
     setProductEditMode(true);
     const product = allProducts.find((product) => product.id === productID);
     setSelectedProduct(product);
+     
   }
 
   function handleClose() {
@@ -109,6 +111,7 @@ function useProducts() {
 
   function handleCloseProdutEditMode() {
     setProductEditMode(false);
+    
   }
 
   return {

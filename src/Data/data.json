@@ -5,7 +5,7 @@
       "name": "Luxury Gold Watch",
       "description": "Premium gold watch for special occasions.",
       "price": 10063,
-      "count": 44,
+      "count": 46,
       "category": "Luxury",
       "brand": "Rolex",
       "rating": 4.8,
@@ -44,17 +44,6 @@
       "isActive": true
     },
     {
-      "id": "1753849853081",
-      "name": "fdbfdb",
-      "brand": "Casio",
-      "price": 0,
-      "count": 6546764,
-      "description": "dffbdgb",
-      "image": "https://images.unsplash.com/photo-1671119720870-df45dcaf81c1?q=80&w=1955&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      "rating": 0,
-      "isActive": true
-    },
-    {
       "id": "1753875892817",
       "name": "test Watch",
       "brand": "Rolex",
@@ -75,443 +64,94 @@
       "password": "admin@123",
       "role": "admin",
       "isBlock": false,
-      "cart": [
-        {
-          "id": "1753849392360",
-          "name": "Athul",
-          "brand": "Casio",
-          "price": 5657,
-          "count": 787,
-          "description": "fggfn",
-          "image": "https://images.unsplash.com/photo-1671119720870-df45dcaf81c1?q=80&w=1955&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          "rating": 0,
-          "isActive": true
-        }
-      ],
+      "cart": [],
       "wishlist": [],
       "created_at": "01/01/2025"
     },
     {
-      "id": "9119",
-      "name": "Rohan Malhotra",
-      "email": "rohan.malhotra@example.com",
-      "password": "rohan789",
+      "id": "9114",
+      "name": "ak",
+      "email": "ak@example.com",
+      "password": "ak@123",
       "role": "user",
       "isBlock": false,
-      "cart": [
-        {
-          "id": "3c4d5e6f",
-          "name": "Luxury Gold Watch",
-          "price": 9999,
-          "count": 1,
-          "category": "Luxury",
-          "brand": "Rolex",
-          "rating": 4.8,
-          "images": [
-            "https://images.unsplash.com/photo-1734776576464-30551c357fd6"
-          ],
-          "isActive": false,
-          "created_at": "2025-06-20T15:45:00Z"
-        }
-      ],
-      "orders": [],
-      "wishlist": [
-        "3c4d5e6f",
-        "6f7g8h9i"
-      ],
-      "created_at": "30/07/2025"
-    },
-    {
-      "id": "9120",
-      "name": "Ishaan Kumar",
-      "email": "ishaan.kumar@example.com",
-      "password": "ishaan456",
-      "role": "user",
-      "isBlock": true,
       "cart": [],
-      "orders": [],
-      "wishlist": [
-        "1a2b3c4d"
-      ],
-      "created_at": "12/07/2025"
-    },
-    {
-      "id": "9121",
-      "name": "Divya Nair",
-      "email": "divya.nair@example.com",
-      "password": "divya2025",
-      "role": "user",
-      "isBlock": true,
-      "cart": [
-        {
-          "id": "1a2b3c4d",
-          "name": "Rolex Submariner",
-          "price": 125000,
-          "count": 1,
-          "category": "Luxury",
-          "brand": "Rolex",
-          "rating": 4.9,
-          "images": [
-            "https://media.istockphoto.com/id/1440770515/photo/watch-isolated-on-white.jpg"
-          ],
-          "isActive": true,
-          "created_at": "2025-07-17T10:00:00Z"
-        },
-        {
-          "id": "2b3c4d5e",
-          "name": "Omega Speedmaster Moonwatch",
-          "price": 95000,
-          "count": 1,
-          "category": "Luxury",
-          "brand": "Omega",
-          "rating": 4.8,
-          "images": [
-            "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRbZ4hig8EAQBgc2sxa9TfjzjwKQX1ElLy5uTclD8_y0IKxCRsrlT20Q4QSzON13Hweg1U6u9ReB4T2sDYprIMKeVy7oULwVJQ9B19FV4ixWDxroApoNU2KBUk"
-          ],
-          "isActive": true,
-          "created_at": "2025-07-16T15:00:00Z"
-        }
-      ],
-      "orders": [],
       "wishlist": [],
-      "created_at": "25/07/2025"
-    },
-    {
-      "id": "9125",
-      "name": "Aditya Rao",
-      "email": "aditya.rao@example.com",
-      "password": "aditya123",
-      "role": "user",
-      "isBlock": true,
-      "cart": [],
-      "orders": [],
-      "wishlist": [
-        "2b3c4d5e"
-      ],
-      "created_at": "20/06/2025"
-    },
-    {
-      "id": "9126",
-      "name": "Pooja Menon",
-      "email": "pooja.menon@example.com",
-      "password": "pooja2025",
-      "role": "user",
-      "isBlock": true,
-      "cart": [
-        {
-          "id": "3c4d5e6f",
-          "name": "Luxury Gold Watch",
-          "price": 9999,
-          "count": 1,
-          "category": "Luxury",
-          "brand": "Rolex",
-          "rating": 4.8,
-          "images": [
-            "https://images.unsplash.com/photo-1734776576464-30551c357fd6"
-          ],
-          "isActive": false,
-          "created_at": "2025-06-20T15:45:00Z"
-        }
-      ],
-      "orders": [],
-      "wishlist": [
-        "1a2b3c4d"
-      ],
-      "created_at": "15/07/2025"
-    },
-    {
-      "id": "9127",
-      "name": "Rajat Verma",
-      "email": "rajat.verma@example.com",
-      "password": "rajat567",
-      "role": "user",
-      "isBlock": false,
-      "cart": [],
-      "orders": [],
-      "wishlist": [
-        "5e6f7g8h"
-      ],
-      "created_at": "10/07/2025"
-    },
-    {
-      "id": "9128",
-      "name": "Shreya Kapoor",
-      "email": "shreya.kapoor@example.com",
-      "password": "shreya123",
-      "role": "user",
-      "isBlock": false,
-      "cart": [],
-      "orders": [],
-      "wishlist": [
-        "6f7g8h9i"
-      ],
-      "created_at": "05/07/2025"
-    },
-    {
-      "email": "athuldevan90@gmail.com",
-      "id": "f1cd",
-      "created_at": "30/07/2025",
+      "created_at": "01/01/2025",
       "orders": [
         {
-          "userID": "f1cd",
-          "id": "ORD-33056",
-          "date": "30/07/2025",
-          "status": "processing",
-          "paymentMethod": "Credit Card",
-          "deliveredAt": "06/08/2025",
+          "deliveredAt": "07/08/2025",
+          "total": 567898,
+          "orderID": "ORD-73615",
+          "date": "31/07/2025",
           "items": [
             {
-              "id": "1a2b3c4d",
-              "name": "Rolex Submariner",
-              "price": 125010,
-              "quantity": 15,
-              "image": "https://media.istockphoto.com/id/1440770515/photo/watch-isolated-on-white.jpg?s=612x612&w=is&k=20&c=Kusy2IWQpzrLhf2oxY4gBAFXW8Fk7QQiov7T2-VPmeg="
+              "id": "4d5e6f7g",
+              "name": "Fossil Grant Chronograph",
+              "price": 10500,
+              "quantity": 10,
+              "image": "https://m.media-amazon.com/images/I/71UIocsjBUL._SX522_.jpg"
             },
             {
               "id": "3c4d5e6f",
               "name": "Luxury Gold Watch",
-              "price": 10061,
-              "quantity": 29,
+              "price": 10063,
+              "quantity": 46,
               "image": "https://images.unsplash.com/photo-1734776576464-30551c357fd6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDM1fHx8ZW58MHx8fHx8"
-            },
-            {
-              "id": "2b3c4d5e",
-              "name": "Omega Speedmaster Moonwatch",
-              "price": 95005,
-              "quantity": 7,
-              "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRbZ4hig8EAQBgc2sxa9TfjzjwKQX1ElLy5uTclD8_y0IKxCRsrlT20Q4QSzON13Hweg1U6u9ReB4T2sDYprIMKeVy7oULwVJQ9B19FV4ixWDxroApoNU2KBUk"
             }
           ],
-          "total": 2831954,
-          "shippingAddress": "123 Kochi, kerala 55"
-        },
-        {
-          "userID": "f1cd",
-          "id": "ORD-37692",
-          "date": "30/07/2025",
           "status": "delivered",
-          "paymentMethod": "Credit Card",
-          "deliveredAt": "06/08/2025",
-          "items": [
-            {
-              "id": "1a2b3c4d",
-              "name": "Rolex Submariner",
-              "price": 125010,
-              "quantity": 15,
-              "image": "https://media.istockphoto.com/id/1440770515/photo/watch-isolated-on-white.jpg?s=612x612&w=is&k=20&c=Kusy2IWQpzrLhf2oxY4gBAFXW8Fk7QQiov7T2-VPmeg="
-            },
-            {
-              "id": "3c4d5e6f",
-              "name": "Luxury Gold Watch",
-              "price": 10061,
-              "quantity": 29,
-              "image": "https://images.unsplash.com/photo-1734776576464-30551c357fd6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDM1fHx8ZW58MHx8fHx8"
-            },
-            {
-              "id": "2b3c4d5e",
-              "name": "Omega Speedmaster Moonwatch",
-              "price": 95005,
-              "quantity": 7,
-              "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRbZ4hig8EAQBgc2sxa9TfjzjwKQX1ElLy5uTclD8_y0IKxCRsrlT20Q4QSzON13Hweg1U6u9ReB4T2sDYprIMKeVy7oULwVJQ9B19FV4ixWDxroApoNU2KBUk"
-            }
-          ],
-          "total": 2831954,
-          "shippingAddress": "123 Kochi, kerala 55"
+          "userID": "9114"
         },
         {
-          "userID": "f1cd",
-          "id": "ORD-17363",
-          "date": "30/07/2025",
-          "status": "pending",
-          "paymentMethod": "Credit Card",
-          "deliveredAt": "06/08/2025",
+          "deliveredAt": "07/08/2025",
+          "total": 567898,
+          "orderID": "ORD-87275",
+          "date": "31/07/2025",
           "items": [
             {
-              "id": "1a2b3c4d",
-              "name": "Rolex Submariner",
-              "price": 125010,
-              "quantity": 15,
-              "image": "https://media.istockphoto.com/id/1440770515/photo/watch-isolated-on-white.jpg?s=612x612&w=is&k=20&c=Kusy2IWQpzrLhf2oxY4gBAFXW8Fk7QQiov7T2-VPmeg="
+              "id": "4d5e6f7g",
+              "name": "Fossil Grant Chronograph",
+              "price": 10500,
+              "quantity": 10,
+              "image": "https://m.media-amazon.com/images/I/71UIocsjBUL._SX522_.jpg"
             },
             {
               "id": "3c4d5e6f",
               "name": "Luxury Gold Watch",
-              "price": 10061,
-              "quantity": 29,
+              "price": 10063,
+              "quantity": 46,
               "image": "https://images.unsplash.com/photo-1734776576464-30551c357fd6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDM1fHx8ZW58MHx8fHx8"
-            },
-            {
-              "id": "2b3c4d5e",
-              "name": "Omega Speedmaster Moonwatch",
-              "price": 95005,
-              "quantity": 7,
-              "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRbZ4hig8EAQBgc2sxa9TfjzjwKQX1ElLy5uTclD8_y0IKxCRsrlT20Q4QSzON13Hweg1U6u9ReB4T2sDYprIMKeVy7oULwVJQ9B19FV4ixWDxroApoNU2KBUk"
             }
           ],
-          "total": 2831954,
-          "shippingAddress": "123 Kochi, kerala 55"
+          "status": "delivered",
+          "userID": "9114"
         },
         {
-          "userID": "f1cd",
-          "id": "ORD-5957",
-          "date": "30/07/2025",
-          "status": "processing",
-          "paymentMethod": "Credit Card",
-          "deliveredAt": "06/08/2025",
+          "deliveredAt": "07/08/2025",
+          "total": 567898,
+          "orderID": "ORD-90166",
+          "date": "31/07/2025",
           "items": [
             {
-              "id": "1a2b3c4d",
-              "name": "Rolex Submariner",
-              "price": 125010,
-              "quantity": 15,
-              "image": "https://media.istockphoto.com/id/1440770515/photo/watch-isolated-on-white.jpg?s=612x612&w=is&k=20&c=Kusy2IWQpzrLhf2oxY4gBAFXW8Fk7QQiov7T2-VPmeg="
+              "id": "4d5e6f7g",
+              "name": "Fossil Grant Chronograph",
+              "price": 10500,
+              "quantity": 10,
+              "image": "https://m.media-amazon.com/images/I/71UIocsjBUL._SX522_.jpg"
             },
             {
               "id": "3c4d5e6f",
               "name": "Luxury Gold Watch",
-              "price": 10061,
-              "quantity": 29,
+              "price": 10063,
+              "quantity": 46,
               "image": "https://images.unsplash.com/photo-1734776576464-30551c357fd6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDM1fHx8ZW58MHx8fHx8"
-            },
-            {
-              "id": "2b3c4d5e",
-              "name": "Omega Speedmaster Moonwatch",
-              "price": 95005,
-              "quantity": 7,
-              "image": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRbZ4hig8EAQBgc2sxa9TfjzjwKQX1ElLy5uTclD8_y0IKxCRsrlT20Q4QSzON13Hweg1U6u9ReB4T2sDYprIMKeVy7oULwVJQ9B19FV4ixWDxroApoNU2KBUk"
             }
           ],
-          "total": 2831954,
-          "shippingAddress": "123 Kochi, kerala 55"
+          "status": "cancelled",
+          "userID": "9114"
         }
-      ],
-      "wishlist": [],
-      "cart": [
-        {
-          "id": "1a2b3c4d",
-          "name": "Rolex Submariner",
-          "description": "Iconic luxury dive watch with timeless design and unmatched precision.",
-          "price": 125010,
-          "count": 15,
-          "category": "Luxury",
-          "brand": "Rolex",
-          "rating": 4.9,
-          "images": [
-            "https://media.istockphoto.com/id/1440770515/photo/watch-isolated-on-white.jpg?s=612x612&w=is&k=20&c=Kusy2IWQpzrLhf2oxY4gBAFXW8Fk7QQiov7T2-VPmeg=",
-            "https://images.unsplash.com/photo-1600185366137-58b04ecb89a3?q=80&w=1180&auto=format&fit=crop&ixlib=rb-4.1.0"
-          ],
-          "isActive": true,
-          "created_at": "2025-07-17T10:00:00Z"
-        },
-        {
-          "id": "3c4d5e6f",
-          "name": "Luxury Gold Watch",
-          "description": "Premium gold watch for special occasions.",
-          "price": 10061,
-          "count": 29,
-          "category": "Luxury",
-          "brand": "Rolex",
-          "rating": 4.8,
-          "images": [
-            "https://images.unsplash.com/photo-1734776576464-30551c357fd6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDM1fHx8ZW58MHx8fHx8",
-            "https://images.unsplash.com/photo-1526045431048-f857369baa09?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-          ],
-          "isActive": false,
-          "created_at": "2025-06-20T15:45:00Z"
-        },
-        {
-          "id": "2b3c4d5e",
-          "name": "Omega Speedmaster Moonwatch",
-          "description": "The legendary chronograph worn on the moon. A symbol of precision and adventure.",
-          "price": 95005,
-          "count": 7,
-          "category": "Luxury",
-          "brand": "Omega",
-          "rating": 4.8,
-          "images": [
-            "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRbZ4hig8EAQBgc2sxa9TfjzjwKQX1ElLy5uTclD8_y0IKxCRsrlT20Q4QSzON13Hweg1U6u9ReB4T2sDYprIMKeVy7oULwVJQ9B19FV4ixWDxroApoNU2KBUk",
-            "https://images.unsplash.com/photo-1588776814546-2c6b8da19d1a?q=80&w=1180&auto=format&fit=crop&ixlib=rb-4.1.0"
-          ],
-          "isActive": true,
-          "created_at": "2025-07-16T15:00:00Z"
-        }
-      ],
-      "name": "Athul",
-      "password": "832005",
-      "role": "user",
-      "isBlock": false
-    },
-    {
-      "id": "cb58",
-      "name": "ATHUL.",
-      "email": "athuldevan90XCVV@gmail.com",
-      "password": "athul@1234",
-      "role": "user",
-      "isBlock": false,
-      "cart": [],
-      "orders": [],
-      "wishlist": [],
-      "created_at": "30/07/2025"
-    },
-    {
-      "id": "0e4f",
-      "name": "Athul",
-      "email": "zxfvf@gmail.com",
-      "password": "cxbxcc xc zx ",
-      "role": "user",
-      "isBlock": false,
-      "cart": [],
-      "orders": [],
-      "wishlist": [],
-      "created_at": "31/07/2025"
-    },
-    {
-      "id": "5066",
-      "name": "gbgb",
-      "email": "athuldevdfgan90@gmail.com",
-      "password": "egbrgngrnrnrny",
-      "role": "user",
-      "isBlock": false,
-      "cart": [],
-      "orders": [],
-      "wishlist": [],
-      "created_at": "31/07/2025"
-    },
-    {
-      "id": "7eeb",
-      "name": "cvsdv",
-      "email": "athulddsvdsevan90@gmail.com",
-      "password": "sdvsd",
-      "role": "user",
-      "isBlock": false,
-      "cart": [],
-      "orders": [],
-      "wishlist": [],
-      "created_at": "31/07/2025"
-    },
-    {
-      "id": "5881",
-      "name": "sdvsv",
-      "email": "athuldevan90sdvsdfv@gmail.com",
-      "password": "dddadcacdadcdcadcadcacacdadc",
-      "role": "user",
-      "isBlock": false,
-      "cart": [],
-      "orders": [],
-      "wishlist": [],
-      "created_at": "31/07/2025"
-    },
-    {
-      "id": "7b4b",
-      "name": "acdc",
-      "email": "athasculdevan90@gmail.com",
-      "password": "acsacaacac",
-      "role": "user",
-      "isBlock": false,
-      "cart": [],
-      "orders": [],
-      "wishlist": [],
-      "created_at": "31/07/2025"
+      ]
     }
   ]
 }
