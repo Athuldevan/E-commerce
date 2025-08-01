@@ -17,7 +17,7 @@ import PageNotFound from "../pages/error/PageNotFound.jsx";
 import Profile from "../pages/Profile/Profile.jsx";
 import AdminRoute from "./AdminRoute.jsx";
 import AdminDashboard from "../admin/layout/AdminDashboard.jsx";
-import DashBoard from "../admin/pages/Dashboard.jsx";
+import DashBoard from "../admin/pages/DashBoard.jsx";
 import UsersPage from "../admin/pages/UsersPage.jsx";
 import OrdersPage from "../admin/pages/OrdersPage.jsx";
 import ProductsPage from "../admin/pages/ProductsPage.jsx";

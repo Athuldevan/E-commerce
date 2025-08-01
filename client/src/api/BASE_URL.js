@@ -1,2 +1,2 @@
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://e-commerce-5-fnxk.onrender.com";
   export default BASE_URL
