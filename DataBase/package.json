@@ -4,7 +4,7 @@
   "description": "Fake e-commerce API using json-server",
   "main": "index.js",
   "scripts": {
-    "start": "json-server --host 0.0.0.0 --watch db.json --port 5000"
+    "start": "npx json-server --host 0.0.0.0 --watch db.json --port $PORT"
   },
   "keywords": [],
   "author": "",
