@@ -45,16 +45,20 @@ function useAuth() {
   //  Handle Registration
   async function handleSubmit(e) {
     e.preventDefault();
-    const userExist = await isUserAlreadyExist(email);
-    if (userExist) return;
+    // const userExist = await isUserAlreadyExist(email);
+    // if (userExist) return;
+
     const newUser = {
-      ...formData,
       name,
       email,
       password,
     };
-
-    await axios.post(`${BASE_URL}/users`, newUser);
+    console.log(BASE_URL);
+    await axios.post(`${BASE_URL}/signIn`, newUser, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     Swal.fire({
       title: "Registered Successfully",
       icon: "success",
