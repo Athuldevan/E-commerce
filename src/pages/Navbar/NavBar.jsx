@@ -10,14 +10,16 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import useWishlist from "../../hooks/useWishlist";
 import useCart from "../../hooks/useCart";
+import useAuth from "../../hooks/useAuth";
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const { wishlist } = useWishlist();
-  const {CartItems} = useCart()
+  const { CartItems } = useCart();
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+  const { isLoggedIn } = useAuth();
 
   const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser")) || {};
   const { id = null } = loggedInUser;
@@ -39,6 +41,8 @@ function NavBar() {
     localStorage.removeItem("loggedInUser");
     navigate("/register");
   }
+
+  console.log(isLoggedIn);
 
   return (
     <nav className="bg-slate-900 shadow-md sticky top-0 z-50">
@@ -83,7 +87,7 @@ function NavBar() {
               onClick={() => navigate("/wishlist")}
             >
               <HeartIcon className="h-5 w-5" />
-              {wishlist?.length >0 > 0 && (
+              {wishlist?.length > 0 > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-400 text-slate-200 text-xs rounded-full h-4 w-4 flex items-center justify-center">
                   {wishlist.length}
                 </span>
@@ -127,7 +131,7 @@ function NavBar() {
                     }}
                     className="block w-full text-left px-4 py-2 text-sm text-slate-100 hover:bg-slate-800 hover:text-slate-100"
                   >
-                    {id ? "LogOut" : "LogIn"}
+                    {isLoggedIn ? "LogOut" : "LogInn"}
                   </button>
                 </div>
               )}

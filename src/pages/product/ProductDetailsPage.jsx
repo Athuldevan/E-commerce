@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import BASE_URL from "../../api/BASE_URL";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   StarIcon,
@@ -13,17 +15,62 @@ import useCart from "../../hooks/useCart";
 const ProductDetailsPage = () => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [isWishlisted, setIsWishlisted] = useState(false);
-
   const { addToCart } = useCart();
-  const { handleWishList, isExist, wishlist } = useWishlist();
+  const { handleWishList, isExist } = useWishlist();
 
   const navigate = useNavigate();
 
   const { id } = useParams();
-  const { state } = useLocation();
-  const product = state.product;
-  console.log(product);
+  const location = useLocation();
+
+  // location.state may contain the product object (or an array where [0] is product)
+  const initialProduct = Array.isArray(location.state)
+    ? location.state[0]
+    : location.state || null;
+
+  const [product, setProduct] = useState(initialProduct);
+  const [loading, setLoading] = useState(!initialProduct);
+
+  useEffect(() => {
+    // If product wasn't passed via location.state, fetch it by id
+    if (!product && id) {
+      setLoading(true);
+      (async () => {
+        try {
+          const res = await axios.get(`${BASE_URL}/products/${id}`, {
+            withCredentials: true,
+          });
+          const fetched = res?.data?.data?.product;
+          // API might return the product directly or as an array
+          setProduct(Array.isArray(fetched) ? fetched[0] : fetched);
+        } catch (err) {
+          console.error("Error fetching product:", err?.message || err);
+        } finally {
+          setLoading(false);
+        }
+      })();
+    }
+  }, [id, product]);
+
+  function handleQuantityChange(delta) {
+    setQuantity((q) => Math.max(1, q + delta));
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-neutral-600">Loading product...</div>
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-neutral-600">Product not found.</div>
+      </div>
+    );
+  }
 
  
 
@@ -43,13 +90,16 @@ const ProductDetailsPage = () => {
           <div className="mb-8 lg:mb-0">
             <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-4 border border-neutral-100">
               <img
-                src={product?.images[selectedImage] || product?.image}
+                src={product?.images?.[selectedImage] || product?.image}
                 alt={product?.name}
                 className="w-full h-96 object-contain p-4"
               />
             </div>
             <div className="grid grid-cols-4 gap-3">
-              {product.images.map((img, index) => (
+              {(product?.images && product.images.length > 0
+                ? product.images
+                : [product?.image]
+              ).map((img, index) => (
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}

@@ -1,5 +1,4 @@
 import axios from "axios";
-import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 
 import { HeartIcon } from "@heroicons/react/24/solid";
@@ -7,6 +6,7 @@ import useWishlist from "../../hooks/useWishlist";
 import useCart from "../../hooks/useCart";
 
 import { useNavigate } from "react-router-dom";
+import BASE_URL from "../../api/BASE_URL";
 
 export default function Products() {
   const [data, setData] = useState([]);
@@ -18,9 +18,11 @@ export default function Products() {
   useEffect(() => {
     async function fetchProduts() {
       try {
-        console.log("fetching product ")
-        const response = await axios.get(`http://localhost:3000/products`);
-        setData(response.data);
+        console.log("fetching product ");
+        const response = await axios.get(`${BASE_URL}/products`, {
+          withCredentials: true,
+        });
+        setData(response.data.products);
       } catch (error) {
         console.error(`Error in fetchhinfg products  ${error.message}`);
       }
@@ -34,6 +36,18 @@ export default function Products() {
     e.preventDefault();
     addToCart(product);
   }
+
+  //GEt product by id
+  const getProductById = async function (id) {
+    const { data } = await axios.get(`${BASE_URL}/products/${id}`, {
+      withCredentials: true,
+    });
+    console.log(data);
+    console.log(data.data.product);
+
+    
+    navigate(`/products/productDetails/${id}`, { state: data.data.product });
+  };
 
   return (
     <div className="bg-stone-100">
@@ -56,11 +70,7 @@ export default function Products() {
               <div className="aspect-square w-full overflow-hidden rounded-t-xl bg-gray-100">
                 <img
                   src={product?.images?.[0] || product.image}
-                  onClick={() =>
-                    navigate(`/productDetails/${product.id}`, {
-                      state: { product },
-                    })
-                  }
+                  onClick={() => getProductById(product?._id)}
                   alt="Product image"
                   className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
                 />

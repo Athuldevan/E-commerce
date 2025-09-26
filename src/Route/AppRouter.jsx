@@ -6,7 +6,6 @@ import Register from "../controller/auth/Register.jsx";
 import Login from "../controller/auth/Login.jsx";
 import HomePage from "../pages/HomePage/HomePage.jsx";
 import Cart from "../pages/cart/Cart.jsx";
-import AuthProvider from "../context/AuthContext.jsx";
 import PaymentPage from "../pages/paymentPage/PaymentPage.jsx";
 import Products from "../pages/product/ProductsPage.jsx";
 
@@ -45,7 +44,10 @@ function AppRouter() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/products" element={<Products />} />
-        <Route path="productDetails/:id" element={<ProductDetailsPage />} />
+        <Route
+          path="/products/productDetails/:id"
+          element={<ProductDetailsPage />}
+        />
         <Route path="/cart" element={<Cart />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/orders" element={<OrderPage />} />
