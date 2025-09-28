@@ -8,19 +8,17 @@ export const WishlistContext = createContext();
 export default function WishlistProvider({ children }) {
   const [wishlist, setWishlist] = useState([]);
   const { isLoggedIn } = useContext(AuthContext);
-
-  //   if (!isLoggedIn) {
-  //     alert("Please Login first");
-  //     return;
-  //   }
+  // if (!isLoggedIn) {
+  //   alert("Please Login first");
+  //   return;
+  // }
   //fetch wishlist
   async function getWishlist() {
     try {
       const { data } = await axios.get(`${BASE_URL}/wishlist`, {
         withCredentials: true,
       });
-      console.log(data.data);
-      console.log("wishlist  " + data.data);
+
       setWishlist(data.data);
       console.log(wishlist);
     } catch (err) {

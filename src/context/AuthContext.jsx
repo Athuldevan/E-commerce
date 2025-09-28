@@ -71,7 +71,6 @@ export default function AuthProvider({ children }) {
     }
   }
 
-  console.log(isLoggedIn);
   // Logout
   function logout() {
     setUser(null);

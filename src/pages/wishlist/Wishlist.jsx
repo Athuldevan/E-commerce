@@ -1,104 +1,146 @@
-import { useContext, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { CartContext } from "../../context/cartContext";
-import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
-import { HeartIcon as HeartSolid } from "@heroicons/react/24/solid";
+import { useContext, useEffect } from "react";
+import { WishlistContext } from "../../context/WishlistContext";
+import { AuthContext } from "../../context/AuthContext";
 
-function ProductDetailsPage() {
-  const [product, setProduct] = useState(null);
-  const { handleAddToCart } = useContext(CartContext);
-  const location = useLocation();
+function Wishlist() {
+  const { wishlist, getWishlist } = useContext(WishlistContext);
+  const { isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
-    if (location.state) {
-      setProduct(location.state);
-    }
-  }, [location.state]);
+    getWishlist();
+  }, []);
 
-  console.log("Product:", product); // DEBUG
 
-  if (!product) {
-    return <p>Loading product...</p>;
+  if (!isLoggedIn) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <button className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+          Please login
+        </button>
+      </div>
+    );
   }
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {product.map((product) => (
-            <div
-              key={product.name}
-              className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
-            >
-              {/* Product Image Section */}
-              <div className="relative bg-gray-50 p-6">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-80 object-contain transition-transform duration-300 hover:scale-105"
-                />
-                {/* Wishlist Icon */}
-                <button className="absolute top-4 right-4 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors duration-200">
-                  <HeartOutline className="h-6 w-6 text-gray-600 hover:text-red-500" />
-                </button>
+    <div className="min-h-screen bg-gray-50 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {wishlist.length === 0 ? (
+          <div className="text-center py-16">
+            <div className="bg-white rounded-2xl shadow-sm p-12 max-w-md mx-auto">
+              <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg
+                  className="w-12 h-12 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                  />
+                </svg>
               </div>
-
-              {/* Product Details Section */}
-              <div className="p-6 space-y-4">
-                {/* Brand */}
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">
-                    {product.brand}
-                  </span>
-                  <div className="flex items-center space-x-1">
-                    <div className="flex text-yellow-400">
-                      {"★".repeat(Math.floor(product.rating))}
-                      {"☆".repeat(5 - Math.floor(product.rating))}
-                    </div>
-                    <span className="text-sm text-gray-500 ml-1">
-                      ({product.rating})
-                    </span>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                Your wishlist is empty
+              </h3>
+              <p className="text-gray-600">
+                Start adding items you love to your wishlist!
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {wishlist.map((product) => (
+              <div
+                key={product.id}
+                className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden"
+              >
+                {/* Product Image */}
+                <div className="relative h-48 bg-gray-100">
+                  <img
+                    src={product.productId.image}
+                    alt={product.productId.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute top-3 right-3">
+                    <button className="p-2 bg-white rounded-full shadow-md hover:bg-red-50 hover:text-red-500 transition-colors duration-200">
+                      <svg
+                        className="w-5 h-5 text-red-500"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
                   </div>
                 </div>
 
-                {/* Product Name */}
-                <h1 className="text-2xl font-bold text-gray-900 leading-tight">
-                  {product.name}
-                </h1>
+                {/* Product Details */}
+                <div className="p-4 space-y-3">
+                  {/* Brand and Category */}
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-medium text-indigo-600 bg-indigo-50 px-2 py-1 rounded">
+                      {product.productId.brand}
+                    </span>
+                    <span className="text-xs text-gray-500 capitalize">
+                      {product.productId.category}
+                    </span>
+                  </div>
 
-                {/* Price */}
-                <div className="flex items-baseline space-x-2">
-                  <span className="text-3xl font-bold text-gray-900">
-                    ${product.price}
-                  </span>
-                  <span className="text-lg text-gray-500 line-through">
-                    ${(product.price * 1.2).toFixed(2)}
-                  </span>
-                  <span className="text-sm font-semibold text-green-600 bg-green-50 px-2 py-1 rounded">
-                    20% OFF
-                  </span>
-                </div>
+                  {/* Product Name */}
+                  <h3 className="font-semibold text-gray-900 text-lg leading-tight line-clamp-2">
+                    {product.productId.name}
+                  </h3>
 
-                {/* Description */}
-                <p className="text-gray-600 leading-relaxed border-t border-b border-gray-100 py-4">
-                  {product.description}
-                </p>
+                  {/* Description */}
+                  <p className="text-gray-600 text-sm leading-relaxed line-clamp-2">
+                    {product.productId.description}
+                  </p>
 
-                <div className="flex space-x-3 pt-2">
-                  <button
-                    onClick={() => handleAddToCart(product._id)}
-                    className="flex-1 bg-indigo-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-indigo-700 transition-colors duration-200 shadow-md hover:shadow-lg"
-                  >
-                    Add to Cart
-                  </button>
+                  {/* Rating */}
+                  <div className="flex items-center space-x-1">
+                    <div className="flex text-yellow-400">
+                      {[...Array(5)].map((_, index) => (
+                        <svg
+                          key={index}
+                          className={`w-4 h-4 ${
+                            index < Math.floor(product.productId.rating)
+                              ? "fill-current"
+                              : "text-gray-300"
+                          }`}
+                          viewBox="0 0 20 20"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span className="text-sm text-gray-500">
+                      ({product.productId.rating})
+                    </span>
+                  </div>
+
+                  {/* Price */}
+                  <div className="flex items-center justify-between pt-2">
+                    <span className="text-2xl font-bold text-gray-900">
+                      ${product.productId.price}
+                    </span>
+                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors duration-200">
+                      Add to Cart
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
-export default ProductDetailsPage;
+export default Wishlist;
