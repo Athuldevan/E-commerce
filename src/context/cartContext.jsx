@@ -52,6 +52,7 @@ export default function CartProvider({ children }) {
 
   //Add to cart funtionality
   async function handleAddToCart(productId) {
+    console.log(productId);
     try {
       if (!isLoggedIn) {
         alert("please login first.");

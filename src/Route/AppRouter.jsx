@@ -23,13 +23,16 @@ import ProductsPage from "../admin/pages/ProductsPage.jsx";
 import AdminProfile from "../admin/pages/AdminProfile.jsx";
 import AuthProvider from "../context/AuthContext.jsx";
 import CartProvider from "../context/cartContext.jsx";
+import WishlistProvider from "../context/WishlistContext.jsx";
 
 export default function MainRoutes() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <CartProvider>
-          <AppRouter />
+          <WishlistProvider>
+            <AppRouter />
+          </WishlistProvider>
         </CartProvider>
       </AuthProvider>
     </BrowserRouter>
