@@ -7,12 +7,8 @@ export const WishlistContext = createContext();
 
 export default function WishlistProvider({ children }) {
   const [wishlist, setWishlist] = useState([]);
-  const { isLoggedIn } = useContext(AuthContext);
-  // if (!isLoggedIn) {
-  //   alert("Please Login first");
-  //   return;
-  // }
-  //fetch wishlist
+
+  // GET WISHLIST
   async function getWishlist() {
     try {
       const { data } = await axios.get(`${BASE_URL}/wishlist`, {
@@ -25,8 +21,28 @@ export default function WishlistProvider({ children }) {
       console.log(err.message);
     }
   }
+
+  //Add To Wishlist
+  async function handleAddToWishlist(productId) {
+    console.log(productId);
+    try {
+      wishlist.map(
+        (product) =>
+          product.productId._id === productId && alert("Already in the wishlist ")
+      );
+      await axios.post(
+        `${BASE_URL}/wishlist/add-to-wishlist/${productId}`,
+        null,
+        { withCredentials: true }
+      );
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
   return (
-    <WishlistContext.Provider value={{ getWishlist, wishlist, setWishlist }}>
+    <WishlistContext.Provider
+      value={{ getWishlist, wishlist, setWishlist, handleAddToWishlist }}
+    >
       {children}
     </WishlistContext.Provider>
   );

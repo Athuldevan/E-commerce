@@ -1,10 +1,11 @@
 import { useContext, useEffect } from "react";
 import { WishlistContext } from "../../context/WishlistContext";
 import { AuthContext } from "../../context/AuthContext";
-import {CartContext} from "../../context/cartContext";
+import { CartContext } from "../../context/cartContext";
 
 function Wishlist() {
-  const { wishlist, getWishlist } = useContext(WishlistContext);
+  const { wishlist, getWishlist } =
+    useContext(WishlistContext);
   const { isLoggedIn } = useContext(AuthContext);
   const { handleAddToCart } = useContext(CartContext);
 

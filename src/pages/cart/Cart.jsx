@@ -14,7 +14,6 @@ export default function Cart() {
   const navigate = useNavigate();
 
   async function handleCheckOut() {
-    // await placeOrder();
     navigate("/payment");
   }
 
@@ -30,8 +29,7 @@ export default function Cart() {
           withCredentials: true,
         }
       );
-      console.log(data.data);
-      setCartItems(data.data);
+      setCartItems(data.data.data);
     } catch (err) {
       console.log(err.message);
     }

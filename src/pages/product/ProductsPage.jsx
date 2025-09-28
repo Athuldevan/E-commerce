@@ -1,18 +1,15 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { HeartIcon } from "@heroicons/react/24/solid";
-import useWishlist from "../../hooks/useWishlist";
 import { useNavigate } from "react-router-dom";
 import BASE_URL from "../../api/BASE_URL";
-import { AuthContext } from "../../context/AuthContext";
 import { CartContext } from "../../context/cartContext";
-
+import { WishlistContext } from "../../context/WishlistContext";
 
 export default function Products() {
   const [data, setData] = useState([]);
   const { handleAddToCart } = useContext(CartContext);
-  const { handleWishList } = useWishlist();
-
+  const { handleAddToWishlist } = useContext(WishlistContext);
 
   const navigate = useNavigate();
 
@@ -24,7 +21,6 @@ export default function Products() {
           withCredentials: true,
         });
         setData(response.data.products);
-        
       } catch (error) {
         console.error(`Error in fetchhinfg products  ${error.message}`);
       }
@@ -33,15 +29,11 @@ export default function Products() {
     fetchProduts();
   }, []);
 
-  
-
   //GEt product by id
   const getProductById = async function (id) {
     const { data } = await axios.get(`${BASE_URL}/products/${id}`, {
       withCredentials: true,
     });
-    console.log(data);
-    console.log(data.data.product);
 
     navigate(`/products/productDetails/${id}`, { state: data.data.product });
   };
@@ -58,7 +50,7 @@ export default function Products() {
               key={product.name}
             >
               <button
-                onClick={() => handleWishList(product)}
+                onClick={() => handleAddToWishlist(product._id)}
                 className="absolute top-4 right-4 p-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm hover:shadow-md transition-all duration-200 z-10"
               >
                 <HeartIcon className="h-5 w-5 text-gray-400 hover:text-red-500 transition-colors" />
