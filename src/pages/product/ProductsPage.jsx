@@ -1,28 +1,30 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-
+import { useContext, useEffect, useState } from "react";
 import { HeartIcon } from "@heroicons/react/24/solid";
 import useWishlist from "../../hooks/useWishlist";
-import useCart from "../../hooks/useCart";
-
 import { useNavigate } from "react-router-dom";
 import BASE_URL from "../../api/BASE_URL";
+import { AuthContext } from "../../context/AuthContext";
+import { CartContext } from "../../context/cartContext";
+
 
 export default function Products() {
   const [data, setData] = useState([]);
+  const { handleAddToCart } = useContext(CartContext);
   const { handleWishList } = useWishlist();
-  const { addToCart } = useCart();
+
+
   const navigate = useNavigate();
 
   // FETHCING THE DATA AND LOADING
   useEffect(() => {
     async function fetchProduts() {
       try {
-        console.log("fetching product ");
         const response = await axios.get(`${BASE_URL}/products`, {
           withCredentials: true,
         });
         setData(response.data.products);
+        
       } catch (error) {
         console.error(`Error in fetchhinfg products  ${error.message}`);
       }
@@ -32,10 +34,10 @@ export default function Products() {
   }, []);
 
   // ADD TO CART
-  function handleAddToCart(product, e) {
-    e.preventDefault();
-    addToCart(product);
-  }
+  // function handleAddToCart(product, e) {
+  //   e.preventDefault();
+  //   addToCart(product);
+  // }
 
   //GEt product by id
   const getProductById = async function (id) {
@@ -45,7 +47,6 @@ export default function Products() {
     console.log(data);
     console.log(data.data.product);
 
-    
     navigate(`/products/productDetails/${id}`, { state: data.data.product });
   };
 
@@ -96,7 +97,7 @@ export default function Products() {
                   </span>
                   <button
                     type="button"
-                    onClick={(e) => handleAddToCart(product, e)}
+                    onClick={() => handleAddToCart(product._id)}
                     className="inline-flex items-center rounded-full bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition-colors"
                   >
                     Add to cart

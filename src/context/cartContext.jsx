@@ -1,11 +1,16 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import BASE_URL from "../api/BASE_URL";
 import axios from "axios";
+import { AuthContext } from "./AuthContext";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export const CartContext = createContext();
 
 export default function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
+  const { isLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   // Fetch cart items of the user
   async function fetchCarts() {
@@ -45,9 +50,40 @@ export default function CartProvider({ children }) {
     }
   }
 
+  //Add to cart funtionality
+  async function handleAddToCart(productId) {
+    try {
+      if (!isLoggedIn) {
+        alert("please login first.");
+        navigate("/login");
+        return;
+      }
+      const { data } = await axios.post(
+        `${BASE_URL}/carts/add-to-cart/${productId}`,
+        null,
+        { withCredentials: true }
+      );
+      if (data.message === "This product is already in the cart") {
+        alert("Product is already in your cart!", { icon: "⚠️" });
+      } else if (data.status === "success") {
+        alert("Product added to cart successfully!");
+        setCartItems((prev) => [...prev, data.data]);
+      }
+    } catch (err) {
+      toast.error("Something went wrong. Please try again!");
+      console.error(err.message);
+    }
+  }
+
   return (
     <CartContext.Provider
-      value={{ cartItems, fetchCarts, setCartItems, updateQuantity }}
+      value={{
+        cartItems,
+        fetchCarts,
+        setCartItems,
+        updateQuantity,
+        handleAddToCart,
+      }}
     >
       {children}
     </CartContext.Provider>
