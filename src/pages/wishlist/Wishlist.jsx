@@ -1,15 +1,16 @@
 import { useContext, useEffect } from "react";
 import { WishlistContext } from "../../context/WishlistContext";
 import { AuthContext } from "../../context/AuthContext";
+import {CartContext} from "../../context/cartContext";
 
 function Wishlist() {
   const { wishlist, getWishlist } = useContext(WishlistContext);
   const { isLoggedIn } = useContext(AuthContext);
+  const { handleAddToCart } = useContext(CartContext);
 
   useEffect(() => {
     getWishlist();
   }, []);
-
 
   if (!isLoggedIn) {
     return (
@@ -129,7 +130,10 @@ function Wishlist() {
                     <span className="text-2xl font-bold text-gray-900">
                       ${product.productId.price}
                     </span>
-                    <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors duration-200">
+                    <button
+                      onClick={() => handleAddToCart(product.productId._id)}
+                      className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors duration-200"
+                    >
                       Add to Cart
                     </button>
                   </div>
