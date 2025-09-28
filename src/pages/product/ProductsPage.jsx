@@ -33,11 +33,7 @@ export default function Products() {
     fetchProduts();
   }, []);
 
-  // ADD TO CART
-  // function handleAddToCart(product, e) {
-  //   e.preventDefault();
-  //   addToCart(product);
-  // }
+  
 
   //GEt product by id
   const getProductById = async function (id) {
