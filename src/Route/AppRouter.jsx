@@ -21,10 +21,17 @@ import UsersPage from "../admin/pages/UsersPage.jsx";
 import OrdersPage from "../admin/pages/OrdersPage.jsx";
 import ProductsPage from "../admin/pages/ProductsPage.jsx";
 import AdminProfile from "../admin/pages/AdminProfile.jsx";
+import AuthProvider from "../context/AuthContext.jsx";
+import CartProvider from "../context/cartContext.jsx";
+
 export default function MainRoutes() {
   return (
     <BrowserRouter>
-      <AppRouter />
+      <AuthProvider>
+        <CartProvider>
+          <AppRouter />
+        </CartProvider>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

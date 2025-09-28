@@ -1,29 +1,27 @@
-import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 import checkPassWordStrength from "../../utility/checkPassWordStrength";
+import { AuthContext } from "../../context/AuthContext";
 
 function RegisterPage() {
-  const {
-    email,
-    setEmail,
-    password,
-    setPassword,
-    handleSubmit,
-    name,
-    setName,
-  } = useAuth();
+  const { handleSubmit, name, setName, email, setEmail, password, setPassword } =
+    useContext(AuthContext);
 
   const [showPassword, setShowPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState("");
+
+  function onSubmit(e) {
+    e.preventDefault();
+    handleSubmit(e);
+  }
 
   return (
     <div
       className="min-h-screen bg-slate-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8"
       style={{
         backgroundImage:
-          "url('https://images.unsplash.com/photo-1506193095-80bc749473f2?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTM1fHxXQVRDSEVTfGVufDB8fDB8fHww')",
+          "url('https://images.unsplash.com/photo-1506193095-80bc749473f2?w=600&auto=format&fit=crop&q=60')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundBlendMode: "overlay",
@@ -49,6 +47,7 @@ function RegisterPage() {
             </svg>
           </div>
         </div>
+
         <h2 className="mt-6 text-center text-3xl font-extrabold text-slate-100">
           Create your account
         </h2>
@@ -59,126 +58,83 @@ function RegisterPage() {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-slate-100 bg-opacity-90 backdrop-blur-sm py-8 px-4 shadow-lg sm:rounded-lg sm:px-10">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Full Name
-              </label>
-              <div className="mt-1">
-                <input
-                  type="text"
-                  required
-                  autoComplete="name"
-                  placeholder="John Doe"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
+          <form className="space-y-6" onSubmit={onSubmit}>
+            {/* Full Name */}
+            <input
+              type="text"
+              placeholder="John Doe"
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md"
+            />
+
+            {/* Email */}
+            <input
+              type="email"
+              placeholder="john@example.com"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md"
+            />
+
+            {/* Password */}
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                required
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setPasswordStrength(checkPassWordStrength(e.target.value));
+                }}
+                className="w-full px-3 py-2 border rounded-md pr-10"
+              />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                {showPassword ? (
+                  <EyeSlashIcon
+                    className="h-5 w-5 text-gray-500 cursor-pointer"
+                    onClick={() => setShowPassword(false)}
+                  />
+                ) : (
+                  <EyeIcon
+                    className="h-5 w-5 text-gray-500 cursor-pointer"
+                    onClick={() => setShowPassword(true)}
+                  />
+                )}
               </div>
             </div>
 
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Email address
-              </label>
-              <div className="mt-1">
-                <input
-                  placeholder="john@example.com"
-                  type="email"
-                  required
-                  autoComplete="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-                autoComplete="current-password"
-              >
-                Password
-              </label>
-              <div className="mt-1 relative">
-                <input
-                  id="password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  required
-                  autoComplete="current-password"
-                  value={password}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setPassword(value);
-                    setPasswordStrength(checkPassWordStrength(value));
-                  }}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm pr-10"
-                />
-                <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
-                  {showPassword ? (
-                    <EyeSlashIcon
-                      className="h-5 w-5 text-gray-500 cursor-pointer hover:text-gray-700"
-                      onClick={() => setShowPassword(!showPassword)}
-                    />
-                  ) : (
-                    <EyeIcon
-                      className="h-5 w-5 text-gray-500 cursor-pointer hover:text-gray-700"
-                      onClick={() => setShowPassword(!showPassword)}
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
+            {/* Password Strength */}
             <p
               className={`text-sm mt-1 font-medium ${
                 passwordStrength === "Weak"
                   ? "text-red-500"
                   : passwordStrength === "Medium"
                   ? "text-yellow-500"
-                  : "text-green-600"
+                  : passwordStrength === "Strong"
+                  ? "text-green-600"
+                  : "text-gray-500"
               }`}
             >
-              Password Strength: {passwordStrength}
+              Password Strength: {passwordStrength || "N/A"}
             </p>
-            <div>
-              <button
-                type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500 focus:shadow-2xl"
-              >
-                Register
-              </button>
-            </div>
+
+            {/* Submit Button */}
+            <button className="w-full py-2 px-4 rounded-md text-white bg-slate-900 hover:bg-slate-800">
+              Register
+            </button>
           </form>
 
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-slate-400" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-slate-100 text-slate-500">
-                  Already have an account?
-                </span>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <Link
-                to="/login"
-                className="w-full flex justify-center py-2 px-4 border border-slate-300 rounded-md shadow-sm text-sm font-medium text-slate-600 bg-white hover:bg-slate-900 hover:text-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
-              >
-                Login
-              </Link>
-            </div>
+          {/* Login Link */}
+          <div className="mt-6 text-center">
+            <Link
+              to="/login"
+              className="text-sm font-medium text-slate-600 hover:text-slate-900"
+            >
+              Already have an account? Login
+            </Link>
           </div>
         </div>
       </div>

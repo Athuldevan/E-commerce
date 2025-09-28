@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import {
   MagnifyingGlassIcon,
   UserIcon,
@@ -10,7 +10,8 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import useWishlist from "../../hooks/useWishlist";
 import useCart from "../../hooks/useCart";
-import useAuth from "../../hooks/useAuth";
+
+import { AuthContext } from "../../context/AuthContext";
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,11 +20,9 @@ function NavBar() {
   const { CartItems } = useCart();
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
-  const { isLoggedIn } = useAuth();
 
-  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser")) || {};
-  const { id = null } = loggedInUser;
 
+  const { isLoggedIn } = useContext(AuthContext);
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(event) {
@@ -38,7 +37,6 @@ function NavBar() {
   }, []);
 
   function handleLogOut() {
-    localStorage.removeItem("loggedInUser");
     navigate("/register");
   }
 
@@ -190,7 +188,7 @@ function NavBar() {
                 }}
                 className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50"
               >
-                {id ? "Logout" : "LogIn"}
+                {isLoggedIn ? "Logout" : "LogIn"}
               </button>
             </div>
           </div>

@@ -14,11 +14,12 @@ function useCart() {
   const [cartItems, setCartItems] = useState([]);
   const { userID } = useAuth();
 
-
   async function fetchCart(userID) {
     try {
       const data = await fetchUsercartByUserID(userID);
-      setCartItems(data.cart || []); //SETTING THE CARTiTEMS TO CART
+      const res = await axios.get(`${BASE_URL}/carts`);
+      console.log(res);
+      setCartItems(data.cart || []);
     } catch (error) {
       console.error("Error fetching cart:", error);
     }
@@ -35,7 +36,6 @@ function useCart() {
         });
         return;
         // navigate("/login");
-
       } else {
         Swal.fire({
           title: "Added to cart !",
