@@ -40,7 +40,7 @@ function NavBar() {
     navigate("/register");
   }
 
-  console.log(isLoggedIn);
+  
 
   return (
     <nav className="bg-slate-900 shadow-md sticky top-0 z-50">

@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { CartContext } from "../../context/cartContext";
 
 function Wishlist() {
-  const { wishlist, getWishlist } =
+  const { wishlist, getWishlist, handleRemoveFromWishlist } =
     useContext(WishlistContext);
   const { isLoggedIn } = useContext(AuthContext);
   const { handleAddToCart } = useContext(CartContext);
@@ -55,7 +55,7 @@ function Wishlist() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {wishlist.map((product) => (
               <div
-                key={product.id}
+                key={product.productId._id}
                 className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden"
               >
                 {/* Product Image */}
@@ -65,8 +65,15 @@ function Wishlist() {
                     alt={product.productId.name}
                     className="w-full h-full object-cover"
                   />
+
+                  {/* HEAR ICON SVG  */}
                   <div className="absolute top-3 right-3">
-                    <button className="p-2 bg-white rounded-full shadow-md hover:bg-red-50 hover:text-red-500 transition-colors duration-200">
+                    <button
+                      onClick={() =>
+                        handleRemoveFromWishlist(product.productId._id)
+                      }
+                      className="p-2 bg-white rounded-full shadow-md hover:bg-red-50 hover:text-red-500 transition-colors duration-200"
+                    >
                       <svg
                         className="w-5 h-5 text-red-500"
                         fill="currentColor"
