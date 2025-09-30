@@ -8,6 +8,7 @@ export const WishlistContext = createContext();
 export default function WishlistProvider({ children }) {
   const [wishlist, setWishlist] = useState([]);
   const { isLoggedIn } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
 
   // GET WISHLIST
   async function getWishlist() {
@@ -22,6 +23,8 @@ export default function WishlistProvider({ children }) {
       setWishlist(data.data || []);
     } catch (err) {
       console.log(err.message);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -74,6 +77,7 @@ export default function WishlistProvider({ children }) {
     if (isLoggedIn) getWishlist();
     else setWishlist([]);
   }, [isLoggedIn]);
+
   return (
     <WishlistContext.Provider
       value={{
@@ -82,6 +86,7 @@ export default function WishlistProvider({ children }) {
         setWishlist,
         handleAddToWishlist,
         handleRemoveFromWishlist,
+        loading,
       }}
     >
       {children}

@@ -24,6 +24,8 @@ import AdminProfile from "../admin/pages/AdminProfile.jsx";
 import AuthProvider from "../context/AuthContext.jsx";
 import CartProvider from "../context/cartContext.jsx";
 import WishlistProvider from "../context/WishlistContext.jsx";
+import OrderProvider from "../context/orderContext.jsx";
+import CheckoutProvider from "../context/CheckoutContext.jsx";
 
 export default function MainRoutes() {
   return (
@@ -31,7 +33,11 @@ export default function MainRoutes() {
       <AuthProvider>
         <CartProvider>
           <WishlistProvider>
-            <AppRouter />
+            <OrderProvider>
+              <CheckoutProvider>
+                <AppRouter />
+              </CheckoutProvider>
+            </OrderProvider>
           </WishlistProvider>
         </CartProvider>
       </AuthProvider>

@@ -11,7 +11,7 @@ export default function AuthProvider({ children }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("js@gmail.com");
   const [password, setPassword] = useState("js@123");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const navigate = useNavigate();
 

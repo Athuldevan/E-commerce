@@ -8,9 +8,10 @@ import {
 } from "react-icons/fi";
 import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 function Header() {
-  const { loggedInUser, handleLogout } = useAuth();
+  const { isLoggedIn } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 

@@ -1,147 +1,235 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import useCart from "../../hooks/useAuth";
+import React, { useContext,  useState } from "react";
+import { CheckoutContext } from "../../context/CheckoutContext";
+import { OrderContext } from "../../context/orderContext";
+
+const PaymentPage = () => {
+  const [paymentMethod, setPaymentMethod] = useState("credit-card");
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const { checkoutItems, handleCheckout } = useContext(CheckoutContext);
+  const {createOrder} = useContext(OrderContext)
+
+  // Safe subtotal calculation
+  const subtotal = checkoutItems.reduce((total, item) => {
+    const price = item?.price || 0;
+    const quantity = item?.quantity || 0;
+    return total + price * quantity;
+  }, 0);
+
+  const shipping = 0;
+  const tax = 0;
+  const total = subtotal + shipping + tax;
+
+ 
+  const closeModal = () => {
+    setShowSuccessModal(false);
+  };
 
 
-export default function PaymentPage() {
-  const location = useLocation();
-  const totalPrice = location.state?.totalPrice || "0.00";
-  const navigate = useNavigate();
-  const {cartItems = [], } = useCart()
-
-  // const cartItems = location.state?.cartItems || [];
-  // console.log(cartItems);
-
-  function handleOrder() {
-    alert("order placed sucess");
-    navigate("/orders", {state : {cartItems, totalPrice}});
-  }
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto">
-        {/* Checkout Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Complete Your Purchase
-          </h1>
-          <p className="mt-2 text-gray-600">
-            Secure payment processed with encryption
-          </p>
-        </div>
-
-        <div className="bg-white shadow-md rounded-lg overflow-hidden">
-          {/* Order Summary */}
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-lg font-medium text-gray-900">Order Summary</h2>
-            <div className="mt-4 space-y-4">
-              <div className="flex justify-between">
-                <p className="text-gray-600">Subtotal (2 items)</p>
-                <p className="text-gray-900">$298.00</p>
-              </div>
-              <div className="flex justify-between">
-                <p className="text-gray-600">Shipping</p>
-                <p className="text-gray-900">Free</p>
-              </div>
-              <div className="flex justify-between border-t border-gray-200 pt-4">
-                <p className="font-medium text-gray-900">Total</p>
-                <p className="font-bold text-lg text-gray-900">{totalPrice}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Payment Methods */}
-          <div className="p-6">
-            <h2 className="text-lg font-medium text-gray-900 mb-4">
-              Payment Method
-            </h2>
-
-            {/* Credit Card */}
-            <div className="mb-6">
-              <div className="flex items-center mb-4">
-                <input
-                  id="credit-card"
-                  name="payment"
-                  type="radio"
-                  className="h-4 w-4 text-indigo-600 border-gray-300 focus:ring-indigo-500"
-                  checked
-                />
-                <label
-                  htmlFor="credit-card"
-                  className="ml-3 block text-sm font-medium text-gray-700"
+    <>
+      <div className="min-h-screen bg-gray-50 py-8 px-2">
+        <div className="max-w-2xl mx-auto">
+          <header className="text-center mb-8">
+            <h1 className="text-2xl font-semibold text-gray-900 mb-1">
+              Checkout
+            </h1>
+            <p className="text-gray-500 text-sm">Secure & Simple Payment</p>
+          </header>
+          <div className="grid grid-cols-1 gap-6">
+            {/* Payment Details */}
+            <section className="bg-white rounded-xl border border-gray-200 p-5 mb-4">
+              <h2 className="text-lg font-medium text-gray-700 mb-5">
+                Payment Options
+              </h2>
+              <div className="flex gap-2 mb-6">
+                <button
+                  onClick={() => setPaymentMethod("credit-card")}
+                  className={`flex-1 border rounded-lg py-2 text-sm ${
+                    paymentMethod === "credit-card"
+                      ? "border-blue-500 bg-blue-50"
+                      : "border-gray-200 bg-white"
+                  } transition`}
                 >
-                  Credit Card
-                </label>
+                  Card
+                </button>
+                <button
+                  onClick={() => setPaymentMethod("paypal")}
+                  className={`flex-1 border rounded-lg py-2 text-sm ${
+                    paymentMethod === "paypal"
+                      ? "border-blue-500 bg-blue-50"
+                      : "border-gray-200 bg-white"
+                  } transition`}
+                >
+                  Cash
+                </button>
               </div>
-
-              <div className="space-y-4">
-                <div>
-                  <label
-                    htmlFor="card-number"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
-                    Card number
-                  </label>
+              {paymentMethod === "credit-card" && (
+                <form className="space-y-3">
                   <input
                     type="text"
-                    id="card-number"
-                    placeholder="4242 4242 4242 4242"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                    placeholder="Card Number"
+                    className="w-full px-3 py-2 border border-gray-200 rounded focus:ring-1 focus:ring-blue-400 text-sm"
                   />
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      placeholder="MM/YY"
+                      className="flex-1 px-3 py-2 border border-gray-200 rounded focus:ring-1 focus:ring-blue-400 text-sm"
+                    />
+                    <input
+                      type="text"
+                      placeholder="CVV"
+                      className="flex-1 px-3 py-2 border border-gray-200 rounded focus:ring-1 focus:ring-blue-400 text-sm"
+                    />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Card Holder Name"
+                    className="w-full px-3 py-2 border border-gray-200 rounded focus:ring-1 focus:ring-blue-400 text-sm"
+                  />
+                </form>
+              )}
+              {paymentMethod === "paypal" && (
+                <div className="text-center py-8 bg-gray-100 rounded mt-2">
+                  <span className="text-gray-800 text-base font-medium">
+                    Cash on Delivery
+                  </span>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Pay with cash when you receive your order.
+                  </p>
                 </div>
-
-                <div className="grid grid-cols-2 gap-4"></div>
+              )}
+            </section>
+            {/* Order Summary */}
+            <section className="bg-white rounded-xl border border-gray-200 p-5">
+              <h2 className="text-lg font-medium text-gray-700 mb-5">
+                Order Summary
+              </h2>
+              <ul className="divide-y divide-gray-100 mb-5">
+                {checkoutItems.map((product) => (
+                  <li key={product.name} className="flex items-center py-3">
+                    <img
+                      src={product?.image}
+                      alt={product.name}
+                      className="w-12 h-12 object-cover rounded mr-3 bg-gray-100 border"
+                    />
+                    <div className="flex-1">
+                      <div className="text-gray-800 text-sm font-medium">
+                        {product.name}
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {product.description}
+                      </div>
+                    </div>
+                    <div className="text-xs text-gray-600 mx-2">
+                      x{product.quantity}
+                    </div>
+                    <div className="text-sm text-gray-900 font-semibold">
+                      ${(product.price * product.quantity).toFixed(2)}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <div className="text-sm py-2 border-t">
+                <div className="flex justify-between py-1">
+                  <span className="text-gray-500">Subtotal</span>
+                  <span className="text-gray-700">${subtotal.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between py-1">
+                  <span className="text-gray-500">Shipping</span>
+                  <span className="text-gray-700">FREE</span>
+                </div>
+                <div className="flex justify-between py-1">
+                  <span className="text-gray-500">Tax</span>
+                  <span className="text-gray-700">${tax.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between py-2 font-bold border-t mt-2">
+                  <span className="text-gray-800">Total</span>
+                  <span className="text-blue-700">${total.toFixed(2)}</span>
+                </div>
               </div>
-            </div>
-
-            {/* Submit Button */}
-            <button
-              type="button"
-              onClick={handleOrder}
-              className="w-full bg-indigo-600 py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              ${totalPrice}
-            </button>
-          </div>
-        </div>
-
-        {/* Security Badges */}
-        <div className="mt-6 flex justify-center space-x-8">
-          <div className="text-center">
-            <svg
-              className="mx-auto h-12 w-12 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1}
-                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-              />
-            </svg>
-            <p className="mt-2 text-sm text-gray-500">256-bit Encryption</p>
-          </div>
-          <div className="text-center">
-            <svg
-              className="mx-auto h-12 w-12 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1}
-                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-              />
-            </svg>
-            <p className="mt-2 text-sm text-gray-500">PCI Compliant</p>    
-
-
-
+              <button
+                onClick={handleCheckout}
+                className="w-full mt-6 bg-blue-600 text-white py-3 rounded font-medium hover:bg-blue-700 transition"
+              >
+                Place Order
+              </button>
+              <p className="text-center text-xs text-gray-400 mt-3">
+                By placing your order, you agree to our Terms
+              </p>
+            </section>
           </div>
         </div>
       </div>
-    </div>
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+          <div className="bg-white rounded-xl shadow-lg max-w-xs w-full p-6 text-center animate-scaleIn">
+            <div className="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-2">
+              <svg
+                className="w-8 h-8 text-green-500"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+            <h2 className="text-lg font-semibold text-gray-800 mb-2">
+              Order Complete!
+            </h2>
+            <p className="text-gray-600 text-sm mb-4">
+              Thank you for shopping with us.
+            </p>
+            <div className="bg-gray-50 rounded p-3 mb-3 text-left text-xs">
+              <div className="flex justify-between mb-1">
+                <span className="text-gray-500">Total:</span>
+                <span className="font-bold">${total.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between mb-1">
+                <span className="text-gray-500">Paid by:</span>
+                <span>
+                  {paymentMethod === "credit-card"
+                    ? "Credit Card"
+                    : "Cash on Delivery"}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-500">Items:</span>
+                <span>{checkoutItems.length}</span>
+              </div>
+            </div>
+            <button
+              onClick={closeModal}
+              className="w-full py-2 rounded bg-gray-200 text-gray-800 font-medium mt-2 hover:bg-gray-300 transition"
+            >
+              Continue Shopping
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Minimal animation */}
+      <style jsx>{`
+        @keyframes scaleIn {
+          from {
+            opacity: 0;
+            transform: scale(0.98);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        .animate-scaleIn {
+          animation: scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+      `}</style>
+    </>
   );
-}
+};
+
+export default PaymentPage;

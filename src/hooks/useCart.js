@@ -14,16 +14,15 @@ function useCart() {
   const [cartItems, setCartItems] = useState([]);
   const { userID } = useAuth();
 
-  // async function fetchCart(userID) {
-  //   try {
-  //     const data = await fetchUsercartByUserID(userID);
-  //     const res = await axios.get(`${BASE_URL}/carts`);
-  //     console.log(res);
-  //     setCartItems(data.cart || []);
-  //   } catch (error) {
-  //     console.error("Error fetching cart:", error);
-  //   }
-  // }
+
+  async function fetchCart(userID) {
+    try {
+      const data = await fetchUsercartByUserID(userID);
+      setCartItems(data.cart || []); //SETTING THE CARTiTEMS TO CART
+    } catch (error) {
+      console.error("Error fetching cart:", error);
+    }
+  }
 
   // ADD TO  CART FUCNTIONALITY FUNCTION
   async function addToCart(product) {
@@ -36,6 +35,7 @@ function useCart() {
         });
         return;
         // navigate("/login");
+
       } else {
         Swal.fire({
           title: "Added to cart !",
@@ -94,13 +94,13 @@ function useCart() {
   }, []);
 
   // Update cart in backend (PUT request)
-  // async function updateCartInBackend(updatedCart) {
-  //   try {
-  //     await updateUserCart(userID, updatedCart);
-  //   } catch (error) {
-  //     console.error("Error updating cart:", error);
-  //   }
-  // }
+  async function updateCartInBackend(updatedCart) {
+    try {
+      await updateUserCart(userID, updatedCart);
+    } catch (error) {
+      console.error("Error updating cart:", error);
+    }
+  }
 
   // --ADDING THE QUANTITY
   function addCount(productID) {
