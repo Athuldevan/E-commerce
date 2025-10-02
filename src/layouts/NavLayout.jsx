@@ -20,7 +20,7 @@ function NavLayout() {
   const dropdownRef = useRef(null);
   const { wishlist } = useContext(WishlistContext);
   const { cartItems } = useContext(CartContext);
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -47,40 +47,51 @@ function NavLayout() {
   }, []);
 
   function handleLogOut() {
+    if (isLoggedIn) {
+      logout();
+    }
     navigate("/register");
+    setUserDropdownOpen(false);
+  }
+
+  function handleLogin() {
+    navigate("/register");
+    setUserDropdownOpen(false);
   }
 
   return (
-    <nav className={`bg-slate-900 sticky top-0 z-50 transition-all duration-300 ${
-      scrolled ? "shadow-xl bg-slate-900/95 backdrop-blur-sm" : "shadow-md"
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <nav
+      className={`bg-black/90 backdrop-blur-xl sticky top-0 z-50 transition-all duration-500 ${
+        scrolled ? "shadow-2xl border-b border-white/10" : "border-b border-white/5"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex justify-between items-center h-14">
           {/* Left side - Logo and Navigation */}
           <div className="flex items-center">
-            <Link 
-              to="/" 
-              className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent hover:from-blue-300 hover:to-purple-400 transition-all duration-300"
+            <Link
+              to="/"
+              className="text-2xl font-bold text-white hover:opacity-80 transition-opacity duration-300"
             >
-              LUXEWATCH
+              Applecart
             </Link>
 
-            <div className="hidden md:flex ml-12 space-x-8">
+            <div className="hidden md:flex ml-16 space-x-10">
               <Link
                 to="/"
-                className="text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-slate-800/50"
+                className="text-gray-300 hover:text-white text-sm font-medium transition-colors duration-300"
               >
                 Home
               </Link>
               <Link
                 to="/products"
-                className="text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-slate-800/50"
+                className="text-gray-300 hover:text-white text-sm font-medium transition-colors duration-300"
               >
                 Products
               </Link>
               <Link
                 to="/orders"
-                className="text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-slate-800/50"
+                className="text-gray-300 hover:text-white text-sm font-medium transition-colors duration-300"
               >
                 My Orders
               </Link>
@@ -88,18 +99,18 @@ function NavLayout() {
           </div>
 
           {/* Right side - Icons */}
-          <div className="flex items-center space-x-4">
-            <button className="p-2 text-slate-200 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all duration-200">
+          <div className="flex items-center space-x-6">
+            <button className="text-gray-300 hover:text-white transition-colors duration-300">
               <MagnifyingGlassIcon className="h-5 w-5" />
             </button>
 
             <button
-              className="p-2 text-slate-200 hover:text-red-400 hover:bg-slate-800/50 rounded-lg transition-all duration-200 relative"
+              className="text-gray-300 hover:text-white transition-colors duration-300 relative group"
               onClick={() => navigate("/wishlist")}
             >
-              <HeartIcon className="h-5 w-5" />
+              <HeartIcon className="h-5 w-5 group-hover:text-red-500 transition-colors duration-300" />
               {wishlist?.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium shadow-lg">
+                <span className="absolute -top-2 -right-2 bg-gradient-to-r from-pink-500 to-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold shadow-lg">
                   {wishlist.length}
                 </span>
               )}
@@ -107,11 +118,11 @@ function NavLayout() {
 
             <button
               onClick={() => navigate("/cart")}
-              className="p-2 text-slate-200 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all duration-200 relative"
+              className="text-gray-300 hover:text-white transition-colors duration-300 relative group"
             >
-              <ShoppingBagIcon className="h-5 w-5" />
+              <ShoppingBagIcon className="h-5 w-5 group-hover:text-blue-500 transition-colors duration-300" />
               {cartItems?.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-blue-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium shadow-lg">
+                <span className="absolute -top-2 -right-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold shadow-lg">
                   {cartItems.length}
                 </span>
               )}
@@ -121,30 +132,38 @@ function NavLayout() {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                className="p-2 text-slate-200 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all duration-200 flex items-center"
+                className="text-gray-300 hover:text-white transition-colors duration-300"
               >
                 <UserIcon className="h-5 w-5" />
               </button>
 
               {userDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-slate-800/95 backdrop-blur-sm rounded-xl shadow-2xl py-2 z-50 border border-slate-700">
-                  <Link
-                    to="/profile"
-                    onClick={() => setUserDropdownOpen(false)}
-                    className="flex items-center px-4 py-3 text-sm text-slate-200 hover:bg-slate-700/50 hover:text-white transition-all duration-200"
-                  >
-                    <UserIcon className="h-4 w-4 mr-3" />
-                    My Profile
-                  </Link>
-                  <button
-                    onClick={() => {
-                      handleLogOut();
-                      setUserDropdownOpen(false);
-                    }}
-                    className="flex items-center w-full text-left px-4 py-3 text-sm text-slate-200 hover:bg-slate-700/50 hover:text-white transition-all duration-200"
-                  >
-                    <span className="flex-1">{isLoggedIn ? "Log Out" : "Log In"}</span>
-                  </button>
+                <div className="absolute right-0 mt-3 w-52 bg-black/95 backdrop-blur-xl rounded-2xl shadow-2xl py-2 z-50 border border-white/10">
+                  {isLoggedIn ? (
+                    <>
+                      <Link
+                        to="/profile"
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="flex items-center px-5 py-3 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-all duration-300"
+                      >
+                        <UserIcon className="h-4 w-4 mr-3" />
+                        My Profile
+                      </Link>
+                      <button
+                        onClick={handleLogOut}
+                        className="flex items-center w-full text-left px-5 py-3 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-all duration-300 border-t border-white/5 mt-1"
+                      >
+                        <span className="flex-1">Log Out</span>
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      onClick={handleLogin}
+                      className="flex items-center w-full text-left px-5 py-3 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-all duration-300"
+                    >
+                      <span className="flex-1">Log In</span>
+                    </button>
+                  )}
                 </div>
               )}
             </div>
@@ -152,7 +171,7 @@ function NavLayout() {
             {/* Mobile menu button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 text-slate-200 hover:text-white hover:bg-slate-800/50 rounded-lg transition-all duration-200"
+              className="md:hidden text-gray-300 hover:text-white transition-colors duration-300"
             >
               {isOpen ? (
                 <XMarkIcon className="h-6 w-6" />
@@ -165,42 +184,41 @@ function NavLayout() {
 
         {/* Mobile menu */}
         {isOpen && (
-          <div className="md:hidden bg-slate-800/95 backdrop-blur-sm rounded-xl shadow-2xl border border-slate-700 mt-2 mb-4">
-            <div className="px-2 pt-2 pb-3 space-y-1">
+          <div className="md:hidden bg-black/95 backdrop-blur-xl rounded-2xl shadow-2xl border border-white/10 mt-3 mb-4">
+            <div className="px-3 pt-3 pb-3 space-y-1">
               <Link
                 to="/"
-                className="flex items-center px-4 py-3 rounded-lg text-base font-medium text-slate-200 hover:text-white hover:bg-slate-700/50 transition-all duration-200"
+                className="flex items-center px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-300"
                 onClick={() => setIsOpen(false)}
               >
                 Home
               </Link>
               <Link
                 to="/products"
-                className="flex items-center px-4 py-3 rounded-lg text-base font-medium text-slate-200 hover:text-white hover:bg-slate-700/50 transition-all duration-200"
+                className="flex items-center px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-300"
                 onClick={() => setIsOpen(false)}
               >
                 Products
               </Link>
               <Link
                 to="/orders"
-                className="flex items-center px-4 py-3 rounded-lg text-base font-medium text-slate-200 hover:text-white hover:bg-slate-700/50 transition-all duration-200"
+                className="flex items-center px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-300"
                 onClick={() => setIsOpen(false)}
               >
                 My Orders
               </Link>
-              <Link
-                to="/profile"
-                className="flex items-center px-4 py-3 rounded-lg text-base font-medium text-slate-200 hover:text-white hover:bg-slate-700/50 transition-all duration-200"
-                onClick={() => setIsOpen(false)}
-              >
-                My Profile
-              </Link>
+              {isLoggedIn && (
+                <Link
+                  to="/profile"
+                  className="flex items-center px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-300"
+                  onClick={() => setIsOpen(false)}
+                >
+                  My Profile
+                </Link>
+              )}
               <button
-                onClick={() => {
-                  handleLogOut();
-                  setIsOpen(false);
-                }}
-                className="flex items-center w-full text-left px-4 py-3 rounded-lg text-base font-medium text-slate-200 hover:text-white hover:bg-slate-700/50 transition-all duration-200"
+                onClick={isLoggedIn ? handleLogOut : handleLogin}
+                className="flex items-center w-full text-left px-4 py-3 rounded-xl text-base font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-all duration-300 border-t border-white/5 mt-2"
               >
                 {isLoggedIn ? "Log Out" : "Log In"}
               </button>

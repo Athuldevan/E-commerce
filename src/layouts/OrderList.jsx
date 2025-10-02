@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import Loading from "../utility/Loading";
+import { OrderContext } from "../context/orderContext";
 
 function OrderList({ order, loading }) {
+  const { handleDeleteOrder } = useContext(OrderContext);
   if (loading) return <Loading />;
   return (
     <>
@@ -66,6 +69,14 @@ function OrderList({ order, loading }) {
                     (product.productId?.price || 0) * (product.quantity || 1)
                   ).toFixed(2)}
                 </div>
+
+                <button
+                  className="bg-red-200 p-3 m-3 "
+                  onClick={() => handleDeleteOrder(order._id)}
+                >
+                  {" "}
+                  Delete Order
+                </button>
               </div>
             </div>
           ))}

@@ -1,24 +1,25 @@
 function WishlistCard({ wishlist, handleAddToCart, handleRemoveFromWishlist }) {
+  console.log(wishlist);
   return (
     <>
       {wishlist.map((product) => (
         <div
           key={product.productId._id}
-          className="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden"
+          className="bg-white rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl"
         >
           {/* Product Image */}
-          <div className="relative h-48 bg-gray-100">
+          <div className="relative aspect-square bg-gray-50">
             <img
-              src={product.productId.image}
+              src={product?.productId?.image}
               alt={product.productId.name}
               className="w-full h-full object-cover"
             />
 
-            {/* HEAR ICON SVG  */}
+            {/* HEART ICON SVG */}
             <div className="absolute top-3 right-3">
               <button
                 onClick={() => handleRemoveFromWishlist(product.productId._id)}
-                className="p-2 bg-white rounded-full shadow-md hover:bg-red-50 hover:text-red-500 transition-colors duration-200"
+                className="p-2 bg-white/90 backdrop-blur-sm rounded-full hover:scale-110 transition-transform duration-200"
               >
                 <svg
                   className="w-5 h-5 text-red-500"
@@ -36,34 +37,24 @@ function WishlistCard({ wishlist, handleAddToCart, handleRemoveFromWishlist }) {
           </div>
 
           {/* Product Details */}
-          <div className="p-4 space-y-3">
-            {/* Brand and Category */}
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-indigo-600 bg-indigo-50 px-2 py-1 rounded">
-                {product.productId.brand}
-              </span>
-              <span className="text-xs text-gray-500 capitalize">
-                {product.productId.category}
-              </span>
-            </div>
-
+          <div className="p-5">
             {/* Product Name */}
-            <h3 className="font-semibold text-gray-900 text-lg leading-tight line-clamp-2">
+            <h3 className="font-semibold text-gray-900 text-base tracking-tight line-clamp-2 mb-2">
               {product.productId.name}
             </h3>
 
             {/* Description */}
-            <p className="text-gray-600 text-sm leading-relaxed line-clamp-2">
+            <p className="text-xs text-gray-500 line-clamp-2 mb-3 leading-relaxed">
               {product.productId.description}
             </p>
 
             {/* Rating */}
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center space-x-1 mb-4">
               <div className="flex text-yellow-400">
                 {[...Array(5)].map((_, index) => (
                   <svg
                     key={index}
-                    className={`w-4 h-4 ${
+                    className={`w-3.5 h-3.5 ${
                       index < Math.floor(product.productId.rating)
                         ? "fill-current"
                         : "text-gray-300"
@@ -74,21 +65,21 @@ function WishlistCard({ wishlist, handleAddToCart, handleRemoveFromWishlist }) {
                   </svg>
                 ))}
               </div>
-              <span className="text-sm text-gray-500">
+              <span className="text-xs text-gray-500">
                 ({product.productId.rating})
               </span>
             </div>
 
-            {/* Price */}
-            <div className="flex items-center justify-between pt-2">
-              <span className="text-2xl font-bold text-gray-900">
+            {/* Price and Button */}
+            <div className="flex items-center justify-between">
+              <span className="text-xl font-bold text-gray-900">
                 ${product.productId.price}
               </span>
               <button
                 onClick={() => handleAddToCart(product.productId._id)}
-                className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors duration-200"
+                className="bg-black text-white px-5 py-2.5 rounded-full text-xs font-medium hover:bg-gray-800 transition-all duration-200 active:scale-95"
               >
-                Add to Cart
+                Add to Bag
               </button>
             </div>
           </div>

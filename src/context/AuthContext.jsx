@@ -11,7 +11,7 @@ export default function AuthProvider({ children }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("js@gmail.com");
   const [password, setPassword] = useState("js@123");
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const navigate = useNavigate();
 
@@ -54,7 +54,7 @@ export default function AuthProvider({ children }) {
         },
         { withCredentials: true }
       );
-      console.log(res);
+     
       if (res.status === 200) alert("Login successfully");
       setIsLoggedIn(true);
       navigate("/products");

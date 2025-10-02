@@ -12,10 +12,10 @@ export default function WishlistProvider({ children }) {
 
   // GET WISHLIST
   async function getWishlist() {
-    if (!isLoggedIn) {
-      alert("Please Login first");
-    }
     try {
+      if (!isLoggedIn) {
+        alert("Please Login first");
+      }
       const { data } = await axios.get(`${BASE_URL}/wishlist`, {
         withCredentials: true,
       });

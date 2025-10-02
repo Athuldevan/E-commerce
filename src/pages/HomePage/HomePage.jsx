@@ -1,241 +1,220 @@
-import { ArrowRightIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { useNavigate } from "react-router-dom";
-import Footer from '../Footer.jsx'
+import React, { useState, useEffect } from 'react';
 
 const HomePage = () => {
-  const navigate = useNavigate();
+  const [scrollY, setScrollY] = useState(0);
 
-  const heroContent = {
-    image:
-      "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    title: "Precision Crafted",
-    subtitle: "Swiss Made Excellence",
-    cta: "Explore Collections",
-  };
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-  const collections = [
+  const products = [
     {
-      name: "Classic Series",
-      image:
-        "https://images.unsplash.com/photo-1557531365-e8b22d93dbd0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80",
-      description: "Timeless designs for every occasion",
+      id: 1,
+      name: "iPhone 17 Pro Max",
+      tagline: "The future is here. Unbelievably powerful.",
+      image: "https://www.apple.com/v/iphone-17-pro/b/images/overview/shared-features/hero_features_middle__calo9u012as2_large_2x.jpg",
+      isDark: true
     },
     {
-      name: "Diver Series",
-      image:
-        "https://images.unsplash.com/photo-1539874754764-5a96559165b0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80",
-      description: "Built for adventure and endurance",
+      id: 2,
+      name: "MacBook Air M4",
+      tagline: "Mind-blowing performance. Game-changing battery life.",
+      image: "https://www.apple.com/v/macbook-air/u/images/overview/design/color/design_top_skyblue__eepkvlvjzcia_large_2x.jpg",
+      isDark: false
     },
     {
-      name: "Chronograph Series",
-      image:
-        "https://images.unsplash.com/photo-1456444029056-7dfaeeb83a19?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8bWVucyUyMHdhdGNofGVufDB8fDB8fHww",
-      description: "Precision timing meets modern aesthetics",
+      id: 3,
+      name: "Apple Watch Ultra 3",
+      tagline: "Adventure awaits. Built for extremes.",
+      image: "https://www.apple.com/in/apple-watch-ultra-3/images/overview/product-viewer/product_landing__d0d4mw4gk282_large_2x.jpg",
+      isDark: true
     },
+    {
+      id: 4,
+      name: "AirPods 4",
+      tagline: "Hearing health meets audio excellence.",
+      image: "https://www.apple.com/v/airpods-4/g/images/overview/bento-gallery/bento_case_open__63kccmu775u6_xlarge_2x.jpg",
+      isDark: false
+    }
   ];
 
-  const testimonials = [
-    {
-      quote:
-        "As someone who's picky about design, I was thrilled to find a watch that's both stylish AND comfortable for all-day wear. The ordering process was seamless, and delivery was lightning-fast. Will definitely be back for my next one!",
-      author: "James Wilson, Collector",
-    },
-    {
-      quote:
-        "I've never received so many compliments on a timepiece. The finishing is exquisite.",
-      author: "Sarah Chen, Fashion Editor",
-    },
+  const features = [
+    { icon: "⚡", title: "A19 Pro Chip", desc: "Revolutionary performance with 3nm technology" },
+    { icon: "📸", title: "Quantum Camera", desc: "200MP Main. 10x Periscope Telephoto." },
+    { icon: "🔋", title: "2-Day Battery", desc: "Up to 48 hours video playback" }
   ];
 
   return (
-    <div className="text-gray-900">
-      {/* Hero Section - Single Image */}
-      <div className="relative h-[90vh] min-h-[600px] overflow-hidden bg-gray-100">
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src={heroContent.image}
-            alt="Luxury Watch"
-            className="w-full h-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-        </div>
-
-        {/* Content Container */}
-        <div className="relative z-10 h-full flex flex-col">
-          {/* Top Navigation Area */}
-          <div className="flex-1"></div>
-
-          {/* Hero Content */}
-          <div className="container mx-auto px-6 pb-24">
-            <div className="max-w-2xl">
-              <p className="text-lg text-amber-300 mb-2 font-light tracking-widest">
-                {heroContent.subtitle}
-              </p>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-light text-white mb-6 leading-tight">
-                {heroContent.title}
-              </h1>
-              <button
-                onClick={() => navigate("/products")}
-                className="group relative inline-flex items-center overflow-hidden px-8 py-3 border border-amber-400 text-amber-400 hover:text-black focus:outline-none"
-              >
-                <span className="absolute left-0 h-full w-0 bg-amber-400 transition-all duration-300 group-hover:w-full"></span>
-                <span className="relative flex items-center">
-                  {heroContent.cta}
-                  <ArrowRightIcon className="h-5 w-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Rest of the page remains unchanged */}
-      <div className="py-12 bg-gray-100 overflow-hidden">
-        <div className="whitespace-nowrap animate-marquee">
-          {[
-            "ROLEX",
-            "PATEK PHILIPPE",
-            "AUDEMARS PIGUET",
-            "VACHERON CONSTANTIN",
-            "JAEGER-LECOULTRE",
-            "OMEGA",
-          ].map((brand) => (
-            <span
-              key={brand}
-              className="text-2xl font-light mx-12 inline-block opacity-70"
-            >
-              {brand}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Featured Collections */}
-      <section className="py-20 px-8 sm:px-16 lg:px-24">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-light mb-4">
-            Curated Collections
-          </h2>
-          <p className="max-w-2xl mx-auto text-gray-600">
-            Each timepiece is a testament to horological artistry, blending
-            tradition with innovation
+    <div className="bg-black">
+      {/* Hero Section */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden bg-black">
+        <img 
+          src="https://www.apple.com/in/iphone-17-pro/images/overview/highlights/highlights_design_startframe__so62758qssay_large_2x.jpg" 
+          alt="iPhone 17 Pro Max"
+          className="absolute w-full h-full object-cover opacity-80"
+        />
+        
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/70"></div>
+        
+        <div className="relative text-center text-white z-10 px-6">
+          <h1 className="text-7xl md:text-9xl font-bold mb-4 tracking-tighter">
+            iPhone 17 Pro Max
+          </h1>
+          <p className="text-3xl md:text-4xl text-gray-200 font-light mb-12">
+            The future is now
           </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {collections.map((collection, index) => (
-            <div key={index} className="group relative overflow-hidden h-96">
-              <img
-                src={collection.image}
-                alt={collection.name}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-all duration-300"></div>
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-white translate-y-10 group-hover:translate-y-0 transition-transform duration-300">
-                <h3 className="text-2xl font-medium mb-1">{collection.name}</h3>
-                <p className="mb-4">{collection.description}</p>
-                <button className="flex items-center text-sm font-medium">
-                  View Collection <ChevronRightIcon className="h-4 w-4 ml-1" />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Craftsmanship Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="px-8 sm:px-16 lg:px-24 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="text-3xl sm:text-4xl font-light mb-6">
-              The Art of Horology
-            </h2>
-            <p className="text-gray-600 mb-6">
-              Elevate your style with our exquisite collection of premium
-              watches. From sleek minimalist designs to bold statement pieces,
-              each timepiece is crafted for precision, durability, and timeless
-              elegance.
-            </p>
-            <p className="text-gray-600 mb-8">
-              Our watches are more than timekeeping instruments—they're
-              heirlooms in the making, designed to be passed down through
-              generations while maintaining their impeccable accuracy and
-              beauty.
-            </p>
-            <button className="border-b border-black pb-1 font-medium">
-              Discover Our Craft
+          
+          <div className="flex flex-col md:flex-row justify-center gap-6 mb-12">
+            <button className="px-8 py-4 bg-white text-black rounded-full font-semibold hover:bg-gray-200 transition transform hover:scale-105">
+              Buy Now
+            </button>
+            <button className="px-8 py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-black transition transform hover:scale-105">
+              Watch the film
             </button>
           </div>
-          <div className="relative h-96 lg:h-[500px]">
-            <img
-              src="https://media.istockphoto.com/id/2123185822/photo/a-man-checking-a-wristwatch-closeup.webp?a=1&b=1&s=612x612&w=0&k=20&c=UeVYsLiWLA-OFOJEPqCtAN5ZYt2Snk6akpo5l9UYJIA="
-              alt="Watchmaking"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute -bottom-6 -right-6 bg-white p-6 shadow-lg w-3/4">
-              <h3 className="text-xl font-medium mb-2">
-                Swiss Made Excellence
-              </h3>
-              <p className="text-gray-600 text-sm">
-                Every movement certified by the COSC, ensuring chronometric
-                precision
-              </p>
-            </div>
+        </div>
+
+        <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2">
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white rounded-full mt-2 animate-bounce"></div>
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-20 px-8 sm:px-16 lg:px-24 bg-black text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-light mb-12">
-            Collector's Voices
+      {/* Features Section */}
+      <section className="py-32 bg-gradient-to-b from-black via-gray-900 to-black">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-5xl md:text-6xl font-bold text-center text-white mb-20">
+            Why you'll love it
           </h2>
-          <div className="space-y-12">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="relative">
-                <svg
-                  className="w-12 h-12 mx-auto text-amber-400 mb-6 opacity-30"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-                <blockquote className="text-xl sm:text-2xl font-light italic mb-4">
-                  "{testimonial.quote}"
-                </blockquote>
-                <p className="text-amber-400">{testimonial.author}</p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {features.map((feature, idx) => (
+              <div key={idx} className="group p-8 bg-white/5 backdrop-blur-xl rounded-3xl hover:scale-105 transition">
+                <div className="w-20 h-20 mx-auto bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:rotate-6 transition">
+                  <span className="text-4xl">{feature.icon}</span>
+                </div>
+                <h3 className="text-2xl font-bold text-white text-center mb-4">{feature.title}</h3>
+                <p className="text-gray-400 text-center">{feature.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 px-8 sm:px-16 lg:px-24 bg-gradient-to-r from-gray-900 to-gray-800 text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-light mb-6">
-            Begin Your Horological Journey
-          </h2>
-          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-            Join our community of collectors and receive exclusive access to
-            limited editions, private events, and expert watchmaking insights.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => navigate("/products")}
-              className="bg-amber-400 text-black px-8 py-4 hover:bg-amber-300 transition-colors"
-            >
-              Browse Collections
-            </button>
+      {/* Product Sections */}
+      {products.map((product) => (
+        <section 
+          key={product.id}
+          className={`min-h-screen flex items-center justify-center py-20 ${product.isDark ? 'bg-black' : 'bg-white'}`}
+        >
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <span className={`text-sm uppercase tracking-widest font-semibold ${product.isDark ? 'text-gray-500' : 'text-gray-400'}`}>
+                New
+              </span>
+              <h2 className={`text-6xl md:text-8xl font-bold my-6 tracking-tighter ${product.isDark ? 'text-white' : 'text-black'}`}>
+                {product.name}
+              </h2>
+              <p className={`text-3xl md:text-4xl font-light ${product.isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+                {product.tagline}
+              </p>
+            </div>
+            
+            <div className="relative group">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-500 to-blue-500 opacity-20 blur-3xl rounded-full"></div>
+              <img
+                src={product.image}
+                alt={product.name}
+                className="relative w-full h-auto rounded-3xl group-hover:scale-110 transition duration-700"
+              />
+            </div>
+
+            <div className="flex flex-col md:flex-row justify-center gap-6 mt-16">
+              <button className={`px-10 py-4 rounded-full font-semibold text-lg transition transform hover:scale-105 ${
+                product.isDark ? 'bg-white text-black hover:bg-gray-200' : 'bg-black text-white hover:bg-gray-800'
+              }`}>
+                Learn more
+              </button>
+              <button className={`px-10 py-4 rounded-full font-semibold text-lg transition transform hover:scale-105 border-2 ${
+                product.isDark ? 'border-white text-white hover:bg-white hover:text-black' : 'border-black text-black hover:bg-black hover:text-white'
+              }`}>
+                Buy
+              </button>
+            </div>
           </div>
+        </section>
+      ))}
+
+      {/* Final CTA */}
+      <section className="min-h-screen relative flex items-center justify-center bg-gradient-to-br from-purple-900 via-black to-blue-900">
+        <div className="text-center text-white px-6">
+          <h2 className="text-6xl md:text-8xl font-bold mb-8 tracking-tighter">
+            Innovation
+          </h2>
+          <p className="text-3xl md:text-4xl text-gray-300 font-light mb-16 max-w-3xl mx-auto">
+            That empowers everyone.
+          </p>
+          
+          <div className="flex justify-center gap-6 mb-16">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 animate-pulse"></div>
+            ))}
+          </div>
+          
+          <button className="px-12 py-5 bg-white text-black rounded-full font-bold text-xl hover:bg-gray-200 transition transform hover:scale-110">
+            Explore All Products
+          </button>
         </div>
       </section>
 
-      <section>
-       <Footer/>
-      </section>
+      {/* Footer */}
+      <footer className="bg-black py-16 border-t border-gray-800">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12 text-gray-400 text-sm">
+            <div>
+              <h4 className="text-white font-semibold mb-4">Shop</h4>
+              <ul className="space-y-2">
+                <li className="hover:text-white transition cursor-pointer">iPhone</li>
+                <li className="hover:text-white transition cursor-pointer">Mac</li>
+                <li className="hover:text-white transition cursor-pointer">iPad</li>
+                <li className="hover:text-white transition cursor-pointer">Watch</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold mb-4">Services</h4>
+              <ul className="space-y-2">
+                <li className="hover:text-white transition cursor-pointer">Apple Music</li>
+                <li className="hover:text-white transition cursor-pointer">Apple TV+</li>
+                <li className="hover:text-white transition cursor-pointer">iCloud</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold mb-4">Support</h4>
+              <ul className="space-y-2">
+                <li className="hover:text-white transition cursor-pointer">Contact Us</li>
+                <li className="hover:text-white transition cursor-pointer">Repair</li>
+                <li className="hover:text-white transition cursor-pointer">Warranty</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-white font-semibold mb-4">Company</h4>
+              <ul className="space-y-2">
+                <li className="hover:text-white transition cursor-pointer">About</li>
+                <li className="hover:text-white transition cursor-pointer">Careers</li>
+                <li className="hover:text-white transition cursor-pointer">Events</li>
+              </ul>
+            </div>
+          </div>
+          <div className="text-center pt-8 border-t border-gray-800">
+            <p className="text-gray-500 text-sm">
+              © 2024 Apple Inc. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

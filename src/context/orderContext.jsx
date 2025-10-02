@@ -30,16 +30,43 @@ export default function OrderProvider({ children }) {
       const { data } = await axios.post(`${BASE_URL}/orders/create`, null, {
         withCredentials: true,
       });
-      console.log(data);
+      setLoading(true);
       await getAllOrders();
     } catch (err) {
       console.log(err.message);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // DELTE ORDER
+  async function handleDeleteOrder(orderId) {
+    console.log(orderId);
+    try {
+      await axios.delete(`${BASE_URL}/orders/delete/${orderId}`, {
+        data: orderId,
+        withCredentials: true,
+      });
+      setLoading(true);
+      await getAllOrders();
+      setLoading(true);
+    } catch (err) {
+      console.log(err.message);
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <OrderContext.Provider
-      value={{ getAllOrders, orders, createOrder, orderedProducts, loading }}
+      value={{
+        getAllOrders,
+        orders,
+        createOrder,
+        orderedProducts,
+        handleDeleteOrder,
+        loading,
+      }}
     >
       {children}
     </OrderContext.Provider>

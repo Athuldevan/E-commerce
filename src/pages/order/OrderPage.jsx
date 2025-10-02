@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { OrderContext } from "../../context/orderContext";
 import OrderList from "../../layouts/OrderList";
 import Loading from "../../utility/Loading";
+import NoOrdersFound from "../../layouts/NoOrderLayout";
 
 const OrderPage = () => {
   const { orders, getAllOrders, loading } = useContext(OrderContext);
@@ -17,6 +18,10 @@ const OrderPage = () => {
   const displayedOrders = activeTab === "recent" ? recentOrders : pastOrders;
 
   if (loading) return <Loading />;
+
+  if (orders.length === 0) {
+   <NoOrdersFound/>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 sm:p-6">

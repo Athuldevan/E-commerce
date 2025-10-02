@@ -1,396 +1,130 @@
-import {
-  UserIcon,
-  EnvelopeIcon,
-  PhoneIcon,
-  MapPinIcon,
-  PencilIcon,
-  LockClosedIcon,
-} from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
-import BASE_URL from "../../api/BASE_URL";
-import useAuth from "../../hooks/useAuth";
-import axios from "axios";
-import { fetchUsers } from "../../api/services/userService";
+import { User, Mail, Calendar, Camera } from "lucide-react";
+import getProfile from "../../api/services/profileService";
 
 function Profile() {
-  const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-  const [user, setUser] = useState(null);
-  console.log(user);
+  const [profile, setProfile] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [totalOrders, setTotalOrders] = useState(0);
 
-  const [isEditingName, setIsEditingName] = useState(false);
-  const [isEditingPassword, setIsEditingPassword] = useState(false);
-  const [name, setName] = useState(loggedInUser?.name || "Alex Johnson");
-  const [passwordData, setPasswordData] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
-  const { userID } = useAuth();
-
-  async function loadUser() {
-    const allUser = await fetchUsers();
-    const user = allUser.find(
-      (user) => user.role === "user" && user.id === userID
-    );
-    setUser(user);
-    console.log("current User", user);
-  }
-
-  // useFect to cange paswors --loading useer
   useEffect(() => {
-    (async function () {
-      await loadUser();
-    })();
-  }, [isEditingPassword]);
-
-  const userData = {
-    email: user?.email,
-    id: user?.id,
-    created_at: user?.created_at,
-    orders: user?.orders,
-    wishlist: user?.wishlist,
-    cart: user?.cart,
-    name: user?.name,
-    password: user?.password,
-    role: user?.role,
-    isBlock: user?.isBlock,
-  };
- async function handleSubmit() {
-  if (passwordData.currentPassword !== user?.password) {
-    alert("Current password is incorrect");
-    return;
-  }
-
-  if (passwordData.newPassword !== passwordData.confirmPassword) {
-    alert("New password and confirmation do not match");
-    return;
-  }
-
-  if (!passwordData.newPassword) {
-    alert("New password cannot be empty");
-    return;
-  }
-
-  try {
-    const updatedUser = {
-      ...user,
-      password: passwordData.newPassword,
+    const fetchProfile = async () => {
+      try {
+        const data = await getProfile();
+        setProfile([data.user]);
+        console.log(data);
+        setTotalOrders(data.totalOrders);
+      } catch (err) {
+        console.log(err.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    await axios.put(
-      `${BASE_URL}/users/${loggedInUser.id}`,
-      updatedUser
-    );
+    fetchProfile();
+  }, []);
 
-    // Save updated user to localStorage
-    localStorage.setItem("loggedInUser", JSON.stringify(updatedUser));
-
-    setIsEditingPassword(false);
-    setPasswordData({
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
+  };
 
-    alert("Password updated successfully");
-  } catch (error) {
-    console.error("Error updating password:", error);
-    alert("Failed to update password");
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
   }
-}
-
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      {loggedInUser ? (
-        <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-3xl font-bold text-gray-900">My Profile</h1>
-            <p className="mt-3 text-gray-600 max-w-lg mx-auto">
-              Manage your account information and preferences
-            </p>
-          </div>
+    <div className="min-h-screen bg-gray-50 py-8 px-4">
+      <div className="max-w-4xl mx-auto">
+        {profile.map((user, index) => (
+          <div
+            key={index}
+            className="bg-white rounded-lg shadow-lg overflow-hidden"
+          >
+            <div className="h-32 bg-gradient-to-r from-blue-500 to-purple-600"></div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Profile Summary Card */}
-            <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
-              <div className="bg-gradient-to-r from-indigo-500 to-indigo-600 h-32 flex items-end justify-center">
-                <div className="relative -mb-16">
-                  <div className="h-32 w-32 rounded-full border-4 border-white bg-gray-100 flex items-center justify-center shadow-md">
-                    <UserIcon className="h-16 w-16 text-gray-400" />
+            {/* Profile Content */}
+            <div className="px-6 pb-8">
+              {/* Profile Image */}
+              <div className="flex justify-center -mt-16 mb-4">
+                <div className="relative">
+                  <div className="w-32 h-32 rounded-full border-4 border-white overflow-hidden bg-gray-200 shadow-lg">
+                    {user?.profileImage ? (
+                      <img
+                        src={user.profileImage}
+                        alt={user.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-gray-300">
+                        <User className="w-16 h-16 text-gray-600" />
+                      </div>
+                    )}
                   </div>
+                  <button className="absolute bottom-0 right-0 bg-blue-600 text-white p-2 rounded-full shadow-lg hover:bg-blue-700 transition">
+                    <Camera className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
-              <div className="pt-20 pb-8 px-6 text-center">
-                {isEditingName ? (
-                  <div className="mb-6">
-                    <input
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                    />
-                    <div className="mt-4 flex justify-center space-x-3">
-                      <button
-                        onClick={() => {
-                          setIsEditingName(false);
-                          // Save to localStorage or API here
-                        }}
-                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
-                      >
-                        Save
-                      </button>
-                      <button
-                        onClick={() => setIsEditingName(false)}
-                        className="px-4 py-2 bg-gray-100 text-gray-800 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="mb-2">
-                    <div className="flex justify-center items-center">
-                      <h2 className="text-2xl font-bold text-gray-900">
-                        {userData?.name}
-                      </h2>
-                      <button
-                        onClick={() => setIsEditingName(true)}
-                        className="ml-3 text-indigo-600 hover:text-indigo-800 transition-colors"
-                        aria-label="Edit name"
-                      >
-                        <PencilIcon className="h-5 w-5" />
-                      </button>
-                    </div>
-                    <span className="inline-block mt-2 px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
-                      {userData?.membership}
-                    </span>
-                  </div>
-                )}
 
-                <p className="text-gray-500 text-sm mt-4">
-                  Member since {userData?.joinDate}
-                </p>
-
-                <div className="mt-8 grid grid-cols-2 gap-4">
-                  <div className="bg-gray-50 p-4 rounded-xl">
-                    <p className="text-3xl font-bold text-indigo-600">
-                      {userData?.orders?.length}
-                      
-                    </p>
-                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mt-1">
-                      Orders
-                    </p>
-                  </div>
-                  <div className="bg-gray-50 p-4 rounded-xl">
-                    <p className="text-3xl font-bold text-indigo-600">
-                      {userData?.wishlist}
-                    </p>
-                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wider mt-1">
-                      Wishlist
-                    </p>
-                  </div>
-                </div>
+              {/* User Info */}
+              <div className="text-center mb-8">
+                <h1 className="text-3xl font-bold text-gray-800 mb-2">
+                  {user.name}
+                </h1>
+                <p className="text-gray-600">Customer</p>
               </div>
-            </div>
 
-            {/* Account Details Card */}
-            <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
-              <div className="px-6 py-5 border-b border-gray-100">
-                <h3 className="text-xl font-semibold text-gray-900">
-                  Account Details
-                </h3>
-              </div>
-              <div className="px-6 py-5 space-y-6">
-                {/* Email */}
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 h-10 w-10 rounded-lg bg-indigo-50 flex items-center justify-center">
-                    <EnvelopeIcon className="h-5 w-5 text-indigo-600" />
+              {/* Details Cards */}
+              <div className="grid md:grid-cols-2 gap-4 mb-6">
+                <div className="bg-gray-50 rounded-lg p-4 flex items-center space-x-3">
+                  <div className="bg-blue-100 p-3 rounded-full">
+                    <Mail className="w-5 h-5 text-blue-600" />
                   </div>
-                  <div className="ml-4">
-                    <h4 className="text-sm font-medium text-gray-500">
+                  <div>
+                    <p className="text-sm text-gray-500 font-medium">
                       Email Address
-                    </h4>
-                    <p className="text-base text-gray-900 mt-1">
-                      {userData.email}
                     </p>
+                    <p className="text-gray-800">{user.email}</p>
                   </div>
                 </div>
 
-                {/* Phone */}
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 h-10 w-10 rounded-lg bg-indigo-50 flex items-center justify-center">
-                    <PhoneIcon className="h-5 w-5 text-indigo-600" />
+                <div className="bg-gray-50 rounded-lg p-4 flex items-center space-x-3">
+                  <div className="bg-purple-100 p-3 rounded-full">
+                    <Calendar className="w-5 h-5 text-purple-600" />
                   </div>
-                  <div className="ml-4">
-                    <h4 className="text-sm font-medium text-gray-500">
-                      Phone Number
-                    </h4>
-                    <p className="text-base text-gray-900 mt-1">
-                      {userData?.phone}
+                  <div>
+                    <p className="text-sm text-gray-500 font-medium">
+                      Member Since
+                    </p>
+                    <p className="text-gray-800">
+                      {formatDate(user.createdAt)}
                     </p>
                   </div>
-                </div>
-
-                {/* Address */}
-                <div className="flex items-start">
-                  <div className="flex-shrink-0 h-10 w-10 rounded-lg bg-indigo-50 flex items-center justify-center">
-                    <MapPinIcon className="h-5 w-5 text-indigo-600" />
-                  </div>
-                  <div className="ml-4">
-                    <h4 className="text-sm font-medium text-gray-500">
-                      Shipping Address
-                    </h4>
-                    <p className="text-base text-gray-900 mt-1">
-                      {userData?.address}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Password */}
-                <div className="pt-4 border-t border-gray-100">
-                  {isEditingPassword ? (
-                    <div className="space-y-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Current Password
-                        </label>
-                        <input
-                          type="password"
-                          value={passwordData?.currentPassword}
-                          onChange={(e) =>
-                            setPasswordData({
-                              ...passwordData,
-                              currentPassword: e.target.value,
-                            })
-                          }
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          New Password
-                        </label>
-                        <input
-                          type="password"
-                          value={passwordData?.newPassword}
-                          onChange={(e) =>
-                            setPasswordData({
-                              ...passwordData,
-                              newPassword: e.target.value,
-                            })
-                          }
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
-                          Confirm New Password
-                        </label>
-                        <input
-                          type="password"
-                          value={passwordData.confirmPassword}
-                          onChange={(e) =>
-                            setPasswordData({
-                              ...passwordData,
-                              confirmPassword: e.target.value,
-                            })
-                          }
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                        />
-                      </div>
-                      <div className="flex space-x-3 pt-2">
-                        <button
-                          onClick={() => {
-                            handleSubmit();
-                            // Add password change logic here
-                          }}
-                          className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
-                        >
-                          Update Password
-                        </button>
-                        <button
-                          onClick={() => setIsEditingPassword(false)}
-                          className="px-4 py-2 bg-gray-100 text-gray-800 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="flex items-start">
-                      <div className="flex-shrink-0 h-10 w-10 rounded-lg bg-indigo-50 flex items-center justify-center">
-                        <LockClosedIcon className="h-5 w-5 text-indigo-600" />
-                      </div>
-                      <div className="ml-4 flex-1">
-                        <h4 className="text-sm font-medium text-gray-500">
-                          Password
-                        </h4>
-                        <p className="text-base text-gray-900 mt-1">••••••••</p>
-                      </div>
-                      <button
-                        onClick={() => setIsEditingPassword(true)}
-                        className="text-indigo-600 hover:text-indigo-800 text-sm font-medium transition-colors"
-                      >
-                        Change
-                      </button>
-                    </div>
-                  )}
                 </div>
               </div>
-            </div>
 
-            {/* Recent Orders Card */}
-            <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
-              <div className="px-6 py-5 border-b border-gray-100">
-                <h3 className="text-xl font-semibold text-gray-900">
-                  Recent Orders
-                </h3>
-              </div>
-              <div className="px-6 py-5 space-y-5">
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">
-                      #LUXE-2023-0456
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">
-                      Delivered • Oct 12, 2023
-                    </p>
-                  </div>
-                  <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium transition-colors">
-                    Details
-                  </button>
-                </div>
-                <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">
-                      #LUXE-2023-0389
-                    </p>
-                    <p className="text-xs text-gray-500 mt-1">
-                      Delivered • Sep 28, 2023
-                    </p>
-                  </div>
-                  <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium transition-colors">
-                    Details
-                  </button>
-                </div>
-                <div className="pt-2 text-center">
-                  <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium transition-colors">
-                    View All Orders →
-                  </button>
-                </div>
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 transition">
+                  Edit Profile
+                </button>
+                <button className="flex-1 border-2 border-gray-300 text-gray-700 py-3 px-6 rounded-lg font-medium hover:bg-gray-50 transition">
+                  View Orders
+                </button>
               </div>
             </div>
           </div>
-        </div>
-      ) : (
-        <div className="text-center py-20">
-          <p className="text-gray-600 text-lg">
-            Please login to view your profile
-          </p>
-        </div>
-      )}
+        ))}
+      </div>
     </div>
   );
 }

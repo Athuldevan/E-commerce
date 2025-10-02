@@ -1,30 +1,45 @@
-import React, { useContext,  useState } from "react";
+import React, { useContext, useState } from "react";
 import { CheckoutContext } from "../../context/CheckoutContext";
 import { OrderContext } from "../../context/orderContext";
+import Loading from "../../utility/Loading";
 
 const PaymentPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("credit-card");
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const { checkoutItems, handleCheckout } = useContext(CheckoutContext);
-  const {createOrder} = useContext(OrderContext)
+  const [, setShowSuccessModal] = useState(false);
+  const { checkoutItems, handleCheckout, loading } =
+    useContext(CheckoutContext);
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const [cvv, setCvv] = useState("");
+  const [cardHolder, setCardHolder] = useState("");
+  const [error, setError] = useState("");
 
-  // Safe subtotal calculation
+  console.log(checkoutItems);
+
+  //  subtotal calculation
   const subtotal = checkoutItems.reduce((total, item) => {
-    const price = item?.price || 0;
-    const quantity = item?.quantity || 0;
+    const price = +item.price;
+    const quantity = +item.quantity;
     return total + price * quantity;
   }, 0);
 
-  const shipping = 0;
-  const tax = 0;
-  const total = subtotal + shipping + tax;
+  console.log(subtotal);
 
- 
-  const closeModal = () => {
-    setShowSuccessModal(false);
+  const handlePlaceOrder = () => {
+    if (paymentMethod === "credit-card") {
+      // validate fields
+      if (!cardNumber || !expiry || !cvv || !cardHolder) {
+        setError("Please fill in all required card details.");
+        return;
+      }
+    }
+
+    setError(""); // clear error
+    handleCheckout();
+    setShowSuccessModal(true);
   };
 
-
+  if (loading) return <Loading />;
   return (
     <>
       <div className="min-h-screen bg-gray-50 py-8 px-2">
@@ -68,24 +83,36 @@ const PaymentPage = () => {
                   <input
                     type="text"
                     placeholder="Card Number"
+                    value={cardNumber}
+                    onChange={(e) => setCardNumber(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-200 rounded focus:ring-1 focus:ring-blue-400 text-sm"
+                    required
                   />
                   <div className="flex gap-2">
                     <input
                       type="text"
                       placeholder="MM/YY"
+                      value={expiry}
+                      onChange={(e) => setExpiry(e.target.value)}
                       className="flex-1 px-3 py-2 border border-gray-200 rounded focus:ring-1 focus:ring-blue-400 text-sm"
+                      required
                     />
                     <input
                       type="text"
                       placeholder="CVV"
+                      value={cvv}
+                      onChange={(e) => setCvv(e.target.value)}
                       className="flex-1 px-3 py-2 border border-gray-200 rounded focus:ring-1 focus:ring-blue-400 text-sm"
+                      required
                     />
                   </div>
                   <input
                     type="text"
                     placeholder="Card Holder Name"
+                    value={cardHolder}
+                    onChange={(e) => setCardHolder(e.target.value)}
                     className="w-full px-3 py-2 border border-gray-200 rounded focus:ring-1 focus:ring-blue-400 text-sm"
+                    required
                   />
                 </form>
               )}
@@ -99,7 +126,9 @@ const PaymentPage = () => {
                   </p>
                 </div>
               )}
+              {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
             </section>
+
             {/* Order Summary */}
             <section className="bg-white rounded-xl border border-gray-200 p-5">
               <h2 className="text-lg font-medium text-gray-700 mb-5">
@@ -125,31 +154,24 @@ const PaymentPage = () => {
                       x{product.quantity}
                     </div>
                     <div className="text-sm text-gray-900 font-semibold">
-                      ${(product.price * product.quantity).toFixed(2)}
+                      ${product.price * product.quantity}
                     </div>
                   </li>
                 ))}
               </ul>
-              <div className="text-sm py-2 border-t">
-                <div className="flex justify-between py-1">
-                  <span className="text-gray-500">Subtotal</span>
-                  <span className="text-gray-700">${subtotal.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between py-1">
-                  <span className="text-gray-500">Shipping</span>
-                  <span className="text-gray-700">FREE</span>
-                </div>
-                <div className="flex justify-between py-1">
-                  <span className="text-gray-500">Tax</span>
-                  <span className="text-gray-700">${tax.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between py-2 font-bold border-t mt-2">
-                  <span className="text-gray-800">Total</span>
-                  <span className="text-blue-700">${total.toFixed(2)}</span>
-                </div>
+
+              <div className="flex justify-between py-1">
+                <span className="text-gray-500">Shipping</span>
+                <span className="text-gray-700">FREE</span>
               </div>
+
+              <div className="flex justify-between py-2 font-bold border-t mt-2">
+                <span className="text-gray-800">Total</span>
+                <span className="text-blue-700"> ${subtotal}</span>
+              </div>
+
               <button
-                onClick={handleCheckout}
+                onClick={handlePlaceOrder}
                 className="w-full mt-6 bg-blue-600 text-white py-3 rounded font-medium hover:bg-blue-700 transition"
               >
                 Place Order
@@ -161,73 +183,6 @@ const PaymentPage = () => {
           </div>
         </div>
       </div>
-      {/* Success Modal */}
-      {showSuccessModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-          <div className="bg-white rounded-xl shadow-lg max-w-xs w-full p-6 text-center animate-scaleIn">
-            <div className="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-2">
-              <svg
-                className="w-8 h-8 text-green-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
-            <h2 className="text-lg font-semibold text-gray-800 mb-2">
-              Order Complete!
-            </h2>
-            <p className="text-gray-600 text-sm mb-4">
-              Thank you for shopping with us.
-            </p>
-            <div className="bg-gray-50 rounded p-3 mb-3 text-left text-xs">
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-500">Total:</span>
-                <span className="font-bold">${total.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between mb-1">
-                <span className="text-gray-500">Paid by:</span>
-                <span>
-                  {paymentMethod === "credit-card"
-                    ? "Credit Card"
-                    : "Cash on Delivery"}
-                </span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-500">Items:</span>
-                <span>{checkoutItems.length}</span>
-              </div>
-            </div>
-            <button
-              onClick={closeModal}
-              className="w-full py-2 rounded bg-gray-200 text-gray-800 font-medium mt-2 hover:bg-gray-300 transition"
-            >
-              Continue Shopping
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Minimal animation */}
-      <style jsx>{`
-        @keyframes scaleIn {
-          from {
-            opacity: 0;
-            transform: scale(0.98);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-        .animate-scaleIn {
-          animation: scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-      `}</style>
     </>
   );
 };

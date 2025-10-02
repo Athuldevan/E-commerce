@@ -39,7 +39,7 @@ export default function Cart() {
   let totalPrice;
   if (cartItems.length > 0) {
     totalPrice = cartItems.reduce(
-      (acc, curr) => acc + curr.productId?.price,
+      (acc, curr) => acc + curr.productId?.price * curr.quantity,
       0
     );
   }
@@ -65,7 +65,6 @@ export default function Cart() {
       </div>
     );
   }
-
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -141,7 +140,7 @@ export default function Cart() {
                       <div className="flex items-center justify-center space-x-3">
                         <button
                           onClick={() =>
-                            updateQuantity(product.productId._id, +1)
+                            updateQuantity(product.productId._id, -1)
                           }
                           className="w-8 h-8 rounded-full bg-gray-200 hover:bg-gray-300 flex items-center justify-center transition duration-200"
                         >
@@ -164,7 +163,7 @@ export default function Cart() {
                     {/* Price and Remove */}
                     <div className="md:w-1/6 mt-4 md:mt-0 text-center">
                       <p className="text-2xl font-bold text-gray-900 mb-3">
-                        ${product.productId.price}
+                        ${product.productId.price * product.quantity}
                       </p>
                       <button
                         onClick={() =>
@@ -188,20 +187,17 @@ export default function Cart() {
                     <div className="space-y-3 mb-6">
                       <div className="flex justify-between text-gray-600">
                         <span>Subtotal</span>
-                        <span>${totalPrice.toFixed(2)}</span>
+                        <span>${totalPrice}</span>
                       </div>
                       <div className="flex justify-between text-gray-600">
                         <span>Shipping</span>
                         <span className="text-green-600">Free</span>
                       </div>
-                      <div className="flex justify-between text-gray-600">
-                        <span>Tax</span>
-                        <span>${(totalPrice * 0.1).toFixed(2)}</span>
-                      </div>
+
                       <div className="border-t border-gray-300 pt-3">
                         <div className="flex justify-between text-lg font-bold text-gray-900">
                           <span>Total</span>
-                          <span>${(totalPrice * 1.1).toFixed(2)}</span>
+                          <span>${totalPrice}</span>
                         </div>
                       </div>
                     </div>
