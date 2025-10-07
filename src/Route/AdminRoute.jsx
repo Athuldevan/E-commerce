@@ -1,8 +1,9 @@
-import { Children } from "react";
+import { Children, useContext } from "react";
 import { Navigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 function AdminRoute({children}) {
-  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+const  {user} = useContext(AuthContext)
 
 
   if (!user ||  user.role !== "admin") {

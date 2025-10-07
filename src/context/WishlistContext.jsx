@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import BASE_URL from "../api/BASE_URL";
 import { AuthContext } from "./AuthContext";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const WishlistContext = createContext();
 
@@ -14,7 +15,7 @@ export default function WishlistProvider({ children }) {
   async function getWishlist() {
     try {
       if (!isLoggedIn) {
-        alert("Please Login first");
+       toast.error("Please Login first to view wishlist");
       }
       const { data } = await axios.get(`${BASE_URL}/wishlist`, {
         withCredentials: true,
@@ -31,7 +32,7 @@ export default function WishlistProvider({ children }) {
   //Add To Wishlist
   async function handleAddToWishlist(productId) {
     if (!isLoggedIn) {
-      alert("Please Login first");
+    toast.error("Please Login first to add to wishlist");
       return;
     }
     try {
@@ -45,6 +46,8 @@ export default function WishlistProvider({ children }) {
         null,
         { withCredentials: true }
       );
+      toast.success("Added to wishlist");
+      await getWishlist();
     } catch (err) {
       console.log(err.message);
     }
@@ -61,12 +64,15 @@ export default function WishlistProvider({ children }) {
         `${BASE_URL}/wishlist/delete-wishlist-item/${productId}`,
         { withCredentials: true }
       );
-      console.log(data.data);
+      
       if (data.data) {
         setWishlist(data.data);
       } else {
         await getWishlist();
       }
+      toast.success("Removed from wishlist");
+      setLoading(true);
+      await getWishlist();
     } catch (err) {
       console.log(err.message);
       await getWishlist();

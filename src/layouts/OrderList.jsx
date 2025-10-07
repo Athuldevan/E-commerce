@@ -19,9 +19,6 @@ function OrderList({ order, loading }) {
               <span className="font-medium text-green-600">{order.status}</span>
             </p>
           </div>
-          <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
-            View Details
-          </button>
         </div>
 
         {/* Products in the order */}

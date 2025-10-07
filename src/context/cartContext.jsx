@@ -2,8 +2,10 @@ import { createContext, useContext, useState } from "react";
 import BASE_URL from "../api/BASE_URL";
 import axios from "axios";
 import { AuthContext } from "./AuthContext";
-import toast from "react-hot-toast";
+
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 export const CartContext = createContext();
 
@@ -55,8 +57,19 @@ export default function CartProvider({ children }) {
     console.log(productId);
     try {
       if (!isLoggedIn) {
-        alert("please login first.");
-        navigate("/login");
+        Swal.fire({
+          title: "Please Login",
+          text: "You need to be logged in to add items to the cart",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Login",
+          cancelButtonText: "Cancel",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            navigate("/login");
+          }
+        });
+
         return;
       }
       const { data } = await axios.post(
@@ -65,14 +78,36 @@ export default function CartProvider({ children }) {
         { withCredentials: true }
       );
       if (data.message === "This product is already in the cart") {
-        alert("Product is already in your cart!", { icon: "⚠️" });
+        Swal.fire({
+          title: "Info",
+          text: "This product is already in the cart",
+          icon: "info",
+        });
       } else if (data.status === "success") {
-        alert("Product added to cart successfully!");
+        toast.success("Product added to cart");
+
         setCartItems((prev) => [...prev, data.data]);
       }
     } catch (err) {
       toast.error("Something went wrong. Please try again!");
       console.error(err.message);
+    }
+  }
+  // REMOVE FROM CART
+  async function handleRemoveFromCart(productId) {
+    try {
+      const data = await axios.delete(
+        `${BASE_URL}/carts/delete-cart-item/${productId}`,
+        {
+          withCredentials: true,
+        }
+      );
+      setCartItems(data.data.data);
+      await fetchCarts();
+      setLoading(true);
+      toast.success("Item removed from cart");
+    } catch (err) {
+      console.log(err.message);
     }
   }
 
@@ -84,6 +119,7 @@ export default function CartProvider({ children }) {
         setCartItems,
         updateQuantity,
         handleAddToCart,
+        handleRemoveFromCart,
       }}
     >
       {children}

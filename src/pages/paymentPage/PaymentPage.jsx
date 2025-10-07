@@ -14,7 +14,7 @@ const PaymentPage = () => {
   const [cardHolder, setCardHolder] = useState("");
   const [error, setError] = useState("");
 
-  console.log(checkoutItems);
+
 
   //  subtotal calculation
   const subtotal = checkoutItems.reduce((total, item) => {

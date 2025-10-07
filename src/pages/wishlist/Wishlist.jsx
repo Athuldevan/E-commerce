@@ -4,23 +4,28 @@ import { AuthContext } from "../../context/AuthContext";
 import { CartContext } from "../../context/cartContext";
 import WishlistCard from "../../layouts/WishlistCard";
 import Loading from "../../utility/Loading";
+import { useNavigate } from "react-router-dom";
 
 function Wishlist() {
   const { wishlist, getWishlist, handleRemoveFromWishlist, loading } =
     useContext(WishlistContext);
   const { isLoggedIn } = useContext(AuthContext);
   const { handleAddToCart } = useContext(CartContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getWishlist();
   }, []);
 
-  if(loading) return <Loading/>
+  if (loading) return <Loading />;
 
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <button className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+        <button
+          onClick={() => navigate("/login")}
+          className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+        >
           Please login
         </button>
       </div>

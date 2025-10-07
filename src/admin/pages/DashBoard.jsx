@@ -1,22 +1,10 @@
-import useOrders from "../../hooks/useOrders";
-import useUsers from "../../hooks/useUsers";
+import { useContext } from "react";
+import { usersContext } from "../contexts/userContext";
 import ChartLayout from "../layout/ChartLayout";
 
-
-
-
 function DashBoard() {
-  const { users } = useUsers();
-  const { allOrders } = useOrders();
-  const [latestOrder] = allOrders.slice(-1);
-  console.log(latestOrder);
-  const [latestUser] = users.slice(-1);
-  const lastDelivered = allOrders.findLast(
-    (order) => order.status === "delivered"
-  );
-
-
-
+  const { totalUsers  } = useContext(usersContext);
+ 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
       {/* Content */}
@@ -27,7 +15,7 @@ function DashBoard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400">Total Users</p>
-                <h3 className="text-2xl font-bold">{users.length}</h3>
+                <h3 className="text-2xl font-bold">{totalUsers}</h3>
               </div>
               <div className="p-3 bg-purple-600 rounded-lg">
                 <svg
@@ -53,7 +41,7 @@ function DashBoard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400">Total Revenue</p>
-                <h3 className="text-2xl font-bold">$24,780</h3>
+                <h3 className="text-2xl font-bold"> %Total revenue%</h3>
               </div>
               <div className="p-3 bg-blue-600 rounded-lg">
                 <svg
@@ -144,7 +132,7 @@ function DashBoard() {
               </select>
             </div>
             <>
-             <ChartLayout/>
+              <ChartLayout />
             </>
           </div>
 
@@ -155,9 +143,7 @@ function DashBoard() {
                 <div className="w-8 h-8 bg-purple-500 rounded-full mt-1"></div>
                 <div>
                   <p className="font-medium">New order received</p>
-                  <p className="text-sm text-gray-400">
-                    Order {latestOrder?.orderID}
-                  </p>
+                  <p className="text-sm text-gray-400">Latest order id</p>
                   <p className="text-xs text-gray-500">2 hours ago</p>
                 </div>
               </div>
@@ -166,7 +152,7 @@ function DashBoard() {
                 <div>
                   <p className="font-medium">New user registered</p>
                   <p className="text-sm text-gray-400">
-                    {latestUser?.name} Registerd
+                    Latest user name Registerd
                   </p>
                   <p className="text-xs text-gray-500">5 hours ago</p>
                 </div>
@@ -176,18 +162,18 @@ function DashBoard() {
                 <div>
                   <p className="font-medium">Payment received</p>
                   <p className="text-sm text-gray-400">
-                    {lastDelivered?.total} for order {lastDelivered?.orderID}
+                    last delivered total % Lat delivered order id
                   </p>
                   <p className="text-xs text-gray-500">1 day ago</p>
                 </div>
               </div>
-            
             </div>
           </div>
         </div>
 
         <h2 className="text-xl font-bold">Recent Orders</h2>
-        {allOrders.map((order) => (
+        <p>%All ordersss details go here %</p>
+        {/* {allOrders.map((order) => (
           <div className="bg-gray-800 p-6 rounded-lg shadow">
             <div className="flex items-center justify-between mb-4"></div>
             <div className="overflow-x-auto">
@@ -241,7 +227,7 @@ function DashBoard() {
               </table>
             </div>
           </div>
-        ))}
+        ))} */}
       </main>
     </div>
   );

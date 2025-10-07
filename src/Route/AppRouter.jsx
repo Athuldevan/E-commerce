@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
-import { ToastContainer, Bounce } from "react-toastify";
+
 import NavBar from "../pages/Navbar/NavBar.jsx";
 import Register from "../controller/auth/Register.jsx";
 
@@ -26,6 +26,9 @@ import CartProvider from "../context/cartContext.jsx";
 import WishlistProvider from "../context/WishlistContext.jsx";
 import OrderProvider from "../context/orderContext.jsx";
 import CheckoutProvider from "../context/CheckoutContext.jsx";
+import { Bounce, ToastContainer } from "react-toastify";
+import UsersProvider from "../admin/contexts/userContext.jsx";
+import OrdersProvider from "../admin/contexts/OrdersContext.jsx";
 
 export default function MainRoutes() {
   return (
@@ -35,7 +38,11 @@ export default function MainRoutes() {
           <WishlistProvider>
             <OrderProvider>
               <CheckoutProvider>
-                <AppRouter />
+                <UsersProvider>
+                  <OrdersProvider>
+                    <AppRouter />
+                  </OrdersProvider>
+                </UsersProvider>
               </CheckoutProvider>
             </OrderProvider>
           </WishlistProvider>
@@ -73,10 +80,13 @@ function AppRouter() {
         <Route
           path="/admin"
           element={
+            <OrdersProvider>
+
             <AdminRoute>
               <AdminDashboard />
             </AdminRoute>
-          }
+            </OrdersProvider>
+          } // Admin route is a protected route
         >
           <Route path="users" element={<UsersPage />} />
           <Route path="dashboard" element={<DashBoard />} />
@@ -87,14 +97,15 @@ function AppRouter() {
 
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+
       {/* </AuthProvider> */}
 
       <ToastContainer
         position="top-center"
-        autoClose={5000}
+        autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
-        closeOnClick={false}
+        closeOnClick
         rtl={false}
         pauseOnFocusLoss
         draggable

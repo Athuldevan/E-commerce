@@ -1,12 +1,23 @@
 import { Link } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { usersContext } from "../contexts/userContext";
 
 function SideBar() {
-  const { loggedInUser } = useAuth();
+  const { user } = useContext(AuthContext);
+  const { getAllUsers, users } = useContext(usersContext);
+  useEffect(() => {
+    getAllUsers();
+  }, []);
+
+  // {users.map(user => (
+  //   <div>
+  //     <p>{user?.name}</p>
+  //   </div>
+  // ))}
 
   return (
     <>
-      {/* Sidebar */}
       <div className="w-64 bg-gray-800 p-4 flex flex-col">
         <div className="flex items-center space-x-2 mb-8">
           <div className="w-8 h-8 bg-purple-600 rounded-full"></div>
@@ -16,8 +27,8 @@ function SideBar() {
         <nav className="flex-1">
           <ul className="space-y-2">
             <li>
-              <Link 
-                to="dashboard" 
+              <Link
+                to="dashboard"
                 className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700"
               >
                 <svg
@@ -60,8 +71,8 @@ function SideBar() {
               </Link>
             </li>
             <li>
-              <Link 
-                to='products' 
+              <Link
+                to="products"
                 className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700"
               >
                 <svg
@@ -82,8 +93,8 @@ function SideBar() {
               </Link>
             </li>
             <li>
-              <Link 
-                to='order' 
+              <Link
+                to="order"
                 className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700"
               >
                 <svg
@@ -104,9 +115,7 @@ function SideBar() {
               </Link>
             </li>
             <li>
-              <Link 
-                className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700"
-              >
+              <Link className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700">
                 <svg
                   className="w-5 h-5"
                   fill="none"
@@ -137,7 +146,7 @@ function SideBar() {
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-purple-500 rounded-full"></div>
             <div>
-              <p className="font-medium">{loggedInUser.name}</p>
+              <p className="font-medium"> {user.name} </p>
               <p className="text-xs text-gray-400">Admin</p>
             </div>
           </div>

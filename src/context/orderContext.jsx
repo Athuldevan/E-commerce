@@ -7,13 +7,17 @@ export const OrderContext = createContext();
 export default function OrderProvider({ children }) {
   const [orders, setOrders] = useState([]);
   const [orderedProducts, setOrderedProducts] = useState([]);
+  const [totalRevenue, setTotalRevenue] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  //fetching all orders
   async function getAllOrders() {
     try {
       const { data } = await axios.get(`${BASE_URL}/orders`, {
         withCredentials: true,
       });
+    
+      console.log("totalRevenue : " + data);
+      setTotalRevenue(data);
       setOrders(data.orders);
       console.log(data.orders);
       const productsArray = data.orders.flatMap((order) => order.products);
@@ -25,6 +29,7 @@ export default function OrderProvider({ children }) {
     }
   }
 
+  //creatinga a new order
   async function createOrder() {
     try {
       const { data } = await axios.post(`${BASE_URL}/orders/create`, null, {
@@ -66,6 +71,7 @@ export default function OrderProvider({ children }) {
         orderedProducts,
         handleDeleteOrder,
         loading,
+        totalRevenue,
       }}
     >
       {children}

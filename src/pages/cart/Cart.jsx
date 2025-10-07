@@ -3,12 +3,15 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../context/cartContext";
 import { AuthContext } from "../../context/AuthContext";
-import BASE_URL from "../../api/BASE_URL";
-import axios from "axios";
 
 export default function Cart() {
-  const { fetchCarts, cartItems, setCartItems, updateQuantity } =
-    useContext(CartContext);
+  const {
+    fetchCarts,
+    cartItems,
+
+    updateQuantity,
+    handleRemoveFromCart,
+  } = useContext(CartContext);
   const { isLoggedIn } = useContext(AuthContext);
 
   const navigate = useNavigate();
@@ -21,20 +24,6 @@ export default function Cart() {
   useEffect(() => {
     fetchCarts();
   }, []);
-
-  async function handleRemoveFromCart(productId) {
-    try {
-      const data = await axios.delete(
-        `${BASE_URL}/carts/delete-cart-item/${productId}`,
-        {
-          withCredentials: true,
-        }
-      );
-      setCartItems(data.data.data);
-    } catch (err) {
-      console.log(err.message);
-    }
-  }
 
   let totalPrice;
   if (cartItems.length > 0) {
