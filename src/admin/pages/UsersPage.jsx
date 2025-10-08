@@ -3,7 +3,7 @@ import { useContext } from "react";
 import UserTable from "../layout/UserTable";
 
 const UsersPage = () => {
-  const { users } = useContext(usersContext);
+  const { users, isBlocked, setIsBlocked } = useContext(usersContext);
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 p-6">
@@ -55,9 +55,15 @@ const UsersPage = () => {
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-semibold text-white">All Users</h2>
             <div className="flex space-x-3">
-              <button className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition duration-200">
-                Filter
-              </button>
+              {/* Filter status options */}
+              <select
+                className="bg-gray-700"
+                onChange={(e) => setIsBlocked(e.target.value)}
+              >
+                <option value= {undefined}>Filter by Status</option>
+                <option value={false}>Active</option>
+                <option value={true}>Blocked</option>
+              </select>
               <button className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition duration-200">
                 Add User
               </button>
@@ -92,8 +98,7 @@ const UsersPage = () => {
             </thead>
             <tbody className="divide-y divide-gray-700">
               {users.map((user) => (
-                <UserTable
-                 user = {user}/>
+                <UserTable user={user} />
               ))}
             </tbody>
           </table>

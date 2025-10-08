@@ -7,9 +7,9 @@ function UserTable({ user }) {
   const { getAllUsers } = useContext(usersContext);
   console.log(getAllUsers);
 
+  // Blocking the user functionality
   async function handleBlock(userId) {
     try {
-      
       await axios.put(
         `${BASE_URL}/admin/users/${userId}`,
         {},
@@ -22,6 +22,10 @@ function UserTable({ user }) {
       console.log(err.message);
     }
   }
+
+
+ 
+
   return (
     <>
       <tr key={user._id} className="hover:bg-gray-750 transition duration-150">
@@ -57,7 +61,7 @@ function UserTable({ user }) {
         <td className="px-6 py-4 whitespace-nowrap">
           <span
             className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-              user.isActive
+              user.isBlocked === false
                 ? "bg-green-500/20 text-green-300"
                 : "bg-red-500/20 text-red-300"
             }`}
@@ -66,21 +70,15 @@ function UserTable({ user }) {
           </span>
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-          {user.joinDate || "Jan 15, 2024"}
+          {user.createdAt}
         </td>
         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
           <div className="flex space-x-2">
-            <button className="text-blue-400 hover:text-blue-300 transition duration-200">
-              Edit
-            </button>
             <button
               onClick={() => handleBlock(user._id)}
               className="text-red-400 hover:text-red-300 transition duration-200"
             >
-              {user?.isBlocked ? 'Unblock' : "Block"}
-            </button>
-            <button className="text-gray-400 hover:text-gray-300 transition duration-200">
-              View
+              {user?.isBlocked ? "Unblock" : "Block"}
             </button>
           </div>
         </td>
