@@ -16,13 +16,22 @@ function reducer(state, action) {
     case "order/getOrder":
       return { ...state, order: action.payload };
 
+    case "orders/updateOrderStatus":
+      return {
+        ...state,
+        orders: state.orders.map((order) =>
+          order._id === action.payload.orderId
+            ? { ...order, status: action.payload.status }
+            : order
+        ),
+      };
+
     default:
       return state;
   }
 }
+
 //Get a single order by id
-
-
 function OrdersProvider({ children }) {
   const [{ orders, totalRevenue }, dispatch] = useReducer(
     reducer,
@@ -48,12 +57,11 @@ function OrdersProvider({ children }) {
       }
     }
     getAllOrders();
- 
   }, []);
   console.log(orders);
   return (
     <OrdersContext.Provider
-      value={{ orders, totalRevenue, orderedProducts }}
+      value={{ orders, totalRevenue, orderedProducts, dispatch }}
     >
       {children}
     </OrdersContext.Provider>

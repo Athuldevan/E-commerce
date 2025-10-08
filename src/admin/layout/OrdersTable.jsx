@@ -1,222 +1,104 @@
-function OrdersTable({allOrders, handleStatusChange }) {
-  console.log(allOrders);
-  return (
-    <>
-      <div className="bg-gray-800 rounded-lg shadow overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-700">
-            <thead className="bg-gray-750">
-              <tr>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                >
-                  Order ID
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                >
-                  Customer
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                >
-                  Date
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                >
-                  Status
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                >
-                  Delivery Time
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider"
-                >
-                  Amount
-                </th>
-                <th
-                  scope="col"
-                  className="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider"
-                >
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-700">
-              {allOrders?.map((order) => (
-                <tr key={order?.id} className="hover:bg-gray-750">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    {order?.orderID}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium">
-                      <ul>
-                        {order?.items?.map((item) => (
-                          <li>{item?.name}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="text-sm text-gray-400">
-                      <span>
-                        {order?.items?.reduce(
-                          (acc, currItem) => acc + currItem?.quantity,
-                          0
-                        )}
-                      </span>
-                      items
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
-                    {order?.date}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                        order?.status === "delivered"
-                          ? "text-green-700"
-                          : "text-blue-300"
-                      } `}
-                    >
-                      {order?.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
-                    {order?.deliveredAt}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    {order?.total}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <select
-                      value={order?.status}
-                      onChange={(e) =>
-                        handleStatusChange({ ...order, status: e.target.value })
-                      }
-                      className="bg-gray-700 text-white border border-gray-600 px-2 py-1 rounded text-xs"
-                    >
-                      <option value="processing">Processing</option>
-                      <option value="shipped">Shipped</option>
-                      <option value="delivered">Delivered</option>
-                      <option value="cancelled">Cancelled</option>
-                    </select>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <div className="flex justify-end space-x-3">
-                      {/* <button
-                        className="text-red-400 hover:text-red-300"
-                        title="Delete"
-                        onClick={() => handleDelte(order?.orderID)}
-                      >
-                        <svg
-                          className="w-5 h-5"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                          />
-                        </svg>
-                      </button> */}
-                      {/* change ststus  */}
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+import axios from "axios";
+import BASE_URL from "../../api/BASE_URL";
+import { useContext, useState } from "react";
+import { OrdersContext } from "../contexts/OrdersContext";
+import Loading from "../../utility/Loading";
 
-        {/* Pagination */}
-        <div className="bg-gray-750 px-6 py-3 flex items-center justify-between border-t border-gray-700">
-          <div className="flex-1 flex justify-between sm:hidden">
-            <button className="relative inline-flex items-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-300 bg-gray-700 hover:bg-gray-600">
-              Previous
-            </button>
-            <button className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-600 text-sm font-medium rounded-md text-gray-300 bg-gray-700 hover:bg-gray-600">
-              Next
-            </button>
-          </div>
-          <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-            <div>
-              <p className="text-sm text-gray-400">
-                Showing <span className="font-medium">1</span> to{" "}
-                <span className="font-medium">8</span> of{" "}
-                <span className="font-medium">24</span> orders
-              </p>
-            </div>
-            <div>
-              <nav
-                className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
-                aria-label="Pagination"
+function OrdersTable({ orders, getStatusColor, handleViewOrder }) {
+  const { dispatch } = useContext(OrdersContext);
+  const [loadingOrder, setLoadingOrder] = useState(null);
+
+  async function handleChangeOrderStatus(orderId, status) {
+    setLoadingOrder(orderId);
+    try {
+      await axios.put(
+        `${BASE_URL}/admin/changeOrderStatus/${orderId}`,
+        { status },
+        { withCredentials: true }
+      );
+      
+      dispatch({
+        type: "orders/updateOrderStatus",
+        payload: { orderId, status },
+      });
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingOrder(null);
+    }
+  }
+
+  return (
+    <div className="bg-gray-900 rounded-lg border border-gray-700 overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead className="bg-gray-800 border-b border-gray-700">
+            <tr>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                Order ID
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                Date
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                Amount
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                Status
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-gray-900 divide-y divide-gray-800">
+            {orders.map((order) => (
+              <tr 
+                key={order._id} 
+                className="hover:bg-gray-800 transition-colors"
               >
-                <button className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-600 bg-gray-700 text-sm font-medium text-gray-300 hover:bg-gray-600">
-                  <span className="sr-only">Previous</span>
-                  <svg
-                    className="h-5 w-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
+                <td className="px-4 py-3">
+                  <span className="text-sm font-medium text-white">
+                    #{order._id?.slice(-8) || order.id?.slice(-8)}
+                  </span>
+                </td>
+                <td className="px-4 py-3">
+                  <span className="text-sm text-gray-300">
+                    {new Date(order.createdAt).toLocaleDateString()}
+                  </span>
+                </td>
+                <td className="px-4 py-3">
+                  <span className="text-sm font-semibold text-white">
+                    ${order.totalPrice}
+                  </span>
+                </td>
+                <td className="px-4 py-3">
+                  <select
+                    value={order.status}
+                    onChange={(e) => handleChangeOrderStatus(order._id, e.target.value)}
+                    disabled={loadingOrder === order._id}
+                    className={`px-3 py-1 rounded text-sm border-0 font-medium ${getStatusColor(order.status)} text-white cursor-pointer disabled:opacity-50`}
                   >
-                    <path
-                      fillRule="evenodd"
-                      d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
-                <button
-                  aria-current="page"
-                  className="z-10 bg-purple-600 border-purple-600 text-white relative inline-flex items-center px-4 py-2 border text-sm font-medium"
-                >
-                  1
-                </button>
-                <button className="bg-gray-700 border-gray-600 text-gray-300 hover:bg-gray-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                  2
-                </button>
-                <button className="bg-gray-700 border-gray-600 text-gray-300 hover:bg-gray-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                  3
-                </button>
-                <span className="relative inline-flex items-center px-4 py-2 border border-gray-600 bg-gray-700 text-sm font-medium text-gray-400">
-                  ...
-                </span>
-                <button className="bg-gray-700 border-gray-600 text-gray-300 hover:bg-gray-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
-                  8
-                </button>
-                <button className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-600 bg-gray-700 text-sm font-medium text-gray-300 hover:bg-gray-600">
-                  <span className="sr-only">Next</span>
-                  <svg
-                    className="h-5 w-5"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
+                    <option value="pending">Pending</option>
+                    <option value="shipped">Shipped</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="cancelled">Cancelled</option>
+                  </select>
+                </td>
+                <td className="px-4 py-3">
+                  <button
+                    onClick={() => handleViewOrder(order._id)}
+                    className="px-3 py-1 text-xs font-medium rounded border border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white transition-colors"
                   >
-                    <path
-                      fillRule="evenodd"
-                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
-              </nav>
-            </div>
-          </div>
-        </div>
+                    View
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </>
+    </div>
   );
 }
 

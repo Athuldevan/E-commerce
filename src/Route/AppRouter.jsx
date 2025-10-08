@@ -27,8 +27,8 @@ import WishlistProvider from "../context/WishlistContext.jsx";
 import OrderProvider from "../context/orderContext.jsx";
 import CheckoutProvider from "../context/CheckoutContext.jsx";
 import { Bounce, ToastContainer } from "react-toastify";
-import UsersProvider from "../admin/contexts/userContext.jsx";
 import OrdersProvider from "../admin/contexts/OrdersContext.jsx";
+import UsersProvider from "../admin/contexts/UsersContext.jsx";
 
 export default function MainRoutes() {
   return (
@@ -38,11 +38,11 @@ export default function MainRoutes() {
           <WishlistProvider>
             <OrderProvider>
               <CheckoutProvider>
-                <UsersProvider>
-                  <OrdersProvider>
+                <OrdersProvider>
+                  <UsersProvider>
                     <AppRouter />
-                  </OrdersProvider>
-                </UsersProvider>
+                  </UsersProvider>
+                </OrdersProvider>
               </CheckoutProvider>
             </OrderProvider>
           </WishlistProvider>
@@ -81,10 +81,11 @@ function AppRouter() {
           path="/admin"
           element={
             <OrdersProvider>
-
-            <AdminRoute>
-              <AdminDashboard />
-            </AdminRoute>
+              <UsersProvider>
+                <AdminRoute>
+                  <AdminDashboard />
+                </AdminRoute>
+              </UsersProvider>
             </OrdersProvider>
           } // Admin route is a protected route
         >

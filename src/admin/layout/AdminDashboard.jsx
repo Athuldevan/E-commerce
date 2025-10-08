@@ -1,9 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import SideBar from "./SideBar";
 import Header from "./Header";
-import Stats from "./Stats";
-import Charts from "./Charts";
-import OrdersTable from "./OrdersTable";
 
 const AdminDashboard = () => {
   return (

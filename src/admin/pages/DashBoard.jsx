@@ -1,10 +1,9 @@
-import { useContext } from "react";
-import { usersContext } from "../contexts/userContext";
+
 import ChartLayout from "../layout/ChartLayout";
 
 function DashBoard() {
-  const { totalUsers  } = useContext(usersContext);
- 
+  // const { totalUsers } = useContext(usersContext);
+
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
       {/* Content */}
@@ -15,7 +14,9 @@ function DashBoard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400">Total Users</p>
-                <h3 className="text-2xl font-bold">{totalUsers}</h3>
+                <h3 className="text-2xl font-bold">
+                  {totalUsers || "Total users"}
+                </h3>
               </div>
               <div className="p-3 bg-purple-600 rounded-lg">
                 <svg
