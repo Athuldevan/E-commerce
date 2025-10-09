@@ -29,6 +29,7 @@ import CheckoutProvider from "../context/CheckoutContext.jsx";
 import { Bounce, ToastContainer } from "react-toastify";
 import OrdersProvider from "../admin/contexts/OrdersContext.jsx";
 import UsersProvider from "../admin/contexts/UsersContext.jsx";
+import ProductsProvider from "../admin/contexts/ProductsContext.jsx";
 
 export default function MainRoutes() {
   return (
@@ -40,7 +41,9 @@ export default function MainRoutes() {
               <CheckoutProvider>
                 <OrdersProvider>
                   <UsersProvider>
-                    <AppRouter />
+                    <ProductsProvider>
+                      <AppRouter />
+                    </ProductsProvider>
                   </UsersProvider>
                 </OrdersProvider>
               </CheckoutProvider>

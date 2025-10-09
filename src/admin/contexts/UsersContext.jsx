@@ -17,6 +17,8 @@ function reducer(state, action) {
   }
 }
 
+
+
 export default function UsersProvider({ children }) {
   const [{ users }, dispatch] = useReducer(reducer, initialState);
   const [isBlocked, setIsBlocked] = useState(undefined);
@@ -40,6 +42,8 @@ export default function UsersProvider({ children }) {
   useEffect(() => {
     getAllUsers(isBlocked);
   }, [isBlocked]);
+
+  
 
   return (
     <usersContext.Provider

@@ -58,7 +58,7 @@ function OrdersProvider({ children }) {
     }
     getAllOrders();
   }, []);
-  console.log(orders);
+ 
   return (
     <OrdersContext.Provider
       value={{ orders, totalRevenue, orderedProducts, dispatch }}

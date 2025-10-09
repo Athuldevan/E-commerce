@@ -1,8 +1,10 @@
-
+import { useContext } from "react";
+import { usersContext } from "../contexts/UsersContext";
 import ChartLayout from "../layout/ChartLayout";
 
 function DashBoard() {
-  // const { totalUsers } = useContext(usersContext);
+  const { users } = useContext(usersContext);
+  const totalUsers = users?.length;
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
