@@ -1,12 +1,38 @@
 import { useContext } from "react";
 import { ProductsContext } from "../contexts/ProductsContext";
-
+import BASE_URL from "../../api/BASE_URL";
+import axios from "axios";
+import Loading from "../../utility/Loading";
 function ProductsPage() {
-  const { products, setCategory, limit, setPage } = useContext(ProductsContext);
+  const {
+    products,
+    setCategory,
+    limit,
+    setPage,
+    getAllProducts,
+    loading,
+    setLoading,
+  } = useContext(ProductsContext);
 
   const totalValue = products.reduce((acc, curr) => acc + curr.price, 0);
   const active = products.filter((product) => product.isActive).length;
 
+  //Delete product;
+  async function handleDelete(productId) {
+    try {
+      await axios.delete(`${BASE_URL}/admin/deleteProduct/${productId}`, {
+        withCredentials: true,
+      });
+      setLoading(true);
+      await getAllProducts();
+    } catch (err) {
+      console.log(err.message);
+    }
+  }
+
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div className="min-h-screen bg-gray-900 p-6">
       {/* Header Section */}
@@ -159,7 +185,10 @@ function ProductsPage() {
                       <button className="text-blue-400 hover:text-blue-300 transition-colors">
                         Edit
                       </button>
-                      <button className="text-red-400 hover:text-red-300 transition-colors">
+                      <button
+                        onClick={() => handleDelete(product?._id)}
+                        className="text-red-400 hover:text-red-300 transition-colors"
+                      >
                         Delete
                       </button>
                       <button className="text-gray-400 hover:text-gray-300 transition-colors">
