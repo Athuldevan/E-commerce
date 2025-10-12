@@ -17,8 +17,6 @@ function reducer(state, action) {
   }
 }
 
-
-
 export default function UsersProvider({ children }) {
   const [{ users }, dispatch] = useReducer(reducer, initialState);
   const [isBlocked, setIsBlocked] = useState(undefined);
@@ -43,11 +41,11 @@ export default function UsersProvider({ children }) {
     getAllUsers(isBlocked);
   }, [isBlocked]);
 
-  
+  const latestUser = users.reverse().slice(-1);
 
   return (
     <usersContext.Provider
-      value={{ users, getAllUsers, isBlocked, setIsBlocked }}
+      value={{ users, getAllUsers, isBlocked, setIsBlocked, latestUser }}
     >
       {children}
     </usersContext.Provider>

@@ -29,7 +29,7 @@ function OrdersTable({ orders, getStatusColor, handleViewOrder }) {
   }
 
   return (
-    <div className="bg-gray-900 rounded-lg border border-gray-700 overflow-hidden">
+    <div className="bg-gray-900 rounded-lg border border-gray-700 overflow-hidden mb-9 p-1">
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead className="bg-gray-800 border-b border-gray-700">

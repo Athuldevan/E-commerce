@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { OrdersContext } from "../contexts/OrdersContext.jsx";
 
 import {
   Chart as ChartJS,
@@ -12,8 +14,8 @@ import {
 } from "chart.js";
 import { Doughnut, Line } from "react-chartjs-2";
 import { useState } from "react";
-import useOrders from "../../hooks/useOrders";
-import { parseDate } from "../../utility/dateUtility"; 
+import { parseDate } from "../../utility/dateUtility";
+
 
 ChartJS.register(
   ArcElement,
@@ -27,9 +29,9 @@ ChartJS.register(
 );
 
 function ChartLayout() {
-  const { allOrders } = useOrders();
+  const { orders } = useContext(OrdersContext);
+  console.log(orders);
   const [range, setRange] = useState(7);
-
 
   function getOrdersFromLastNDays(orders, days) {
     const today = new Date();
@@ -37,12 +39,12 @@ function ChartLayout() {
     fromDate.setDate(today.getDate() - days);
 
     return orders.filter((order) => {
-      const orderDate = parseDate(order.date);
+      const orderDate = parseDate(order.createdAt);
       return orderDate >= fromDate && orderDate <= today;
     });
   }
 
-  // Group orders by day for Line chart
+  // group orders for orders by line orderes
   function getLineChartData(orders, days) {
     const grouped = {};
 
@@ -76,13 +78,17 @@ function ChartLayout() {
   }
 
   // Compute data (every render)
-  const recentOrders = getOrdersFromLastNDays(allOrders, range);
+  const recentOrders = getOrdersFromLastNDays(orders, range);
   const lineData = getLineChartData(recentOrders, range);
 
   // Doughnut chart (order status)
-  const totalOrders = allOrders.length;
-  const pendingOrders = allOrders.filter(order => order.status === "pending").length;
-  const deliveredOrders = allOrders.filter(order => order.status === "delivered").length;
+  const totalOrders = orders.length;
+  const pendingOrders = orders.filter(
+    (order) => order.status === "pending"
+  ).length;
+  const deliveredOrders = orders.filter(
+    (order) => order.status === "delivered"
+  ).length;
 
   const doughnutData = {
     labels: ["Delivered", "Pending", "Other"],

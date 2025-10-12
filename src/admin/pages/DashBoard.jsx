@@ -1,14 +1,20 @@
 import { useContext } from "react";
 import { usersContext } from "../contexts/UsersContext";
 import ChartLayout from "../layout/ChartLayout";
+import { OrdersContext } from "../contexts/OrdersContext";
 
 function DashBoard() {
-  const { users } = useContext(usersContext);
+  const { users, latestUser } = useContext(usersContext);
+  const { latestOrder } = useContext(OrdersContext);
   const totalUsers = users?.length;
+  console.log(latestOrder);
+  const newOrder = latestOrder[0]?._id || "no latest order available";
+  const latestPayment = latestOrder[0]?.totalPrice || 0.0;
+  const newUser = latestUser[0]?.name || "No new user";
+console.log(latestOrder);
 
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
-      {/* Content */}
       <main className="flex-1 overflow-y-auto p-6">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -146,7 +152,7 @@ function DashBoard() {
                 <div className="w-8 h-8 bg-purple-500 rounded-full mt-1"></div>
                 <div>
                   <p className="font-medium">New order received</p>
-                  <p className="text-sm text-gray-400">Latest order id</p>
+                  <p className="text-sm text-gray-400">{newOrder}</p>
                   <p className="text-xs text-gray-500">2 hours ago</p>
                 </div>
               </div>
@@ -154,9 +160,7 @@ function DashBoard() {
                 <div className="w-8 h-8 bg-blue-500 rounded-full mt-1"></div>
                 <div>
                   <p className="font-medium">New user registered</p>
-                  <p className="text-sm text-gray-400">
-                    Latest user name Registerd
-                  </p>
+                  <p className="text-sm text-gray-400">{newUser}</p>
                   <p className="text-xs text-gray-500">5 hours ago</p>
                 </div>
               </div>
@@ -164,9 +168,7 @@ function DashBoard() {
                 <div className="w-8 h-8 bg-green-500 rounded-full mt-1"></div>
                 <div>
                   <p className="font-medium">Payment received</p>
-                  <p className="text-sm text-gray-400">
-                    last delivered total % Lat delivered order id
-                  </p>
+                  <p className="text-sm text-gray-400">{latestPayment}</p>
                   <p className="text-xs text-gray-500">1 day ago</p>
                 </div>
               </div>
@@ -175,62 +177,22 @@ function DashBoard() {
         </div>
 
         <h2 className="text-xl font-bold">Recent Orders</h2>
-        <p>%All ordersss details go here %</p>
-        {/* {allOrders.map((order) => (
-          <div className="bg-gray-800 p-6 rounded-lg shadow">
-            <div className="flex items-center justify-between mb-4"></div>
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-700">
-                <thead>
-                  <tr>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      {order?.orderID}
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Date
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Status
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      TotalItems
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">
-                      Amount
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-700">
-                  <tr>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm font-medium">
-                      {order.orderID}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm">
-                      {order.date}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap">
-                      <span
-                        className={`px-2 py-1 text-xs rounded-full ${
-                          order.status === "delivered"
-                            ? "bg-green-900 text-green-200"
-                            : "bg-red-900 text-red-200"
-                        }`}
-                      >
-                        {order.status}
-                      </span>
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm">
-                      {order?.items?.length}
-                    </td>
-                    <td className="px-4 py-4 whitespace-nowrap text-sm">
-                      {order?.total}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        ))} */}
+     
+        
+        {latestOrder.map((order) => (
+          <>
+            <p>{order.status}</p>
+            <p>{order?.totalPrice}</p>
+
+            <h2>Products</h2>
+            {order.products.map(product => (
+              <>
+              <p>{product?._id}</p>
+              </>
+            ))}
+            <p>{order?.totalPrice}</p>
+          </>
+        ))}
       </main>
     </div>
   );

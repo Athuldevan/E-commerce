@@ -1,19 +1,9 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-
-
+import { AuthContext } from "../../context/AuthContext";
 
 function SideBar() {
-  // const { user } = useContext(AuthContext);
-  // const { getAllUsers, users } = useContext(usersContext);
-  // useEffect(() => {
-  //   getAllUsers();
-  // }, []);
-
-  // {users.map(user => (
-  //   <div>
-  //     <p>{user?.name}</p>
-  //   </div>
-  // ))}
+  const { user } = useContext(AuthContext);
 
   return (
     <>
@@ -145,7 +135,7 @@ function SideBar() {
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-purple-500 rounded-full"></div>
             <div>
-              <p className="font-medium"> /%ADMIN NAME%/ </p>
+              <p className="font-medium"> {user?.name} </p>
               <p className="text-xs text-gray-400">Admin</p>
             </div>
           </div>

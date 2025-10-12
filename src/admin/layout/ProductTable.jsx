@@ -84,9 +84,6 @@ function ProductTable({
                     >
                       Delete
                     </button>
-                    <button className="text-gray-400 hover:text-gray-300 transition-colors">
-                      View
-                    </button>
                   </div>
                 </td>
               </tr>

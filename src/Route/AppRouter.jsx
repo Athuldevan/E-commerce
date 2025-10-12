@@ -1,4 +1,10 @@
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 
 import NavBar from "../pages/Navbar/NavBar.jsx";
 import Register from "../controller/auth/Register.jsx";
@@ -84,6 +90,7 @@ function AppRouter() {
           path="/admin"
           element={
             <OrdersProvider>
+              <Navigate path="/dashboard" />
               <UsersProvider>
                 <AdminRoute>
                   <AdminDashboard />

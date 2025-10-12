@@ -58,10 +58,11 @@ function OrdersProvider({ children }) {
     }
     getAllOrders();
   }, []);
- 
+
+const latestOrder = orders.reverse().slice(-1)
   return (
     <OrdersContext.Provider
-      value={{ orders, totalRevenue, orderedProducts, dispatch }}
+      value={{ orders, totalRevenue, orderedProducts, dispatch , latestOrder}}
     >
       {children}
     </OrdersContext.Provider>

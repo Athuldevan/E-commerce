@@ -52,7 +52,7 @@ function OrdersPage() {
       setIsModalOpen(true);
     } catch (err) {
       console.error("Error fetching order details:", err.message);
-      // You might want to show a toast notification here
+     
     }
   }
 
