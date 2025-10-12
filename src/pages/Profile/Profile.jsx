@@ -12,7 +12,7 @@ function Profile() {
       try {
         const data = await getProfile();
         setProfile([data.user]);
-        console.log(data);
+        console.log(totalOrders);
         setTotalOrders(data.totalOrders);
       } catch (err) {
         console.log(err.message);

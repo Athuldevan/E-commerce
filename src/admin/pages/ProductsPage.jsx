@@ -19,6 +19,8 @@ function ProductsPage() {
     getAllProducts,
     loading,
     setLoading,
+    setSort,
+    sort,
   } = useContext(ProductsContext);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -71,6 +73,8 @@ function ProductsPage() {
     return <Loading />;
   }
 
+  if (!products) return <p>No such prodcut exists </p>;
+
   return (
     <div className="min-h-screen bg-gray-900 p-6">
       {/* Header Section */}
@@ -87,7 +91,12 @@ function ProductsPage() {
       />
 
       {/* Filter Section */}
-      <ProductFilter setCategory={setCategory} setIsOpen={setIsOpen} />
+      <ProductFilter
+        setCategory={setCategory}
+        setIsOpen={setIsOpen}
+        setSort={setSort}
+        sort={sort}
+      />
 
       {/* Products Table */}
       <div className="bg-gray-800 rounded-lg shadow-lg overflow-hidden border border-gray-700">

@@ -1,7 +1,12 @@
-export default function ProductFilter({setCategory, setIsOpen}) {
-    return (
-        <>
-            <div className="bg-gray-800 rounded-lg shadow-lg p-6 mb-6 border border-gray-700">
+export default function ProductFilter({
+  setCategory,
+  setIsOpen,
+  sort,
+  setSort,
+}) {
+  return (
+    <>
+      <div className="bg-gray-800 rounded-lg shadow-lg p-6 mb-6 border border-gray-700">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex flex-wrap gap-4">
             <select
@@ -22,11 +27,20 @@ export default function ProductFilter({setCategory, setIsOpen}) {
               </option>
             </select>
 
-            <select className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-              <option className="bg-gray-700">Price Range</option>
-              <option className="bg-gray-700">Under ₹50,000</option>
-              <option className="bg-gray-700">₹50,000 - ₹1,00,000</option>
-              <option className="bg-gray-700">Above ₹1,00,000</option>
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+              className="px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option className="bg-gray-700" value="">
+                Price Range
+              </option>
+              <option className="bg-gray-700" value="higher">
+                Higher
+              </option>
+              <option className="bg-gray-700" value="lower">
+                Lesser
+              </option>
             </select>
 
             <input
@@ -49,8 +63,6 @@ export default function ProductFilter({setCategory, setIsOpen}) {
           </div>
         </div>
       </div>
-            
-        </>
-    )
+    </>
+  );
 }
-
