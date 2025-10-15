@@ -3,7 +3,22 @@ import { useContext } from "react";
 import UserTable from "../layout/UserTable";
 
 const UsersPage = () => {
-  const { users, isBlocked, setIsBlocked } = useContext(usersContext);
+  const { users, setIsBlocked, setPage, limit } = useContext(usersContext);
+
+  const latestUser = users.reverse().slice(-1);
+
+  const now = new Date();
+  const currentMonth = now.getMonth();
+  const currentYear = now.getFullYear();
+
+  // User joined in the recent month
+  const usersThisMonth = users.filter((user) => {
+    const createdAt = new Date(user.createdAt);
+    return (
+      createdAt.getMonth() === currentMonth &&
+      createdAt.getFullYear() === currentYear
+    );
+  });
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 p-6">
@@ -32,17 +47,18 @@ const UsersPage = () => {
         </div>
 
         <div className="bg-gray-800 rounded-lg p-6 border-l-4 border-purple-500">
-          <h3 className="text-lg font-semibold text-white">Admins</h3>
+          <h3 className="text-lg font-semibold text-white">Latest user</h3>
           <p className="text-2xl font-bold text-white mt-2">
             {users.filter((u) => u.role === "admin").length}
           </p>
-          <p className="text-gray-400 text-sm mt-1">Administrative users</p>
+          <p className="text-gray-400 text-sm mt-1">{latestUser[0]?.name}</p>
+          <p className="text-gray-400 text-sm mt-1">Latest user</p>
         </div>
 
         <div className="bg-gray-800 rounded-lg p-6 border-l-4 border-yellow-500">
           <h3 className="text-lg font-semibold text-white">New This Month</h3>
           <p className="text-2xl font-bold text-white mt-2">
-            {users.filter((u) => u.isNew).length}
+            {usersThisMonth[0]?.name}
           </p>
           <p className="text-gray-400 text-sm mt-1">Recent signups</p>
         </div>
@@ -60,13 +76,10 @@ const UsersPage = () => {
                 className="bg-gray-700"
                 onChange={(e) => setIsBlocked(e.target.value)}
               >
-                <option value= {undefined}>Filter by Status</option>
+                <option value={undefined}>Filter by Status</option>
                 <option value={false}>Active</option>
                 <option value={true}>Blocked</option>
               </select>
-              <button className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition duration-200">
-                Add User
-              </button>
             </div>
           </div>
         </div>
@@ -111,10 +124,20 @@ const UsersPage = () => {
               Showing {users.length} of {users.length} users
             </div>
             <div className="flex space-x-2">
-              <button className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded transition duration-200">
+              <button
+                onClick={() => setPage((prev) => Math.min(prev - 1, 1))}
+                className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded transition duration-200"
+              >
                 Previous
               </button>
-              <button className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded transition duration-200">
+              <button
+                onClick={() => {
+                  if (users.length === limit) {
+                    setPage((prev) => prev + 1);
+                  }
+                }}
+                className="px-3 py-1 bg-gray-700 hover:bg-gray-600 text-white rounded transition duration-200"
+              >
                 Next
               </button>
             </div>

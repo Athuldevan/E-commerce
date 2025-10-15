@@ -17,12 +17,6 @@ function ProductsStats({ products, totalValue, active }) {
           <p className="text-3xl font-bold text-green-400">₹{totalValue}</p>
         </div>
 
-        <div className="bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-700">
-          <h3 className="text-lg font-semibold text-gray-300 mb-2">
-            Categories
-          </h3>
-          <p className="text-3xl font-bold text-purple-400"></p>
-        </div>
 
         <div className="bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-700">
           <h3 className="text-lg font-semibold text-gray-300 mb-2">Active</h3>

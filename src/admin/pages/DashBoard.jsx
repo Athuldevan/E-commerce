@@ -2,17 +2,25 @@ import { useContext } from "react";
 import { usersContext } from "../contexts/UsersContext";
 import ChartLayout from "../layout/ChartLayout";
 import { OrdersContext } from "../contexts/OrdersContext";
+import { ProductsContext } from "../contexts/ProductsContext";
 
 function DashBoard() {
   const { users, latestUser } = useContext(usersContext);
-  const { latestOrder } = useContext(OrdersContext);
+  const { latestOrder, orders } = useContext(OrdersContext);
+  const { products } = useContext(ProductsContext);
   const totalUsers = users?.length;
-  console.log(latestOrder);
   const newOrder = latestOrder[0]?._id || "no latest order available";
   const latestPayment = latestOrder[0]?.totalPrice || 0.0;
   const newUser = latestUser[0]?.name || "No new user";
-console.log(latestOrder);
 
+  const totalRevenue = orders?.reduce(
+    (acc, order) => acc + order.totalPrice,
+    0
+  );
+
+  const pendingOrders = orders?.filter((order) => order.status === "pending");
+
+  const ActiveProducts = products?.length;
   return (
     <div className="flex-1 flex flex-col overflow-hidden">
       <main className="flex-1 overflow-y-auto p-6">
@@ -43,14 +51,13 @@ console.log(latestOrder);
                 </svg>
               </div>
             </div>
-            <p className="text-green-400 text-sm mt-2">↑ 12% from last month</p>
           </div>
 
           <div className="bg-gray-800 p-6 rounded-lg shadow">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400">Total Revenue</p>
-                <h3 className="text-2xl font-bold"> %Total revenue%</h3>
+                <h3 className="text-2xl font-bold"> {totalRevenue}</h3>
               </div>
               <div className="p-3 bg-blue-600 rounded-lg">
                 <svg
@@ -69,16 +76,13 @@ console.log(latestOrder);
                 </svg>
               </div>
             </div>
-            <p className="text-green-400 text-sm mt-2">
-              ↑ 8.5% from last month
-            </p>
           </div>
 
           <div className="bg-gray-800 p-6 rounded-lg shadow">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400">Active Products</p>
-                <h3 className="text-2xl font-bold">342</h3>
+                <h3 className="text-2xl font-bold">{ActiveProducts}</h3>
               </div>
               <div className="p-3 bg-green-600 rounded-lg">
                 <svg
@@ -97,14 +101,13 @@ console.log(latestOrder);
                 </svg>
               </div>
             </div>
-            <p className="text-red-400 text-sm mt-2">↓ 3% from last month</p>
           </div>
 
           <div className="bg-gray-800 p-6 rounded-lg shadow">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-400">Pending Orders</p>
-                <h3 className="text-2xl font-bold">56</h3>
+                <h3 className="text-2xl font-bold">{pendingOrders?.length}</h3>
               </div>
               <div className="p-3 bg-yellow-600 rounded-lg">
                 <svg
@@ -123,9 +126,6 @@ console.log(latestOrder);
                 </svg>
               </div>
             </div>
-            <p className="text-green-400 text-sm mt-2">
-              ↑ 2.4% from last month
-            </p>
           </div>
         </div>
 
@@ -175,24 +175,6 @@ console.log(latestOrder);
             </div>
           </div>
         </div>
-
-        <h2 className="text-xl font-bold">Recent Orders</h2>
-     
-        
-        {latestOrder.map((order) => (
-          <>
-            <p>{order.status}</p>
-            <p>{order?.totalPrice}</p>
-
-            <h2>Products</h2>
-            {order.products.map(product => (
-              <>
-              <p>{product?._id}</p>
-              </>
-            ))}
-            <p>{order?.totalPrice}</p>
-          </>
-        ))}
       </main>
     </div>
   );

@@ -2,10 +2,10 @@ import axios from "axios";
 import BASE_URL from "../../api/BASE_URL";
 import { useContext } from "react";
 import { usersContext } from "../contexts/UsersContext";
+import { toast } from "react-toastify";
 
 function UserTable({ user }) {
   const { getAllUsers } = useContext(usersContext);
-  console.log(getAllUsers);
 
   // Blocking the user functionality
   async function handleBlock(userId) {
@@ -17,14 +17,12 @@ function UserTable({ user }) {
           withCredentials: true,
         }
       );
+      toast.success("User status updated successfully");
       await getAllUsers();
     } catch (err) {
       console.log(err.message);
     }
   }
-
-
- 
 
   return (
     <>

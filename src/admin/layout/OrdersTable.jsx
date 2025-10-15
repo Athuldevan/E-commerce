@@ -2,7 +2,8 @@ import axios from "axios";
 import BASE_URL from "../../api/BASE_URL";
 import { useContext, useState } from "react";
 import { OrdersContext } from "../contexts/OrdersContext";
-import Loading from "../../utility/Loading";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function OrdersTable({ orders, getStatusColor, handleViewOrder }) {
   const { dispatch } = useContext(OrdersContext);

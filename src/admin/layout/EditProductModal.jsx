@@ -1,6 +1,9 @@
 import { useState } from "react";
 import BASE_URL from "../../api/BASE_URL";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function EditProductModal({
   selectedProduct,
@@ -26,10 +29,11 @@ function EditProductModal({
     try {
       await axios.put(
         `${BASE_URL}/admin/editProduct/${selectedProduct._id}`,
-        { product },
+        product,
         { withCredentials: true }
       );
       setIsEditingMode(false);
+      toast.success("Product updated successfully");
       await getAllProducts();
     } catch (err) {
       console.log(err.message);

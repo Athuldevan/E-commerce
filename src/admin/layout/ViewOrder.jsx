@@ -72,7 +72,7 @@ function ViewOrder({ selectedOrder, closeModal, getStatusColor }) {
                     className="flex items-center space-x-4 bg-gray-750 rounded-lg p-4"
                   >
                     <div className="flex-shrink-0 w-16 h-16 bg-gray-600 rounded-lg flex items-center justify-center">
-                      {product.productId.image ? (
+                      {product?.image ? (
                         <img
                           src={product.productId.image}
                           alt={product.name}
@@ -87,11 +87,11 @@ function ViewOrder({ selectedOrder, closeModal, getStatusColor }) {
                         {product.name || "Product Name"}
                       </h4>
                       <p className="text-gray-400 text-sm">
-                        Quantity: {product.quantity} × ${product.productId.price}
+                        Quantity: {product.quantity} × ${product.price}
                       </p>
                       <p className="text-gray-400 text-sm">
                         Subtotal: $
-                        {(product.quantity * product.productId.price).toFixed(2)}
+                        {(product.quantity * product.price).toFixed(2)}
                       </p>
                     </div>
                   </div>

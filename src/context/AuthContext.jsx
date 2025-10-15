@@ -84,7 +84,7 @@ export default function AuthProvider({ children }) {
     toast.info("Logged out successfully");
     navigate("/login");
   }
-console.log(user)
+
   return (
     <AuthContext.Provider
       value={{

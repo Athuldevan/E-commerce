@@ -55,6 +55,10 @@ function ProductsPage() {
     }
   }
 
+  function handleEdit(selectedProdcut) {
+    
+  }
+
   // Add to product;
   if (isOpen) return <AddProductModal isOpen={isOpen} setIsOpen={setIsOpen} />;
 
